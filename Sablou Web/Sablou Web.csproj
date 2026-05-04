@@ -11,4 +11,8 @@
     <Folder Include="Mockdata\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.14" />
+  </ItemGroup>
+
 </Project>
