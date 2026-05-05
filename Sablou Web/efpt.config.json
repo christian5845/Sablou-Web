@@ -3,7 +3,7 @@
    "ContextClassName": "cralle_dk_db_sablouContext",
    "ContextNamespace": null,
    "FilterSchemas": false,
-   "IncludeConnectionString": false,
+   "IncludeConnectionString": true,
    "IrregularWords": null,
    "MinimumProductVersion": "2.6.1465",
    "ModelNamespace": null,

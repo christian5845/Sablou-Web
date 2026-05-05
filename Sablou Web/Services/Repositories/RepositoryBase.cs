@@ -12,7 +12,7 @@ public abstract class RepositoryBase<T> : IRepository<T> where T : class, IHarId
         {
             using DbContext context = CreateDbContext();
             Dictionary<int, T> dict = new Dictionary<int, T>();
-            List<T> list = GetList(context);
+            List<T> list = GetList();
 
             foreach (var item in list)
             {
@@ -76,8 +76,9 @@ public abstract class RepositoryBase<T> : IRepository<T> where T : class, IHarId
         return Data.Select(t => t.Value.Id).DefaultIfEmpty(0).Max() + 1;
     }
 
-    private List<T> GetList(DbContext context)
+    private List<T> GetList()
     {
+        using DbContext context = CreateDbContext();
         return context.Set<T>().ToList();
     }
 }
