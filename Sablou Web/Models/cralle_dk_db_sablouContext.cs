@@ -8,6 +8,10 @@ namespace Sablou_Web.Models;
 
 public partial class cralle_dk_db_sablouContext : DbContext
 {
+    public cralle_dk_db_sablouContext()
+    {
+    }
+
     public cralle_dk_db_sablouContext(DbContextOptions<cralle_dk_db_sablouContext> options)
         : base(options)
     {
@@ -28,6 +32,10 @@ public partial class cralle_dk_db_sablouContext : DbContext
     public virtual DbSet<OrdreLinje> OrdreLinje { get; set; }
 
     public virtual DbSet<Rolle> Rolle { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=mssql13.unoeuro.com;Initial Catalog=cralle_dk_db_sablou;Persist Security Info=True;User ID=cralle_dk;Password=mDz296f5FegxdnrhG3EA");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -1,5 +1,10 @@
 ﻿namespace Sablou_Web.Models;
 
-public class Exstensions
+public partial class Ingrediens : IHarId
 {
+    public Ingrediens(string navn, string beskrivelse)
+    {
+        Navn = navn;
+        Beskrivelse = beskrivelse;
+    }
 }

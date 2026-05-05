@@ -1,0 +1,26 @@
+﻿@page
+@model Sablou_Web.Pages.Ingredienser.AlleModel
+@{
+}
+
+<div class="text-center">
+    <h1>Ingredienser </h1>
+</div>
+
+<div>
+    @if(Model.Repositories.IngrediensRepository != null )
+    {
+        foreach(var item in Model.Repositories.IngrediensRepository.Data)
+        {
+            <tr class="btn-dark">
+                <td>
+                    @item.Value.Navn
+                </td>
+                <td>
+                    @item.Value.Beskrivelse
+                </td>
+            </tr>   
+        }
+    }
+</div>
+
