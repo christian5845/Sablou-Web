@@ -7,19 +7,25 @@
     <h1>Ingredienser </h1>
 </div>
 
-<div>
+    <div class="row align-content-center">
+        <div class="col">
+            <a class="btn btn-primary btn-sm" type="button" title="Opret" asp-page="Opret">Opret ny ingrediens</a>
+         </div>
+    </div>
+
+
     @if(Model.Repositories.IngrediensRepository != null )
     {
         foreach(var item in Model.Repositories.IngrediensRepository.Data)
         {
-            <tr class="btn-dark">
-                <td>
-                    @item.Value.Navn
-                </td>
-                <td>
-                    @item.Value.Beskrivelse
-                </td>
-            </tr>   
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Value.Navn</h5>
+                    <p class="card-text">@item.Value.Beskrivelse</p>
+                    <a class="btn btn-primary btn-sm" type="button" title="Opdater" asp-page="Opret" asp-route-id="@item.Key">test</a>
+                    <a class="btn btn-primary btn-sm" type="button" title="Slet" asp-page="Slet" asp-route-id="@item.Key">test</a>
+                </div>
+            </div>
         }
     }
 </div>
