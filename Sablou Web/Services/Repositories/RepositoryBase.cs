@@ -73,7 +73,7 @@ public abstract class RepositoryBase<T> : IRepository<T> where T : class, IHarId
 
     private int NextId()
     {
-        return All().Select(t => t.Id).DefaultIfEmpty(0).Max() + 1;
+        return Data.Select(t => t.Value.Id).DefaultIfEmpty(0).Max() + 1;
     }
 
     private List<T> GetList(DbContext context)
