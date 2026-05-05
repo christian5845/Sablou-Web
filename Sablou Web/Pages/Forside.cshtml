@@ -1,0 +1,97 @@
+﻿@page
+@{
+    ViewData["Title"] = "Forside";
+}
+
+<style>
+    /* Hero fills viewport minus navbar (adjust --navbar-height if needed) */
+    :root {
+        --navbar-height: 72px;
+    }
+
+    body {
+        margin: 0;
+    }
+
+    .hero-full {
+        position: fixed;
+        top: var(--navbar-height);
+        left: 0;
+        right: 0;
+        height: calc(100vh - var(--navbar-height));
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        z-index: 0;
+        overflow: hidden;
+    }
+
+    /* animated background layer */
+    .hero-bg {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: left center;
+        background-repeat: no-repeat;
+        transform-origin: left center;
+        will-change: transform;
+        backface-visibility: hidden;
+        z-index: 0;
+        /* GPU hint and fallback */
+        transform: translateZ(0) scale(1);
+        -webkit-transform: translateZ(0) scale(1);
+        animation: hero-zoom 16s ease-in-out infinite;
+        -webkit-animation: hero-zoom 16s ease-in-out infinite;
+    }
+
+    /* subtle dark overlay */
+    .hero-full::before{
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.35);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .hero-sub {
+        font-size: 1.1rem;
+        margin-top: 0.5rem;
+        opacity: 0.9;
+    }
+
+    @@keyframes hero-zoom {
+        0%   { transform: translateZ(0) scale(1); }
+        50%  { transform: translateZ(0) scale(1.12); }
+        100% { transform: translateZ(0) scale(1); }
+    }
+
+    /* WebKit fallback */
+    @@-webkit-keyframes hero-zoom {
+        0%   { -webkit-transform: translateZ(0) scale(1); transform: translateZ(0) scale(1); }
+        50%  { -webkit-transform: translateZ(0) scale(1.12); transform: translateZ(0) scale(1.12); }
+        100% { -webkit-transform: translateZ(0) scale(1); transform: translateZ(0) scale(1); }
+    }
+</style>
+
+<section class="hero-full" role="img" aria-label="Håndlavet chokolade">
+    <div class="hero-bg" style="background-image:url('@Url.Content("~/images/choko.PNG")');"></div>
+    <div class="hero-content container">
+        <h1 class="hero-title">Håndlavet chokolade</h1>
+        <p class="hero-sub">lavet med kærlighed</p>
+    </div>
+</section>
