@@ -8,6 +8,11 @@ namespace Sablou_Web.Models;
 
 public partial class cralle_dk_db_sablouContext : DbContext
 {
+    public cralle_dk_db_sablouContext()
+    {
+    }
+
+
     public cralle_dk_db_sablouContext(DbContextOptions<cralle_dk_db_sablouContext> options)
         : base(options)
     {

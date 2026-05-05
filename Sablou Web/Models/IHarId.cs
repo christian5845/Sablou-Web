@@ -1,6 +1,6 @@
 ﻿namespace Sablou_Web.Models;
 
-public interface IHasId
+public interface IHarId
 {
     int Id { get; set; }
 }

@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Folder Include="Mockdata\" />
-    <Folder Include="Services\Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
