@@ -22,6 +22,7 @@
                 <div class="card-body">
                     <h5 class="card-title">@item.Value.Navn</h5>
                     <p class="card-text">@item.Value.Beskrivelse</p>
+                    <h8>Antal på lager @item.Value.Antal </h8>
                     <a class="btn btn-primary btn-sm" type="button" title="Opdater" asp-page="Opret" asp-route-id="@item.Key">test</a>
                     <a class="btn btn-primary btn-sm" type="button" title="Slet" asp-page="Slet" asp-route-id="@item.Key">test</a>
                 </div>

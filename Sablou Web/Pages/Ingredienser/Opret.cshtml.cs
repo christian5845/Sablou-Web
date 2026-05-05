@@ -13,6 +13,8 @@ namespace Sablou_Web.Pages.Ingredienser
         public string Navn { get; set; }
         [BindProperty]
         public string Beskrivelse { get; set; }
+        [BindProperty]
+        public int Antal { get; set; }
 
         public OpretModel()
         {
@@ -25,7 +27,7 @@ namespace Sablou_Web.Pages.Ingredienser
             {
                return Page();
             }
-            _repositories.IngrediensRepository.Create(new Ingrediens(Navn,Beskrivelse));
+            _repositories.IngrediensRepository.Create(new Ingrediens(Navn,Beskrivelse,Antal));
 
             return RedirectToPage("Alle");
         }

@@ -13,5 +13,7 @@ public partial class Ingrediens
 
     public string Beskrivelse { get; set; }
 
+    public int Antal { get; set; }
+
     public virtual ICollection<Chokolade> Chokolade { get; set; } = new List<Chokolade>();
 }
