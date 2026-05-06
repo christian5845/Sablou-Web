@@ -1,0 +1,29 @@
+﻿@page
+@model Sablou_Web.Pages.Chokolader.VoresChokoladerModel
+
+<h1>Vores chokolader</h1>
+
+<div class="row">
+    @foreach (var chokolade in Model.Chokolader)
+    {
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <img src="~/images/chokolade.jpg" class="card-img-top" alt="@chokolade.Navn" />
+
+                <div class="card-body">
+                    <h5 class="card-title">@chokolade.Navn</h5>
+
+                    <p>
+                        <strong>Pris:</strong> @($"{chokolade.Stykpris:0.00} kroner")
+                    </p>
+
+                    <a class="btn btn-primary"
+                       asp-page="/Chokolader/Information"
+                       asp-route-id="@chokolade.Id">
+                        Læs mere
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

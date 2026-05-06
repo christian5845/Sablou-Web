@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Sablou_Web.Models;
 
-public partial class Chokolade
+public partial class Chokolade : IHarId
 {
     public int Id { get; set; }
 

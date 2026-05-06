@@ -1,0 +1,19 @@
+﻿@page "{id:int}"
+@model Sablou_Web.Pages.Chokolader.InformationModel
+
+<h1>@Model.Chokolade?.Navn</h1>
+
+<img src="~/images/chokolade.jpg" style="max-width: 300px;" alt="@Model.Chokolade?.Navn" />
+
+<p>
+    <strong>Pris:</strong> @($"{Model.Chokolade?.Stykpris:0.00} kroner")
+</p>
+
+<p>
+    <strong>Beskrivelse:</strong> @Model.Chokolade?.Beskrivelse
+</p>
+
+<h3>Ingredienser</h3>
+<p>Ingrediensliste mangler at blive koblet på databasen.</p>
+
+<a asp-page="/Chokolader/VoresChokolader">Tilbage til vores chokolader</a>
