@@ -1,4 +1,36 @@
 ﻿@page
 @model Sablou_Web.Pages.OmModel
 @{
+
 }
+@* Dette kan ændrer baggrunds farven *@
+<style>
+    body {
+        background-color: lightgrey;
+    }
+</style>
+<style>
+    /* Grålig baggrund */
+    .about-panel {
+        background-color: #f3f4f6; /* lys, neutral grå nuance */
+        padding: 2rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        color: #111827;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    @@media (min-width: 768px) {
+        .about-panel {
+            padding: 3rem;
+        }
+    }
+</style>
+
+<div class="container">
+    <main class="about-panel">
+        <h1>Om os</h1>
+        <p>Sabloú blev oprettet i 2003, og har sidenhen stået for kvalitets chokolade med det smukkeste design>
+    </main>
+</div>
