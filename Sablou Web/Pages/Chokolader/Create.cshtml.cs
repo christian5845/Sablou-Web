@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Sablou_Web.Models;
 
-namespace Sablou_Web.Pages.Chokolade
+namespace Sablou_Web.Pages.Chokolader
 {
     public class CreateModel : PageModel
     {

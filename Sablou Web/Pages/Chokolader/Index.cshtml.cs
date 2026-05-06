@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Sablou_Web.Models;
 
-namespace Sablou_Web.Pages.Chokolade
+namespace Sablou_Web.Pages.Chokolader
 {
     public class IndexModel : PageModel
     {
