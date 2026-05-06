@@ -31,7 +31,7 @@ public partial class cralle_dk_db_sablouContext : DbContext
 
     public virtual DbSet<OrdreLinje> OrdreLinje { get; set; }
 
-    public virtual DbSet<Rolle> Rolle { get; set; }
+    public virtual DbSet<Test> Test { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -41,7 +41,7 @@ public partial class cralle_dk_db_sablouContext : DbContext
     {
         modelBuilder.Entity<Bruger>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Bruger__3214EC0766664BE7");
+            entity.HasKey(e => e.Id).HasName("PK__Bruger__3214EC070A1F989E");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Adresse)
@@ -53,11 +53,12 @@ public partial class cralle_dk_db_sablouContext : DbContext
             entity.Property(e => e.Navn)
                 .IsRequired()
                 .HasMaxLength(50);
-
-            entity.HasOne(d => d.RolleType).WithMany(p => p.Bruger)
-                .HasForeignKey(d => d.RolleTypeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_RolleTypeId");
+            entity.Property(e => e.Password)
+                .IsRequired()
+                .HasMaxLength(200);
+            entity.Property(e => e.Rolle)
+                .IsRequired()
+                .HasMaxLength(50);
         });
 
         modelBuilder.Entity<Chokolade>(entity =>
@@ -145,11 +146,6 @@ public partial class cralle_dk_db_sablouContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK__Ordre__3214EC078C58FAB4");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
-
-            entity.HasOne(d => d.Bruger).WithMany(p => p.Ordre)
-                .HasForeignKey(d => d.BrugerId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_BrugerId");
         });
 
         modelBuilder.Entity<OrdreLinje>(entity =>
@@ -162,12 +158,11 @@ public partial class cralle_dk_db_sablouContext : DbContext
                 .HasConstraintName("FK_OrdreId");
         });
 
-        modelBuilder.Entity<Rolle>(entity =>
+        modelBuilder.Entity<Test>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Rolle__3214EC078C933C78");
+            entity.HasKey(e => e.Id).HasName("PK__Test__3214EC0794B0D4AF");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.Rolletype).HasMaxLength(20);
         });
 
         OnModelCreatingPartial(modelBuilder);

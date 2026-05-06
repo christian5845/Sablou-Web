@@ -17,9 +17,7 @@ public partial class Bruger
 
     public int? TelefonNummer { get; set; }
 
-    public int RolleTypeId { get; set; }
+    public string Password { get; set; }
 
-    public virtual ICollection<Ordre> Ordre { get; set; } = new List<Ordre>();
-
-    public virtual Rolle RolleType { get; set; }
+    public string Rolle { get; set; }
 }

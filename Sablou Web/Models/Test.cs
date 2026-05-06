@@ -5,11 +5,7 @@ using System.Collections.Generic;
 
 namespace Sablou_Web.Models;
 
-public partial class Rolle
+public partial class Test
 {
     public int Id { get; set; }
-
-    public string Rolletype { get; set; }
-
-    public virtual ICollection<Bruger> Bruger { get; set; } = new List<Bruger>();
 }

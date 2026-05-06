@@ -7,17 +7,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Sablou_Web.Models;
 
-namespace Sablou_Web.Pages.Chokolade
+namespace Sablou_Web.Pages.Chokolader
 {
-    public class DetailsModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly Sablou_Web.Models.cralle_dk_db_sablouContext _context;
 
-        public DetailsModel(Sablou_Web.Models.cralle_dk_db_sablouContext context)
+        public DeleteModel(Sablou_Web.Models.cralle_dk_db_sablouContext context)
         {
             _context = context;
         }
 
+        [BindProperty]
         public Models.Chokolade Chokolade { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -37,6 +38,24 @@ namespace Sablou_Web.Pages.Chokolade
             }
 
             return NotFound();
+        }
+
+        public async Task<IActionResult> OnPostAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var chokolade = await _context.Chokolade.FindAsync(id);
+            if (chokolade != null)
+            {
+                Chokolade = chokolade;
+                _context.Chokolade.Remove(Chokolade);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage("./Index");
         }
     }
 }

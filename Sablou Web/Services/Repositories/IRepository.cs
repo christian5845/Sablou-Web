@@ -15,4 +15,5 @@ public interface IRepository<T> where T : IHarId
     bool Delete(int id);
 
     void Update(T t);
+
 }

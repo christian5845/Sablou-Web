@@ -2,3 +2,18 @@
 @model Sablou_Web.Pages.Ingredienser.SletModel
 @{
 }
+
+
+<h3>Vil du slette denne ingrediens?</h3>
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Ingrediens.Navn</h5>
+        <p class="card-text">@Model.Ingrediens.Beskrivelse</p>
+        <h8>Antal på lager @Model.Ingrediens.Antal</h8>
+    </div>
+    <form method="post">
+        <input type="hidden" asp-for="Ingrediens.Id" />
+        <input type="submit" value="Slet" class="btn btn-danger" /> |
+        <a asp-page="./Alle">Gå tilbage</a>
+    </form>
+</div>

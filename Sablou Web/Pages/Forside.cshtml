@@ -11,6 +11,7 @@
 
     body {
         margin: 0;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     }
 
     .hero-full {
@@ -24,7 +25,7 @@
         align-items: center;
         justify-content: center;
         color: #fff;
-        z-index: 0;
+        z-index: 900; /* keep below footer */
         overflow: hidden;
     }
 
@@ -43,15 +44,16 @@
         /* GPU hint */
         transform: translateZ(0) scale(1);
         -webkit-transform: translateZ(0) scale(1);
-        animation: hero-fadeZoom 24s ease-in-out infinite;
-        -webkit-animation: hero-fadeZoom 24s ease-in-out infinite;
+        /* total cycle 30s = 10s per image */
+        animation: hero-fadeZoom 30s ease-in-out infinite;
+        -webkit-animation: hero-fadeZoom 30s ease-in-out infinite;
         opacity: 0;
     }
 
-    /* stagger start times for three images (0s, 8s, 16s) */
+    /* stagger start times for three images (0s, 10s, 20s) */
     .hero-bg.bg1 { animation-delay: 0s; -webkit-animation-delay: 0s; }
-    .hero-bg.bg2 { animation-delay: 8s; -webkit-animation-delay: 8s; }
-    .hero-bg.bg3 { animation-delay: 16s; -webkit-animation-delay: 16s; }
+    .hero-bg.bg2 { animation-delay: 10s; -webkit-animation-delay: 10s; }
+    .hero-bg.bg3 { animation-delay: 20s; -webkit-animation-delay: 20s; }
 
     /* subtle dark overlay */
     .hero-full::before{
@@ -60,13 +62,21 @@
         inset: 0;
         background: rgba(0,0,0,0.35);
         pointer-events: none;
-        z-index: 1;
+        z-index: 1; /* overlay above background */
     }
 
+    /* Center the text regardless of the .container width */
     .hero-content {
         position: relative;
-        z-index: 2;
+        z-index: 2; /* content on top of overlay */
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         text-align: center;
+        padding: 0 1rem; /* small horizontal padding so text doesn't touch edges on small screens */
+        box-sizing: border-box;
     }
 
     .hero-title {
@@ -81,32 +91,72 @@
         opacity: 0.9;
     }
 
-    /* animation: quick fade-in, slow zoom while visible, fade-out */
-    @@keyframes hero-fadeZoom {
-        0%   { opacity: 0; transform: translateZ(0) scale(1); }
-        4%   { opacity: 1; transform: translateZ(0) scale(1.03); }
-        30%  { opacity: 1; transform: translateZ(0) scale(1.09); }
-        34%  { opacity: 0; transform: translateZ(0) scale(1.12); }
-        100% { opacity: 0; transform: translateZ(0) scale(1.12); }
+    /* page content sits below fixed hero; do not raise its z-index */
+    .page-content {
+        position: relative;
+        padding: 2rem;
+        padding-top: calc(100vh - var(--navbar-height) + 2rem); /* push content below hero */
+        background: #fff;
+        color: #111;
+        min-height: 50vh;
     }
 
-    /* WebKit fallback */
+    .site-footer {
+        position: relative; /* ensure footer can sit above fixed hero */
+        z-index: 1001;     /* higher than .hero-full (900) so footer appears on top */
+        background: #0f1720;
+        color: #e6eef8;
+        padding: 1.25rem 1rem;
+        text-align: center;
+        font-size: 0.95rem;
+        border-top: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .site-footer a {
+        color: #e6eef8;
+        text-decoration: underline;
+        opacity: 0.9;
+    }
+
+    /* animation: each image now zooms in then zooms out during its own 10s window
+       slower, smoother zoom; quick fades to preserve sharp image change */
+    @@keyframes hero-fadeZoom {
+        0%   { opacity: 0; transform: translateZ(0) scale(1); }
+        8%   { opacity: 1; transform: translateZ(0) scale(1); }       /* quick fade in */
+        50%  { opacity: 1; transform: translateZ(0) scale(1.12); }    /* zoom-in peak (middle of slide) */
+        85%  { opacity: 1; transform: translateZ(0) scale(1.00); }    /* zoom-out */
+        95%  { opacity: 0; transform: translateZ(0) scale(1); }       /* quick fade out */
+        100% { opacity: 0; transform: translateZ(0) scale(1); }
+    }
+
     @@-webkit-keyframes hero-fadeZoom {
         0%   { opacity: 0; -webkit-transform: translateZ(0) scale(1); transform: translateZ(0) scale(1); }
-        4%   { opacity: 1; -webkit-transform: translateZ(0) scale(1.03); transform: translateZ(0) scale(1.03); }
-        30%  { opacity: 1; -webkit-transform: translateZ(0) scale(1.09); transform: translateZ(0) scale(1.09); }
-        34%  { opacity: 0; -webkit-transform: translateZ(0) scale(1.12); transform: translateZ(0) scale(1.12); }
-        100% { opacity: 0; -webkit-transform: translateZ(0) scale(1.12); transform: translateZ(0) scale(1.12); }
+        8%   { opacity: 1; -webkit-transform: translateZ(0) scale(1); transform: translateZ(0) scale(1); }
+        50%  { opacity: 1; -webkit-transform: translateZ(0) scale(1.12); transform: translateZ(0) scale(1.12); }
+        85%  { opacity: 1; -webkit-transform: translateZ(0) scale(1.00); transform: translateZ(0) scale(1.00); }
+        95%  { opacity: 0; -webkit-transform: translateZ(0) scale(1); transform: translateZ(0) scale(1); }
+        100% { opacity: 0; -webkit-transform: translateZ(0) scale(1); transform: translateZ(0) scale(1); }
     }
 </style>
 
 <section class="hero-full" role="img" aria-label="Håndlavet chokolade">
-    <div class="hero-bg bg1" style="background-image:url('@Url.Content("~/images/choko.PNG")');"></div>
+    <div class="hero-bg bg1" style="background-image:url('@Url.Content("~/images/choko1.PNG")');"></div>
     <div class="hero-bg bg2" style="background-image:url('@Url.Content("~/images/choko2.PNG")');"></div>
     <div class="hero-bg bg3" style="background-image:url('@Url.Content("~/images/choko3.PNG")');"></div>
 
     <div class="hero-content container">
-        <h1 class="hero-title">Sablou</h1>
-        <p class="hero-sub">Håndlavet chokolade</p>
+        <h1 class="hero-title">Håndlavet chokolade</h1>
+        <p class="hero-sub">Lavet med kærlighed</p>
     </div>
 </section>
+
+<main class="page-content container">
+
+    <!-- Footer placed after the main content -->
+    <footer class="site-footer" role="contentinfo">
+        <div>© @DateTime.Now.Year Sablou — All rights reserved.</div>
+        <div style="margin-top:0.5rem; font-size:0.9rem;">
+            <a href="/kontakt">Kontakt</a> · <a href="/om">Om os</a>
+        </div>
+    </footer>
+</main>
