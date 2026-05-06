@@ -22,3 +22,8 @@ public partial class Bruger : IHarId
         Rolle = rolle;
     }
 }
+
+public partial class Chokolade : IHarId
+{
+
+}

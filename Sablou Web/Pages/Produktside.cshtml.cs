@@ -8,7 +8,7 @@ namespace Sablou_Web.Pages;
 public class ProduktsideModel : PageModel
 {
     public IDataService Repositories { get; }
-    public Chokolade Chokoladen { get; }
+    public Chokolade Chokoladen { get; set; }
 
     public ProduktsideModel()
     {
@@ -17,6 +17,6 @@ public class ProduktsideModel : PageModel
 
     public void OnGet(int id)
     {
-        //Chokoladen = Repositories.
+        Chokoladen = Repositories.ChokoladeRepository.GetItem(id);
     }
 }
