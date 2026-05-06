@@ -1,12 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow;
+using Sablou_Web.Services;
 
-namespace Sablou_Web.Pages.Ingredienser
+namespace Sablou_Web.Pages.Ingredienser;
+
+public class OpdaterModel : PageModel
 {
-    public class OpdaterModel : PageModel
+    private IDataService _data;
+
+    public OpdaterModel()
     {
-        public void OnGet()
-        {
-        }
+        _data = new Dataservice();
+    }
+
+    public void OnGet(int id)
+    {
+
     }
 }

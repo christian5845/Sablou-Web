@@ -25,9 +25,11 @@ public abstract class RepositoryBase<T> : IRepository<T> where T : class, IHarId
 
     public T? GetItem(int id)
     {
-        using DbContext context = CreateDbContext();
-
-        return context.Set<T>().FirstOrDefault(t => t.Id == id);
+        if (!Data.ContainsKey(id))
+        {
+            throw new ArgumentException();
+        }
+        return Data[id];
     }
 
 

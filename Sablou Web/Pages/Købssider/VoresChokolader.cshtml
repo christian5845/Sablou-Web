@@ -1,0 +1,23 @@
+﻿@page
+@model Sablou_Web.Pages.Købssider.VoresChokoladerModel
+@{
+}
+
+<div class="row">
+    @if (Model.Repositories.IngrediensRepository!= null)
+    {
+        foreach (var item in Model.Repositories.IngrediensRepository.Data)
+        {
+            <div class="card" style="width: 40rem;">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Value.Navn</h5>
+                    <p class="card-text">@item.Value.Beskrivelse</p>
+                    <h8>Antal på lager @item.Value.Antal </h8>
+                </div>
+                <a class="btn btn-primary btn-sm" type="button" title="Opdater" asp-page="Opdater" asp-route-id="@item.Key">Opdater</a>
+                <a class="btn btn-primary btn-sm" type="button" title="Slet" asp-page="Slet" asp-route-id="@item.Key">Slet</a>
+            </div>
+        }
+    }
+</div>
+</div>
