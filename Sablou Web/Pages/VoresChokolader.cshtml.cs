@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sablou_Web.Services;
 
-namespace Sablou_Web.Pages.Købssider
+namespace Sablou_Web.Pages
 {
     public class VoresChokoladerModel : PageModel
     {
