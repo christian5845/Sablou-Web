@@ -1,0 +1,24 @@
+﻿@page
+@model Sablou_Web.Pages.BrugerLogin.LoginModel
+@{
+}
+<h1 class="display-5 mb-3">Log på</h1>
+
+<div class="container">
+    <div>
+        @Model.ErrorMessage
+    </div>
+    <form method="post">
+        <div class="form-group mb-3">
+            <label asp-for="Email" class="control-label "></label>
+            <input asp-for="Email" class="form-control" />
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Password" class="control-label"></label>
+            <input asp-for="Password" class="form-control" />
+        </div>
+        <div class="form-group mb-3">
+            <input type="submit" value="Log in" class="btn btn-outline-primary" />
+        </div>
+    </form>
+</div>

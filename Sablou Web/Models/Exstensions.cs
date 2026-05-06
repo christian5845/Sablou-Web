@@ -9,3 +9,16 @@ public partial class Ingrediens : IHarId
         Antal = antal;
     }
 }
+
+public partial class Bruger : IHarId
+{
+    public Bruger(string navn, string email, string adresse, int? telefonNummer, string password, string rolle)
+    {
+        Navn = navn;
+        Email = email;
+        Adresse = adresse;
+        TelefonNummer = telefonNummer;
+        Password = password;
+        Rolle = rolle;
+    }
+}

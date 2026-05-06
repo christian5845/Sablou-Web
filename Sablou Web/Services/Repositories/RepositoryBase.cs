@@ -31,7 +31,7 @@ public abstract class RepositoryBase<T> : IRepository<T> where T : class, IHarId
     }
 
 
-    public void Create(T element)
+    public virtual void Create(T element)
     {
         using DbContext context = CreateDbContext();
         int id = NextId();

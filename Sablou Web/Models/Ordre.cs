@@ -11,7 +11,5 @@ public partial class Ordre
 
     public int BrugerId { get; set; }
 
-    public virtual Bruger Bruger { get; set; }
-
     public virtual ICollection<OrdreLinje> OrdreLinje { get; set; } = new List<OrdreLinje>();
 }
