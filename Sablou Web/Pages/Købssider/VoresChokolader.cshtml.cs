@@ -4,11 +4,11 @@ using Sablou_Web.Services;
 
 namespace Sablou_Web.Pages.Købssider
 {
-    public class ButiksfrontModel : PageModel
+    public class VoresChokoladerModel : PageModel
     {
         public  IDataService Repositories { get; }
 
-        public ButiksfrontModel()
+        public VoresChokoladerModel()
         {
             Repositories = new Dataservice();
         }
