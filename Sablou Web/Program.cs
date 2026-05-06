@@ -12,6 +12,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddSingleton<IDataService, Dataservice>();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
