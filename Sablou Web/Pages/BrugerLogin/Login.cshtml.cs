@@ -24,9 +24,9 @@ namespace Sablou_Web.Pages.BrugerLogin
 
         public string ErrorMessage { get; set; }
 
-        public LoginModel(IBrugerRepository brugerRepository)
+        public LoginModel()
         {
-            _brugerRepository = brugerRepository;
+            _brugerRepository = new BrugerRepository();
         }
 
         public async Task<IActionResult> OnPost()
