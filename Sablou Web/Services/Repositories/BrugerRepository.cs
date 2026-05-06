@@ -23,7 +23,7 @@ public class BrugerRepository : RepositoryBase<Bruger>, IBrugerRepository
         base.Create(bruger);
     }
 
-    public Bruger? VerifyBruger(string providedBrugerEmail, string providedPassword)
+    public Bruger? VerifyUser(string providedEmail, string providedPassword)
     {
         // List<Bruger> Bruger = All;
 
@@ -34,7 +34,7 @@ public class BrugerRepository : RepositoryBase<Bruger>, IBrugerRepository
         brugere = context.Bruger.ToList();
 
 
-        Bruger? bruger = brugere.FirstOrDefault(u => u.Email == providedBrugerEmail &&
+        Bruger? bruger = brugere.FirstOrDefault(u => u.Email == providedEmail &&
                                                u.Password == providedPassword);
 
         return bruger;

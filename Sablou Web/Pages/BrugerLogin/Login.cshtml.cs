@@ -64,7 +64,7 @@ namespace Sablou_Web.Pages.BrugerLogin
             return new ClaimsPrincipal(claimsIdentity);
         }
 
-        public Bruger? VerifyBruger(string providedBrugerEmail, string providedPassword)
+        public Bruger? VerifyUser(string providedEmail, string providedPassword)
         {
             // List<Bruger> Bruger = All;
 
@@ -75,7 +75,7 @@ namespace Sablou_Web.Pages.BrugerLogin
             brugere = context.Bruger.ToList();
 
 
-            Bruger? bruger = brugere.FirstOrDefault(u => u.Email == providedBrugerEmail &&
+            Bruger? bruger = brugere.FirstOrDefault(u => u.Email == providedEmail &&
                                                    u.Password == providedPassword);
 
             return bruger;
