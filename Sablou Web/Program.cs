@@ -9,6 +9,7 @@ builder.Services.AddDbContext<cralle_dk_db_sablouContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddRazorPages();
 
+
 builder.Services.AddSingleton<IDataService, Dataservice>();
 
 var app = builder.Build();
