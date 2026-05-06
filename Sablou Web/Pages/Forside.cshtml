@@ -28,7 +28,7 @@
         overflow: hidden;
     }
 
-    /* animated background layer */
+    /* shared background layer styles */
     .hero-bg {
         position: absolute;
         inset: 0;
@@ -36,15 +36,22 @@
         background-position: left center;
         background-repeat: no-repeat;
         transform-origin: left center;
-        will-change: transform;
+        will-change: transform, opacity;
         backface-visibility: hidden;
         z-index: 0;
-        /* GPU hint and fallback */
+        pointer-events: none;
+        /* GPU hint */
         transform: translateZ(0) scale(1);
         -webkit-transform: translateZ(0) scale(1);
-        animation: hero-zoom 16s ease-in-out infinite;
-        -webkit-animation: hero-zoom 16s ease-in-out infinite;
+        animation: hero-fadeZoom 24s ease-in-out infinite;
+        -webkit-animation: hero-fadeZoom 24s ease-in-out infinite;
+        opacity: 0;
     }
+
+    /* stagger start times for three images (0s, 8s, 16s) */
+    .hero-bg.bg1 { animation-delay: 0s; -webkit-animation-delay: 0s; }
+    .hero-bg.bg2 { animation-delay: 8s; -webkit-animation-delay: 8s; }
+    .hero-bg.bg3 { animation-delay: 16s; -webkit-animation-delay: 16s; }
 
     /* subtle dark overlay */
     .hero-full::before{
@@ -74,24 +81,32 @@
         opacity: 0.9;
     }
 
-    @@keyframes hero-zoom {
-        0%   { transform: translateZ(0) scale(1); }
-        50%  { transform: translateZ(0) scale(1.12); }
-        100% { transform: translateZ(0) scale(1); }
+    /* animation: quick fade-in, slow zoom while visible, fade-out */
+    @@keyframes hero-fadeZoom {
+        0%   { opacity: 0; transform: translateZ(0) scale(1); }
+        4%   { opacity: 1; transform: translateZ(0) scale(1.03); }
+        30%  { opacity: 1; transform: translateZ(0) scale(1.09); }
+        34%  { opacity: 0; transform: translateZ(0) scale(1.12); }
+        100% { opacity: 0; transform: translateZ(0) scale(1.12); }
     }
 
     /* WebKit fallback */
-    @@-webkit-keyframes hero-zoom {
-        0%   { -webkit-transform: translateZ(0) scale(1); transform: translateZ(0) scale(1); }
-        50%  { -webkit-transform: translateZ(0) scale(1.12); transform: translateZ(0) scale(1.12); }
-        100% { -webkit-transform: translateZ(0) scale(1); transform: translateZ(0) scale(1); }
+    @@-webkit-keyframes hero-fadeZoom {
+        0%   { opacity: 0; -webkit-transform: translateZ(0) scale(1); transform: translateZ(0) scale(1); }
+        4%   { opacity: 1; -webkit-transform: translateZ(0) scale(1.03); transform: translateZ(0) scale(1.03); }
+        30%  { opacity: 1; -webkit-transform: translateZ(0) scale(1.09); transform: translateZ(0) scale(1.09); }
+        34%  { opacity: 0; -webkit-transform: translateZ(0) scale(1.12); transform: translateZ(0) scale(1.12); }
+        100% { opacity: 0; -webkit-transform: translateZ(0) scale(1.12); transform: translateZ(0) scale(1.12); }
     }
 </style>
 
 <section class="hero-full" role="img" aria-label="Håndlavet chokolade">
-    <div class="hero-bg" style="background-image:url('@Url.Content("~/images/choko.PNG")');"></div>
+    <div class="hero-bg bg1" style="background-image:url('@Url.Content("~/images/choko.PNG")');"></div>
+    <div class="hero-bg bg2" style="background-image:url('@Url.Content("~/images/choko2.PNG")');"></div>
+    <div class="hero-bg bg3" style="background-image:url('@Url.Content("~/images/choko3.PNG")');"></div>
+
     <div class="hero-content container">
-        <h1 class="hero-title">Håndlavet chokolade</h1>
-        <p class="hero-sub">lavet med kærlighed</p>
+        <h1 class="hero-title">Sablou</h1>
+        <p class="hero-sub">Håndlavet chokolade</p>
     </div>
 </section>
