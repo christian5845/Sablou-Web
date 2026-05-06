@@ -1,12 +1,31 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Sablou_Web.Models;
+using Sablou_Web.Services;
 
 namespace Sablou_Web.Pages.Ingredienser
 {
     public class SletModel : PageModel
     {
-        public void OnGet()
+        private IDataService _data;
+        public Ingrediens Ingrediens { get; set; }
+
+       public SletModel()
         {
+            _data = new Dataservice();
+        }
+
+
+        public void OnGet(int id)
+        {
+            Ingrediens = _data.IngrediensRepository.GetItem(id);
+        }
+
+        public IActionResult OnPost(int id)
+        {
+
+            _data.IngrediensRepository.Delete(_data.IngrediensRepository.GetItem(id).Id);
+            return RedirectToPage("Alle");
         }
     }
 }

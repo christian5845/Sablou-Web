@@ -26,7 +26,6 @@ namespace Sablou_Web.Pages.Chokolade
         [BindProperty]
         public Models.Chokolade Chokolade { get; set; } = default!;
 
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
