@@ -81,6 +81,9 @@ public abstract class RepositoryBase<T> : IRepository<T> where T : class, IHarId
     private List<T> GetList()
     {
         using DbContext context = CreateDbContext();
-        return context.Set<T>().ToList();
+
+        return GetAllWithIncludes(context)
+            .Cast<T>()
+            .ToList();
     }
 }

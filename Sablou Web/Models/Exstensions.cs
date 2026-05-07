@@ -1,7 +1,14 @@
-﻿namespace Sablou_Web.Models;
+﻿using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Sablou_Web.Models;
 
 public partial class Ingrediens : IHarId
 {
+    public Ingrediens()
+    {
+    }
     public Ingrediens(string navn, string beskrivelse,int antal)
     {
         Navn = navn;
@@ -25,5 +32,14 @@ public partial class Bruger : IHarId
 
 public partial class Chokolade : IHarId
 {
+    public Chokolade()
+    {
+    }
 
+    public Chokolade(string navn, decimal stykpris, string beskrivelse)
+    {
+        Navn = navn;
+        Stykpris = stykpris;
+        Beskrivelse = beskrivelse;
+    }
 }
