@@ -33,7 +33,7 @@ public partial class Bruger : IHarId
 {
     public static Bruger Construct(string navn, string email, string adresse, int? telefonNummer, string password)
     {
-        return new Bruger { Navn = navn, Email = email, Adresse = adresse, TelefonNummer = telefonNummer, Password = password, Rolle = "Kunde" };
+        return new Bruger { Navn = navn, Email = email, Adresse = adresse, Telefonnummer = telefonNummer, Password = password, Rolle = "Kunde" };
     }
 }
 
