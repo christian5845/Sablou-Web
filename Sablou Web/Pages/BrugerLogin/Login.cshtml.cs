@@ -73,8 +73,9 @@ namespace Sablou_Web.Pages.BrugerLogin
             brugere = context.Bruger.ToList();
 
 
-            Bruger? bruger = brugere.FirstOrDefault(u => u.Email == providedEmail &&
-                                                   u.Password == providedPassword);
+            Bruger? bruger = brugere.FirstOrDefault(u =>
+                string.Equals(u.Email, providedEmail, StringComparison.OrdinalIgnoreCase) &&
+                u.Password == providedPassword);
 
             return bruger;
         }
