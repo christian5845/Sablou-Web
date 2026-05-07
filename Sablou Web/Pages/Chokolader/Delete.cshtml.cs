@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Sablou_Web.Models;
+using Sablou_Web.Pages.BrugerLogin;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sablou_Web.Pages.Chokolader
 {
@@ -23,6 +24,10 @@ namespace Sablou_Web.Pages.Chokolader
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            if (LoginModel.CurrentBruger?.Rolle != "Admin")
+            {
+                return RedirectToPage("/Forside");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -42,6 +47,10 @@ namespace Sablou_Web.Pages.Chokolader
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
+            if (LoginModel.CurrentBruger?.Rolle != "Admin")
+            {
+                return RedirectToPage("/Forside");
+            }
             if (id == null)
             {
                 return NotFound();

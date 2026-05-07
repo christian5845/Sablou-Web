@@ -16,6 +16,7 @@ namespace Sablou_Web.Pages.Chokolader
 
         public void OnGet()
         {
+
             Chokolader = _repository.Data.Values.ToList();
         }
     }

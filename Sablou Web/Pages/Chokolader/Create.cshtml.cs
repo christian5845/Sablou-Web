@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Sablou_Web.Models;
+using Sablou_Web.Pages.BrugerLogin;
 using Sablou_Web.Services;
 
 namespace Sablou_Web.Pages.Chokolader
@@ -30,6 +31,10 @@ namespace Sablou_Web.Pages.Chokolader
 
         public IActionResult OnGet()
         {
+            if (LoginModel.CurrentBruger?.Rolle != "Admin")
+            {
+                return RedirectToPage("/Forside");
+            }
             IngrediensValg = _context.Ingrediens
                 .Select(i => new SelectListItem
                 {
@@ -43,6 +48,10 @@ namespace Sablou_Web.Pages.Chokolader
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (LoginModel.CurrentBruger?.Rolle != "Admin")
+            {
+                return RedirectToPage("/Forside");
+            }
             if (!ModelState.IsValid)
             {
                 IngrediensValg = _context.Ingrediens

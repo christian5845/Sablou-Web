@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Sablou_Web.Models;
+using Sablou_Web.Pages.BrugerLogin;
 using Sablou_Web.Services;
 
 namespace Sablou_Web.Pages.Chokolader
@@ -25,6 +26,10 @@ namespace Sablou_Web.Pages.Chokolader
 
         public IActionResult OnGet(int id)
         {
+            if (LoginModel.CurrentBruger?.Rolle != "Admin")
+            {
+                return RedirectToPage("/Forside");
+            }
             Chokolade = _repositories.ChokoladeRepository.GetItem(id);
 
             if (Chokolade == null)
@@ -50,6 +55,10 @@ namespace Sablou_Web.Pages.Chokolader
 
         public IActionResult OnPost()
         {
+            if (LoginModel.CurrentBruger?.Rolle != "Admin")
+            {
+                return RedirectToPage("/Forside");
+            }
             if (!ModelState.IsValid)
             {
                 IngrediensValg = _repositories.IngrediensRepository.Data
