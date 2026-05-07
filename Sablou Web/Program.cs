@@ -1,6 +1,7 @@
-using Sablou_Web.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Sablou_Web.Models;
+using Sablou_Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,12 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddSingleton<IDataService, Dataservice>();
 
+builder.Services.AddAuthentication(
+    CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+    {
+        options.LoginPath = "/BrugerLogin/Login";
+        
+    });
 
 
 var app = builder.Build();

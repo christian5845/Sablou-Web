@@ -31,9 +31,7 @@ namespace Sablou_Web.Pages.BrugerLogin
 
         public async Task<IActionResult> OnPost()
         {
-            // CurrentUser = _brugerRepository.VerifyUser(Email, Password);
-
-            VerifyUser(Email, Password);
+            CurrentBruger = VerifyUser(Email, Password);
 
             if (CurrentBruger == null)
             {
@@ -46,7 +44,7 @@ namespace Sablou_Web.Pages.BrugerLogin
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 BuildClaimsPrincipal(CurrentBruger));
 
-            return RedirectToPage("/Index");
+            return RedirectToPage("/Forside");
         }
 
         private ClaimsPrincipal BuildClaimsPrincipal(Bruger bruger)
