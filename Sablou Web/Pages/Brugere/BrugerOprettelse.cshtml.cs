@@ -12,12 +12,12 @@ namespace Sablou_Web.Pages.Brugere
    
     public class BrugerOprettelseModel : PageModel
     {
-        private IBrugerRepository _repo;
+        private IDataService _repo;
 
         [BindProperty]
         public Bruger Element { get; set; } = new Bruger();
 
-        public BrugerOprettelseModel(IBrugerRepository repo)
+        public BrugerOprettelseModel(IDataService repo)
         {
             _repo = repo;          
         }
@@ -31,7 +31,7 @@ namespace Sablou_Web.Pages.Brugere
             }
 
             // Send data videre til repository
-            _repo.Create(Element);
+            _repo.BrugerRepository.Create(Element);
 
             // Vend tilbage til startsiden
             return RedirectToPage("/Forside");
