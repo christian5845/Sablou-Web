@@ -1,0 +1,1 @@
+﻿INSERT INTO [dbo].[Bruger] VALUES (1, N'Sabrina', N'sabrina@hotmail.com', N'Tofteholmen 33', 74285374, N'1234', N'Admin');

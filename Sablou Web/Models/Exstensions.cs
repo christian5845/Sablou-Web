@@ -26,16 +26,23 @@ public partial class IngrediensListe : IHarId
     }
 }
 
+//public partial class Bruger : IHarId
+//{
+//    public Bruger(string navn, string email, string adresse, int? telefonNummer, string password, string rolle)
+//    {
+//        Navn = navn;
+//        Email = email;
+//        Adresse = adresse;
+//        TelefonNummer = telefonNummer;
+//        Password = password;
+//        Rolle = rolle;
+//    }
+//}
 public partial class Bruger : IHarId
 {
-    public Bruger(string navn, string email, string adresse, int telefonNummer, string password, string rolle)
+    public static Bruger Construct(string navn, string email, string adresse, int? telefonNummer, string password)
     {
-        Navn = navn;
-        Email = email;
-        Adresse = adresse;
-        Telefonnummer = telefonNummer;
-        Password = password;
-        Rolle = rolle;
+        return new Bruger { Navn = navn, Email = email, Adresse = adresse, Telefonnummer = telefonNummer, Password = password, Rolle = "Kunde" };
     }
 }
 
