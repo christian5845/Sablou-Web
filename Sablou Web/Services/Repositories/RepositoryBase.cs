@@ -47,7 +47,7 @@ public abstract class RepositoryBase<T> : IRepository<T> where T : class, IHarId
     {
         using DbContext context = CreateDbContext();
 
-        T? t = GetItem(id);
+        T? t = context.Set<T>().Find(id);
 
         if (t == null)
         {
@@ -55,12 +55,16 @@ public abstract class RepositoryBase<T> : IRepository<T> where T : class, IHarId
         }
 
         context.Remove(t);
-        return (context.SaveChanges() > 0);
+        return context.SaveChanges() > 0;
     }
 
     public virtual void Update(T t)
     {
-        throw new ArgumentException();
+        using DbContext context = CreateDbContext();
+
+        context.Set<T>().Update(t);
+
+        context.SaveChanges();
     }
 
     protected virtual IQueryable GetAllWithIncludes(DbContext context)

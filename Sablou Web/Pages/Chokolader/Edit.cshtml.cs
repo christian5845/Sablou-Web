@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Sablou_Web.Models;
 using Sablou_Web.Services;
 
@@ -10,16 +9,14 @@ namespace Sablou_Web.Pages.Chokolader
     public class EditModel : PageModel
     {
         private IDataService _repositories;
-        private cralle_dk_db_sablouContext _context;
 
-        public EditModel(cralle_dk_db_sablouContext context)
+        public EditModel()
         {
-            _context = context;
             _repositories = new Dataservice();
         }
 
         [BindProperty]
-        public Models.Chokolade Chokolade { get; set; } = default!;
+        public Chokolade Chokolade { get; set; } = default!;
 
         public List<SelectListItem> IngrediensValg { get; set; } = new();
 
@@ -28,13 +25,12 @@ namespace Sablou_Web.Pages.Chokolader
 
         public IActionResult OnGet(int id)
         {
-            if (id == null)
-                return NotFound();
-
             Chokolade = _repositories.ChokoladeRepository.GetItem(id);
 
             if (Chokolade == null)
+            {
                 return NotFound();
+            }
 
             IngrediensValg = _repositories.IngrediensRepository.Data
                 .Select(i => new SelectListItem
@@ -44,9 +40,9 @@ namespace Sablou_Web.Pages.Chokolader
                 })
                 .ToList();
 
-            ValgteIngrediensIds = _repositories.IngrediensRepository.Data
-                
-                .Select(i => i.Key)
+            ValgteIngrediensIds = _repositories.IngrediensListeRepository.Data
+                .Where(il => il.Value.ChokoladeId == id)
+                .Select(il => il.Value.IngrediensId)
                 .ToList();
 
             return Page();
@@ -54,31 +50,37 @@ namespace Sablou_Web.Pages.Chokolader
 
         public IActionResult OnPost()
         {
-            //    var chokoladeFraDb = _context.Chokolade
-            //        .Include(c => c.Ingrediens)
-            //        .FirstOrDefault(c => c.Id == Chokolade.Id);
+            if (!ModelState.IsValid)
+            {
+                IngrediensValg = _repositories.IngrediensRepository.Data
+                    .Select(i => new SelectListItem
+                    {
+                        Value = i.Value.Id.ToString(),
+                        Text = i.Value.Navn
+                    })
+                    .ToList();
 
-            //    if (chokoladeFraDb == null)
-            //        return NotFound();
+                return Page();
+            }
 
-            //    chokoladeFraDb.Navn = Chokolade.Navn;
-            //    chokoladeFraDb.Stykpris = Chokolade.Stykpris;
-            //    chokoladeFraDb.Beskrivelse = Chokolade.Beskrivelse;
+            _repositories.ChokoladeRepository.Update(Chokolade);
 
-            //    chokoladeFraDb.Ingrediens.Clear();
+            var gamleIngredienser = _repositories.IngrediensListeRepository.Data
+                .Where(il => il.Value.ChokoladeId == Chokolade.Id)
+                .Select(il => il.Value.Id)
+                .ToList();
 
-            //    var valgteIngredienser = _context.Ingrediens
-            //        .Where(i => ValgteIngrediensIds.Contains(i.Id))
-            //        .ToList();
+            foreach (var id in gamleIngredienser)
+            {
+                _repositories.IngrediensListeRepository.Delete(id);
+            }
 
-            //    foreach (var ingrediens in valgteIngredienser)
-            //    {
-            //        chokoladeFraDb.Ingrediens.Add(ingrediens);
-            //    }
-
-
-
-            //    _repositories.ChokoladeRepository.Create(Chokolade);
+            foreach (var ingrediensId in ValgteIngrediensIds)
+            {
+                _repositories.IngrediensListeRepository.Create(
+                    new IngrediensListe(Chokolade.Id, ingrediensId)
+                );
+            }
 
             return RedirectToPage("./Index");
         }

@@ -48,10 +48,17 @@ namespace Sablou_Web.Pages.Chokolader
             }
 
             var chokolade = await _context.Chokolade.FindAsync(id);
+
             if (chokolade != null)
             {
-                Chokolade = chokolade;
-                _context.Chokolade.Remove(Chokolade);
+                var ingrediensLister = _context.IngrediensListe
+                    .Where(il => il.ChokoladeId == chokolade.Id)
+                    .ToList();
+
+                _context.IngrediensListe.RemoveRange(ingrediensLister);
+
+                _context.Chokolade.Remove(chokolade);
+
                 await _context.SaveChangesAsync();
             }
 
