@@ -2,18 +2,26 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Sablou_Web.Models;
 
 public partial class Ingrediens
 {
+    [Key]
     public int Id { get; set; }
 
+    [Required]
+    [StringLength(30)]
     public string Navn { get; set; }
 
+    [StringLength(100)]
     public string Beskrivelse { get; set; }
 
     public int Antal { get; set; }
 
-    public virtual ICollection<Chokolade> Chokolade { get; set; } = new List<Chokolade>();
+    [InverseProperty("Ingrediens")]
+    public virtual ICollection<IngrediensListe> IngrediensListe { get; set; } = new List<IngrediensListe>();
 }

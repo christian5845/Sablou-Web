@@ -2,20 +2,32 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Sablou_Web.Models;
 
-public partial class Chokolade : IHarId
+public partial class Chokolade
 {
+    [Key]
     public int Id { get; set; }
 
+    [Required]
+    [StringLength(30)]
     public string Navn { get; set; }
 
+    [Column(TypeName = "decimal(18, 0)")]
     public decimal Stykpris { get; set; }
 
+    [Required]
+    [StringLength(200)]
     public string Beskrivelse { get; set; }
 
-    public virtual ICollection<Ingrediens> Ingrediens { get; set; } = new List<Ingrediens>();
+    [InverseProperty("Chokolade")]
+    public virtual ICollection<IngrediensListe> IngrediensListe { get; set; } = new List<IngrediensListe>();
 
+    [ForeignKey("ChokoladeId")]
+    [InverseProperty("Chokolade")]
     public virtual ICollection<HøjtidsKatalog> Katalog { get; set; } = new List<HøjtidsKatalog>();
 }

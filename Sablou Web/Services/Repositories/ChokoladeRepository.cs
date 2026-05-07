@@ -6,10 +6,10 @@ namespace Sablou_Web.Services.Repositories
 {
     public class ChokoladeRepository : RepositoryBase<Chokolade>
     {
-        protected override IQueryable GetAllWithIncludes(DbContext context)
-        {
-            return context.Set<Chokolade>()
-                .Include(c => c.Ingrediens);
-        }
+        //protected override IQueryable GetAllWithIncludes(DbContext context)
+        //{
+        //    return context.Set<Chokolade>()
+        //        .Include(c => c.Ingrediens);
+        //}
     }
 }

@@ -8,12 +8,13 @@ public class Dataservice : IDataService
     public IRepository<Ingrediens> IngrediensRepository { get; }
     public IRepository<Bruger> BrugerRepository { get; } 
     public IRepository<Chokolade> ChokoladeRepository { get; }
-
+    public IRepository<IngrediensListe> IngrediensListeRepository { get; }
 
     public Dataservice()
     {
         IngrediensRepository = new IngrediensRepository();
         BrugerRepository = new BrugerRepository();
         ChokoladeRepository = new ChokoladeRepository();
+        IngrediensListeRepository = new IngrediensListeRepository();
     }
 }

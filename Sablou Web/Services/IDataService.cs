@@ -7,7 +7,7 @@ public interface IDataService
 {
     IRepository<Ingrediens> IngrediensRepository { get; }
     IRepository<Bruger> BrugerRepository { get; }
-
     IRepository<Chokolade> ChokoladeRepository { get; }
+    IRepository<IngrediensListe> IngrediensListeRepository { get; }
 
 }

@@ -3,16 +3,21 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Sablou_Web.Models;
+using Sablou_Web.Services;
 
 namespace Sablou_Web.Pages.Chokolader
 {
     public class CreateModel : PageModel
     {
+        private IDataService _repositories;
         private readonly cralle_dk_db_sablouContext _context;
+
+
 
         public CreateModel(cralle_dk_db_sablouContext context)
         {
             _context = context;
+            _repositories = new Dataservice();
         }
 
         [BindProperty]
@@ -51,14 +56,12 @@ namespace Sablou_Web.Pages.Chokolader
                 return Page();
             }
 
-            var valgteIngredienser = await _context.Ingrediens
-                .Where(i => ValgteIngrediensIds.Contains(i.Id))
-                .ToListAsync();
+            _repositories.ChokoladeRepository.Create(Chokolade);
 
-            Chokolade.Ingrediens = valgteIngredienser;
-
-            _context.Chokolade.Add(Chokolade);
-            await _context.SaveChangesAsync();
+            foreach (var id in ValgteIngrediensIds)
+            {
+                _repositories.IngrediensListeRepository.Create(new IngrediensListe(Chokolade.Id, id));
+            }
 
             return RedirectToPage("./Index");
         }

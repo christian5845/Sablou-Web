@@ -2,22 +2,36 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Sablou_Web.Models;
 
 public partial class Bruger
 {
+    [Key]
     public int Id { get; set; }
 
+    [Required]
+    [StringLength(50)]
     public string Navn { get; set; }
 
+    [Required]
+    [StringLength(50)]
     public string Email { get; set; }
 
+    [Required]
+    [StringLength(50)]
     public string Adresse { get; set; }
 
-    public int? TelefonNummer { get; set; }
+    public int? Telefonnummer { get; set; }
 
+    [Required]
+    [StringLength(200)]
     public string Password { get; set; }
 
+    [Required]
+    [StringLength(50)]
     public string Rolle { get; set; }
 }

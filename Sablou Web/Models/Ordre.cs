@@ -2,14 +2,19 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Sablou_Web.Models;
 
 public partial class Ordre
 {
+    [Key]
     public int Id { get; set; }
 
     public int BrugerId { get; set; }
 
+    [InverseProperty("Ordre")]
     public virtual ICollection<OrdreLinje> OrdreLinje { get; set; } = new List<OrdreLinje>();
 }

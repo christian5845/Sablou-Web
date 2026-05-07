@@ -53,10 +53,6 @@
       {
          "Name": "[dbo].[OrdreLinje]",
          "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Test]",
-         "ObjectType": 0
       }
    ],
    "UiHint": null,
@@ -68,7 +64,7 @@
    "UseDateOnlyTimeOnly": true,
    "UseDbContextSplitting": false,
    "UseDecimalDataAnnotationForSprocResult": true,
-   "UseFluentApiOnly": true,
+   "UseFluentApiOnly": false,
    "UseHandleBars": false,
    "UseHierarchyId": false,
    "UseInflector": false,

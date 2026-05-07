@@ -2,14 +2,21 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Sablou_Web.Models;
 
 public partial class Højtider
 {
+    [Key]
     public int Id { get; set; }
 
+    [Required]
+    [StringLength(20)]
     public string Navn { get; set; }
 
+    [InverseProperty("Højt")]
     public virtual ICollection<HøjtidsKatalog> HøjtidsKatalog { get; set; } = new List<HøjtidsKatalog>();
 }

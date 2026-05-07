@@ -18,5 +18,21 @@
                 <a class="btn btn-primary btn-sm" type="button" title="GåTilChokolade" asp-page="Produktside" asp-route-id="@item.Key">Kig nærmere</a>
             </div>
         }
+        foreach (var item in Model.Repositories.ChokoladeRepository.Data)
+        {
+          @*   var a = item.Value.Ingrediens;
+            foreach(Models.Ingrediens ingrediens in a )
+            {
+                <div class="card" style="width: 40rem; height: 40rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@ingrediens.Navn</h5>
+              
+                    </div>
+                    
+                </div>
+                
+            } *@
+
+        }
     }
 </div>

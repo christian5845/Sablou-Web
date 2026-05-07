@@ -8,18 +8,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Sablou_Web.Models;
 
-[PrimaryKey("ChokoladeId", "OrdreId")]
-public partial class OrdreLinje
+public partial class IngrediensListe
 {
     [Key]
+    public int Id { get; set; }
+
     public int ChokoladeId { get; set; }
 
-    [Key]
-    public int OrdreId { get; set; }
+    public int IngrediensId { get; set; }
 
-    public int? Antal { get; set; }
+    [ForeignKey("ChokoladeId")]
+    [InverseProperty("IngrediensListe")]
+    public virtual Chokolade Chokolade { get; set; }
 
-    [ForeignKey("OrdreId")]
-    [InverseProperty("OrdreLinje")]
-    public virtual Ordre Ordre { get; set; }
+    [ForeignKey("IngrediensId")]
+    [InverseProperty("IngrediensListe")]
+    public virtual Ingrediens Ingrediens { get; set; }
 }

@@ -6,23 +6,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Sablou_Web.Models;
+using Sablou_Web.Services;
 
 namespace Sablou_Web.Pages.Chokolader
 {
     public class IndexModel : PageModel
     {
         private readonly Sablou_Web.Models.cralle_dk_db_sablouContext _context;
+        private IDataService _repositories;
 
         public IndexModel(Sablou_Web.Models.cralle_dk_db_sablouContext context)
         {
             _context = context;
+            _repositories = new Dataservice();
+            Chokolader = _repositories.ChokoladeRepository.Data.Values.ToList();
         }
 
-        public IList<Models.Chokolade> Chokolade { get;set; } = default!;
+        public IList<Chokolade> Chokolader { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public async Task OnGet()
         {
-            Chokolade = await _context.Chokolade.ToListAsync();
+           
         }
     }
 }

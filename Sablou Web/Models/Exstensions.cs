@@ -17,14 +17,23 @@ public partial class Ingrediens : IHarId
     }
 }
 
+public partial class IngrediensListe : IHarId
+{
+    public IngrediensListe(int chokoladeId, int ingrediensId)
+    {
+        ChokoladeId = chokoladeId;
+        IngrediensId = ingrediensId;
+    }
+}
+
 public partial class Bruger : IHarId
 {
-    public Bruger(string navn, string email, string adresse, int? telefonNummer, string password, string rolle)
+    public Bruger(string navn, string email, string adresse, int telefonNummer, string password, string rolle)
     {
         Navn = navn;
         Email = email;
         Adresse = adresse;
-        TelefonNummer = telefonNummer;
+        Telefonnummer = telefonNummer;
         Password = password;
         Rolle = rolle;
     }
@@ -43,3 +52,5 @@ public partial class Chokolade : IHarId
         Beskrivelse = beskrivelse;
     }
 }
+
+
