@@ -15,7 +15,7 @@ public partial class Bruger
 
     public string Adresse { get; set; }
 
-    public int? TelefonNummer { get; set; }
+    public int? Telefonnummer { get; set; }
 
     public string Password { get; set; }
 

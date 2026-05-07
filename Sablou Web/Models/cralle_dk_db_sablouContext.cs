@@ -27,6 +27,8 @@ public partial class cralle_dk_db_sablouContext : DbContext
 
     public virtual DbSet<Ingrediens> Ingrediens { get; set; }
 
+    public virtual DbSet<IngrediensListe> IngrediensListe { get; set; }
+
     public virtual DbSet<Ordre> Ordre { get; set; }
 
     public virtual DbSet<OrdreLinje> OrdreLinje { get; set; }
@@ -35,13 +37,13 @@ public partial class cralle_dk_db_sablouContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=mssql13.unoeuro.com;Initial Catalog=cralle_dk_db_sablou;Persist Security Info=True;User ID=cralle_dk;Password=mDz296f5FegxdnrhG3EA");
+        => optionsBuilder.UseSqlServer("Data Source=mssql13.unoeuro.com;Initial Catalog=cralle_dk_db_sablou;Persist Security Info=True;User ID=cralle_dk;Password=mDz296f5FegxdnrhG3EA;Encrypt=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Bruger>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Bruger__3214EC070A1F989E");
+            entity.HasKey(e => e.Id).HasName("PK__Bruger__3214EC0720F9716B");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Adresse)
@@ -73,22 +75,6 @@ public partial class cralle_dk_db_sablouContext : DbContext
                 .IsRequired()
                 .HasMaxLength(30);
             entity.Property(e => e.Stykpris).HasColumnType("decimal(18, 0)");
-
-            entity.HasMany(d => d.Ingrediens).WithMany(p => p.Chokolade)
-                .UsingEntity<Dictionary<string, object>>(
-                    "IngrediensListe",
-                    r => r.HasOne<Ingrediens>().WithMany()
-                        .HasForeignKey("IngrediensId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK_IngrediensId"),
-                    l => l.HasOne<Chokolade>().WithMany()
-                        .HasForeignKey("ChokoladeId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK_ChokoladeId"),
-                    j =>
-                    {
-                        j.HasKey("ChokoladeId", "IngrediensId").HasName("PK__Ingredie__235DDE11B1EE0E25");
-                    });
         });
 
         modelBuilder.Entity<Højtider>(entity =>
@@ -139,6 +125,23 @@ public partial class cralle_dk_db_sablouContext : DbContext
             entity.Property(e => e.Navn)
                 .IsRequired()
                 .HasMaxLength(30);
+        });
+
+        modelBuilder.Entity<IngrediensListe>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tmp_ms_x__3214EC071FAA53D9");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Chokolade).WithMany(p => p.IngrediensListe)
+                .HasForeignKey(d => d.ChokoladeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ChokoladeId");
+
+            entity.HasOne(d => d.Ingrediens).WithMany(p => p.IngrediensListe)
+                .HasForeignKey(d => d.IngrediensId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_IngrediensId");
         });
 
         modelBuilder.Entity<Ordre>(entity =>

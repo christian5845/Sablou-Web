@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Sablou_Web.Models;
 
-public partial class Chokolade : IHarId
+public partial class Chokolade
 {
     public int Id { get; set; }
 
@@ -15,7 +15,7 @@ public partial class Chokolade : IHarId
 
     public string Beskrivelse { get; set; }
 
-    public virtual ICollection<Ingrediens> Ingrediens { get; set; } = new List<Ingrediens>();
+    public virtual ICollection<IngrediensListe> IngrediensListe { get; set; } = new List<IngrediensListe>();
 
     public virtual ICollection<HøjtidsKatalog> Katalog { get; set; } = new List<HøjtidsKatalog>();
 }

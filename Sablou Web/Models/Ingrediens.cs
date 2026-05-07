@@ -15,5 +15,5 @@ public partial class Ingrediens
 
     public int Antal { get; set; }
 
-    public virtual ICollection<Chokolade> Chokolade { get; set; } = new List<Chokolade>();
+    public virtual ICollection<IngrediensListe> IngrediensListe { get; set; } = new List<IngrediensListe>();
 }
