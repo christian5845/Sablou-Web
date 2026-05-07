@@ -29,11 +29,12 @@ public partial class IngrediensListe : IHarId
 
 public partial class Bruger : IHarId
 {
-    public static Bruger Construct(string navn, string email, string adresse, int? telefonNummer, string password)
+    public Bruger(string navn, string email, string adresse, int? telefonnummer, string password)
     {
-        return new Bruger { Navn = navn, Email = email, Adresse = adresse, Telefonnummer = telefonNummer, Password = password, Rolle = "Kunde" };
+        Navn = navn; Email = email; Adresse = adresse; Telefonnummer = telefonnummer; Password = password; Rolle = "Kunde";
     }
 }
+
 
 public partial class Chokolade : IHarId
 {

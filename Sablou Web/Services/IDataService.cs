@@ -6,7 +6,7 @@ namespace Sablou_Web.Services;
 public interface IDataService
 {
     IRepository<Ingrediens> IngrediensRepository { get; }
-    IRepository<Bruger> BrugerRepository { get; }
+    IBrugerRepository BrugerRepository { get; }
     IRepository<Chokolade> ChokoladeRepository { get; }
     IRepository<IngrediensListe> IngrediensListeRepository { get; }
 

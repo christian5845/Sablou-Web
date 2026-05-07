@@ -7,24 +7,27 @@
 <form method="post">
     <div class="form-group mb-3">
         <div class="form-group mb-3">
-            <label asp-for="@Model.Element.Navn" class="control-lable"></label>
-            <input asp-for="@Model.Element.Navn" class="form-control" />
+            <label asp-for="@Model.Navn" class="control-lable"></label>
+            <input asp-for="@Model.Navn" class="form-control" />
         </div>
     <div>
-        <label asp-for="@Model.Element.Email" class="control-lable"></label>
-        <input asp-for="@Model.Element.Email" class="form-control" type="email" />
+        <label asp-for="@Model.Email" class="control-lable"></label>
+        <input asp-for="@Model.Email" class="form-control" type="email" />
     </div>
     <div class="form-group mb-3">
-            <label asp-for="@Model.Element.Telefonnummer" class="control-lable"></label>
-            <input asp-for="@Model.Element.Telefonnummer" class="form-control" />
+            <label asp-for="@Model.Telefonnummer" class="control-lable"></label>
+            <input asp-for="@Model.Telefonnummer" class="form-control" />
     </div>
     <div class="form-group mb-3">
-        <label asp-for="@Model.Element.Adresse" class="control-lable"></label>
-        <input asp-for="@Model.Element.Adresse" class="form-control" />
+        <label asp-for="@Model.Adresse" class="control-lable"></label>
+        <input asp-for="@Model.Adresse" class="form-control" />
     </div>
     <div class="form-group mb-3">
-        <label asp-for="@Model.Element.Password" class="control-lable"></label>
-        <input asp-for="@Model.Element.Password" class="form-control" type="password" />
+        <label asp-for="@Model.Password" class="control-lable"></label>
+        <input asp-for="@Model.Password" class="form-control" type="password" />
     </div>
+        <div class="form-group mb-3">
+            <input type="submit" value="Create" class="btn btn-outline-primary" />
+        </div>
     </div>
  </form>

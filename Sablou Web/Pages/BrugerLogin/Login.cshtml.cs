@@ -12,7 +12,7 @@ namespace Sablou_Web.Pages.BrugerLogin
 {
     public class LoginModel : PageModel
     {
-        private IBrugerRepository _brugerRepository;
+        private IDataService _brugerRepository;
 
         public static Bruger? CurrentBruger { get; set; }
 
@@ -24,9 +24,9 @@ namespace Sablou_Web.Pages.BrugerLogin
 
         public string ErrorMessage { get; set; }
 
-        public LoginModel()
+        public LoginModel(IDataService DS)
         {
-            _brugerRepository = new BrugerRepository();
+            _brugerRepository = DS;
         }
 
         public async Task<IActionResult> OnPost()
@@ -64,20 +64,21 @@ namespace Sablou_Web.Pages.BrugerLogin
 
         public Bruger? VerifyUser(string providedEmail, string providedPassword)
         {
-            // List<Bruger> Bruger = All;
+            return _brugerRepository.BrugerRepository.VerifyUser(providedEmail, providedPassword);
+            //    // List<Bruger> Bruger = All;
 
-            List<Bruger> brugere = new List<Bruger>();
+            //    List<Bruger> brugere = new List<Bruger>();
 
-            using cralle_dk_db_sablouContext context = new cralle_dk_db_sablouContext();
+            //    using cralle_dk_db_sablouContext context = new cralle_dk_db_sablouContext();
 
-            brugere = context.Bruger.ToList();
+            //    brugere = context.Bruger.ToList();
 
 
-            Bruger? bruger = brugere.FirstOrDefault(u =>
-                string.Equals(u.Email, providedEmail, StringComparison.OrdinalIgnoreCase) &&
-                u.Password == providedPassword);
+            //    Bruger? bruger = brugere.FirstOrDefault(u =>
+            //        string.Equals(u.Email, providedEmail, StringComparison.OrdinalIgnoreCase) &&
+            //        u.Password == providedPassword);
 
-            return bruger;
+            //    return bruger;
         }
     }
 }

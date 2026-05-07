@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Sablou_Web.Models;
 using Sablou_Web.Services;
 using Sablou_Web.Services.Repositories;
+using System.ComponentModel.DataAnnotations;
 
 namespace Sablou_Web.Pages.Brugere
 {
@@ -15,7 +16,19 @@ namespace Sablou_Web.Pages.Brugere
         private IDataService _repo;
 
         [BindProperty]
-        public Bruger Element { get; set; } = new Bruger();
+        public string Navn { get; set; }
+
+        [BindProperty]
+        public string Email { get; set; }
+
+        [BindProperty]
+        public string Adresse { get; set; }
+
+        [BindProperty]
+        public int? Telefonnummer { get; set; }
+
+        [BindProperty]
+        public string Password { get; set; }
 
         public BrugerOprettelseModel(IDataService repo)
         {
@@ -31,7 +44,7 @@ namespace Sablou_Web.Pages.Brugere
             }
 
             // Send data videre til repository
-            _repo.BrugerRepository.Create(Element);
+            _repo.BrugerRepository.Create(new Bruger(Navn, Email, Adresse, Telefonnummer, Password));
 
             // Vend tilbage til startsiden
             return RedirectToPage("/Forside");

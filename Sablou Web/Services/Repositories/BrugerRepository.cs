@@ -34,10 +34,16 @@ public class BrugerRepository : RepositoryBase<Bruger>, IBrugerRepository
         brugere = context.Bruger.ToList();
 
 
-        Bruger? bruger = brugere.FirstOrDefault(u => u.Email == providedEmail &&
-                                               u.Password == providedPassword);
+        Bruger? bruger = brugere.FirstOrDefault(u => u.Email == providedEmail);
+        bool result = bruger != null && VerifyPassword(bruger, providedPassword);
+        
+        if (result)
+        {
+            return bruger;
+        }
+        else
+            return null;
 
-        return bruger;
     }
 
     private bool VerifyPassword(Bruger bruger, string providedPassword)
