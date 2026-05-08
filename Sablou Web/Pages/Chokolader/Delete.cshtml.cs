@@ -1,75 +1,68 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using Sablou_Web.Models;
 using Sablou_Web.Pages.BrugerLogin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Sablou_Web.Services;
 
 namespace Sablou_Web.Pages.Chokolader
 {
     public class DeleteModel : PageModel
     {
-        private readonly Sablou_Web.Models.cralle_dk_db_sablouContext _context;
+        private IDataService _repositories;
 
-        public DeleteModel(Sablou_Web.Models.cralle_dk_db_sablouContext context)
+        public DeleteModel()
         {
-            _context = context;
+            _repositories = new Dataservice();
         }
 
         [BindProperty]
-        public Models.Chokolade Chokolade { get; set; } = default!;
+        public Chokolade Chokolade { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int? id)
         {
             if (LoginModel.CurrentBruger?.Rolle != "Admin")
             {
                 return RedirectToPage("/Forside");
             }
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var chokolade = await _context.Chokolade.FirstOrDefaultAsync(m => m.Id == id);
+            Chokolade = _repositories.ChokoladeRepository.GetItem(id.Value);
 
-            if (chokolade is not null)
+            if (Chokolade == null)
             {
-                Chokolade = chokolade;
-
-                return Page();
+                return NotFound();
             }
 
-            return NotFound();
+            return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public IActionResult OnPost(int? id)
         {
             if (LoginModel.CurrentBruger?.Rolle != "Admin")
             {
                 return RedirectToPage("/Forside");
             }
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var chokolade = await _context.Chokolade.FindAsync(id);
+            var ingrediensListeIds = _repositories.IngrediensListeRepository.Data
+                .Where(il => il.Value.ChokoladeId == id.Value)
+                .Select(il => il.Value.Id)
+                .ToList();
 
-            if (chokolade != null)
+            foreach (var ingrediensListeId in ingrediensListeIds)
             {
-                var ingrediensLister = _context.IngrediensListe
-                    .Where(il => il.ChokoladeId == chokolade.Id)
-                    .ToList();
-
-                _context.IngrediensListe.RemoveRange(ingrediensLister);
-
-                _context.Chokolade.Remove(chokolade);
-
-                await _context.SaveChangesAsync();
+                _repositories.IngrediensListeRepository.Delete(ingrediensListeId);
             }
+
+            _repositories.ChokoladeRepository.Delete(id.Value);
 
             return RedirectToPage("./Index");
         }

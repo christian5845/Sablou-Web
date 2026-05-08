@@ -1,0 +1,34 @@
+﻿@page
+@model Sablou_Web.Pages.Brugere.BrugerlisteModel
+@{
+}
+
+<h2>Brugerliste</h2>
+
+<table class="table table-striped">
+    <thead>
+        <form method="post" class="form-inline">
+            <div class="input-group mb-3">
+                <input asp-for="SearchString" class="form-control mr-1" placeholder="Søg efter Email" />
+                <input type="submit" asp-page-handler="NameSearch" value="Søg" class="btn btn-primary" />
+            </div>
+        </form>
+        <tr>
+            <th>Navn</th>
+            <th>Email</th>
+            <th>Telefon</th>
+            <th>Rolle</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var b in Model.Brugere)
+    {
+        <tr>
+            <td>@b.Navn</td>
+            <td>@b.Email</td>
+            <td>@(b.Telefonnummer?.ToString() ?? "")</td>
+            <td>@b.Rolle</td>
+        </tr>
+    }
+    </tbody>
+</table>

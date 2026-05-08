@@ -20,6 +20,13 @@ public class BrugerRepository : RepositoryBase<Bruger>, IBrugerRepository
 
     public override void Create(Bruger bruger)
     {
+        using cralle_dk_db_sablouContext context = new cralle_dk_db_sablouContext();
+
+        bool emailExists = context.Bruger.Any(u => u.Email == bruger.Email);
+        if (emailExists)
+        {
+            throw new InvalidOperationException("E-mailen findes allerede.");
+        }
 
         bruger.Password = _passwordHasher.HashPassword(bruger.Email, bruger.Password);
         base.Create(bruger);
