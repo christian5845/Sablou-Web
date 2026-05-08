@@ -64,21 +64,9 @@ namespace Sablou_Web.Pages.BrugerLogin
 
         public Bruger? VerifyUser(string providedEmail, string providedPassword)
         {
-            return _brugerRepository.BrugerRepository.VerifyUser(providedEmail, providedPassword);
-            //    // List<Bruger> Bruger = All;
-
-            //    List<Bruger> brugere = new List<Bruger>();
-
-            //    using cralle_dk_db_sablouContext context = new cralle_dk_db_sablouContext();
-
-            //    brugere = context.Bruger.ToList();
-
-
-            //    Bruger? bruger = brugere.FirstOrDefault(u =>
-            //        string.Equals(u.Email, providedEmail, StringComparison.OrdinalIgnoreCase) &&
-            //        u.Password == providedPassword);
-
-            //    return bruger;
+            return _brugerRepository.BrugerRepository.VerifyUser(
+                providedEmail.Trim().ToLowerInvariant(),
+                providedPassword);
         }
     }
 }
