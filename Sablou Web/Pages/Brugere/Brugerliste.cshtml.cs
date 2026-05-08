@@ -5,6 +5,7 @@ using Sablou_Web.Services;
 using Sablou_Web.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Identity.Client;
 
 namespace Sablou_Web.Pages.Brugere
 {
@@ -42,7 +43,7 @@ namespace Sablou_Web.Pages.Brugere
         {
             Bruger? bruger = _repo.BrugerRepository.GetItem(id);
 
-            if (bruger == null )
+            if (bruger == null)
             {
                 return NotFound();
             }
@@ -58,6 +59,16 @@ namespace Sablou_Web.Pages.Brugere
 
             _repo.BrugerRepository.Update(bruger);
 
+            return RedirectToPage();
+        }
+        public IActionResult OnPostSlet(int id)
+        {
+            Bruger? bruger = _repo.BrugerRepository.GetItem(id);
+            if (bruger == null)
+            {
+                return NotFound();
+            }
+            _repo.BrugerRepository.Delete(id);
             return RedirectToPage();
         }
     }
