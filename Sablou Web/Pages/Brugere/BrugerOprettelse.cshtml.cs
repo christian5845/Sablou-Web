@@ -43,8 +43,16 @@ namespace Sablou_Web.Pages.Brugere
                 return Page();
             }
 
-            // Send data videre til repository
-            _repo.BrugerRepository.Create(new Bruger(Navn, Email, Adresse, Telefonnummer, Password));
+            try
+            {
+                // Send data videre til repository
+                _repo.BrugerRepository.Create(new Bruger(Navn, Email, Adresse, Telefonnummer, Password));
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError(nameof(Email), ex.Message);
+                return Page();
+            }
 
             // Vend tilbage til startsiden
             return RedirectToPage("/Forside");
