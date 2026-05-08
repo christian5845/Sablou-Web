@@ -152,11 +152,72 @@
 
 <main class="page-content container">
 
-    <!-- Footer placed after the main content -->
+    <!-- Footer -->
     <footer class="site-footer" role="contentinfo">
-        <div>© @DateTime.Now.Year Sablou — All rights reserved.</div>
-        <div style="margin-top:0.5rem; font-size:0.9rem;">
-            <a href="/kontakt">Kontakt</a> · <a href="/om">Om os</a>
+
+        <div>
+            © @DateTime.Now.Year Sablou — All rights reserved.
         </div>
+
+        <div class="footer-links">
+
+            <a href="https://www.instagram.com/sablou_cph/?hl=da"
+               target="_blank"
+               class="instagram-icon-link">
+
+                <img src="~/images/insta.png" alt="Instagram" />
+            </a>
+
+            <span>·</span>
+
+            <a href="/om">Om os</a>
+
+        </div>
+
     </footer>
 </main>
+
+<style>
+    .site-footer {
+        padding: 2rem 0;
+        text-align: center;
+    }
+
+    .footer-links {
+        margin-top: 0.7rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 14px;
+        font-size: 0.95rem;
+    }
+
+    .instagram-icon-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        line-height: 0;
+    }
+
+        .instagram-icon-link img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+            .instagram-icon-link img:hover {
+                transform: scale(1.12);
+            }
+
+    .footer-links a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+</style>
