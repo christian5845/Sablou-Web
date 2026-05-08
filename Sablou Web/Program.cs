@@ -9,7 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<cralle_dk_db_sablouContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddRazorPages();
+
+builder.Services.AddRazorPages(options =>
+{
+    // Angiv hvilke foldere login giver adgang til
+    options.Conventions.AuthorizeFolder("/Ingredienser");
+   
+});
+
 
 
 builder.Services.AddSingleton<IDataService, Dataservice>();
@@ -19,6 +26,7 @@ builder.Services.AddAuthentication(
     CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
     {
         options.LoginPath = "/BrugerLogin/Login";
+        options.AccessDeniedPath = "/BrugerLogin/AccessDenied";
         
     });
 
@@ -38,7 +46,6 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();

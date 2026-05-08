@@ -9,9 +9,9 @@ namespace Sablou_Web.Pages
     {
         public  IDataService Repositories { get; }
 
-        public VoresChokoladerModel()
+        public VoresChokoladerModel(IDataService dataService)
         {
-            Repositories = new Dataservice();
+            Repositories = dataService;
         }
 
         public void OnGet()

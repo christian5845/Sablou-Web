@@ -17,8 +17,10 @@ public class BrugerRepository : RepositoryBase<Bruger>, IBrugerRepository
         get { return new List<string> { "Admin", "Kunde" }; }
     }
 
+
     public override void Create(Bruger bruger)
     {
+
         bruger.Password = _passwordHasher.HashPassword(bruger.Email, bruger.Password);
         base.Create(bruger);
     }

@@ -4,16 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sablou_Web.Pages.BrugerLogin;
 
-namespace Sablou_Web.Pages
+namespace Sablou_Web.Pages;
+
+public class ForsideModel : PageModel
 {
-    public class ForsideModel : PageModel
+    public void OnGet()
     {
-        public void OnGet()
+        if (LoginModel.CurrentBruger == null) // Force Signout on startup
         {
-            if (LoginModel.CurrentBruger == null) // Force Signout on startup
-            {
-                HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            }
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
     }
 }
