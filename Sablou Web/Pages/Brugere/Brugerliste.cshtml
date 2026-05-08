@@ -7,6 +7,12 @@
 
 <table class="table table-striped">
     <thead>
+        <form method="post" class="form-inline">
+            <div class="input-group mb-3">
+                <input asp-for="SearchString" class="form-control mr-1" placeholder="Søg efter Email" />
+                <input type="submit" asp-page-handler="NameSearch" value="Søg" class="btn btn-primary" />
+            </div>
+        </form>
         <tr>
             <th>Navn</th>
             <th>Email</th>

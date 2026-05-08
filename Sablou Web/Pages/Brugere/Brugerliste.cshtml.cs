@@ -15,6 +15,9 @@ namespace Sablou_Web.Pages.Brugere
 
         public List<Bruger> Brugere { get; set; } = new List<Bruger>();
 
+        [BindProperty]
+        public string SearchString { get; set; }
+
         public BrugerlisteModel(IDataService repo)
         {
             _repo = repo;
@@ -26,6 +29,14 @@ namespace Sablou_Web.Pages.Brugere
             Brugere = _repo.BrugerRepository.Data.Values
                 .OrderBy(b => b.Navn)
                 .ToList();
+        }
+        public IActionResult OnPostNameSearch()
+        {
+            Brugere = _repo.BrugerRepository.Data.Values
+                .Where(b => b.Email.Contains(SearchString, StringComparison.OrdinalIgnoreCase))
+                .OrderBy(b => b.Email)
+                .ToList();
+            return Page();
         }
     }
 }
