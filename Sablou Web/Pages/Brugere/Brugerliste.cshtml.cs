@@ -38,5 +38,27 @@ namespace Sablou_Web.Pages.Brugere
                 .ToList();
             return Page();
         }
+        public IActionResult OnPostSkiftRolle(int id)
+        {
+            Bruger? bruger = _repo.BrugerRepository.GetItem(id);
+
+            if (bruger == null )
+            {
+                return NotFound();
+            }
+
+            if (bruger.Rolle == "Admin")
+            {
+                bruger.Rolle = "Kunde";
+            }
+            else
+            {
+                bruger.Rolle = "Admin";
+            }
+
+            _repo.BrugerRepository.Update(bruger);
+
+            return RedirectToPage();
+        }
     }
 }

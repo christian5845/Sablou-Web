@@ -27,7 +27,18 @@
             <td>@b.Navn</td>
             <td>@b.Email</td>
             <td>@(b.Telefonnummer?.ToString() ?? "")</td>
-            <td>@b.Rolle</td>
+
+            <td>@b.Rolle
+                    <span>
+                        <form method="post" asp-page-handler="SkiftRolle" class="d-inline">
+                            <input type="hidden" name="id" value="@b.Id" />
+                            <button type="submit" class="btn btn-sm btn-secondary">
+                                @(b.Rolle == "Admin" ? "Gør til kunde" : "Gør til admin")
+                            </button>
+                        </form>
+                    </span>
+            </td>
+                  
         </tr>
     }
     </tbody>
