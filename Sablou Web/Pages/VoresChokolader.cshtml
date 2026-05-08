@@ -3,36 +3,138 @@
 @{
 }
 
-<div class="row">
-    @if (Model.Repositories.ChokoladeRepository != null)
-    {
-        foreach (var item in Model.Repositories.ChokoladeRepository.Data)
-        {
-            <div class="card" style="width: 40rem; height: 40rem;">
-                <div class="card-body">
-                    <h5 class="card-title">@item.Value.Navn</h5>
-                    <p class="card-text">@item.Value.Beskrivelse</p>
-                    <h8>Antal på lager @item.Value.Stykpris </h8>
-                </div>
-                <a class="btn btn-primary btn-sm" type="button" title="TilføjTilKurv" asp-page="" asp-route-id="@item.Key">Tilføj til kurv</a>
-                <a class="btn btn-primary btn-sm" type="button" title="GåTilChokolade" asp-page="Produktside" asp-route-id="@item.Key">Kig nærmere</a>
-            </div>
-        }
-        foreach (var item in Model.Repositories.ChokoladeRepository.Data)
-        {
-          @*   var a = item.Value.Ingrediens;
-            foreach(Models.Ingrediens ingrediens in a )
-            {
-                <div class="card" style="width: 40rem; height: 40rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">@ingrediens.Navn</h5>
-              
-                    </div>
-                    
-                </div>
-                
-            } *@
+<style>
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 20px;
+        padding: 20px;
+    }
+</style>
 
+<style>
+    .product {
+        aspect-ratio: 1 / 1;
+        background: #fff;
+        border-radius: 12px;
+        padding: 16px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+</style>
+
+<main class="page-content container">
+
+    <!-- Footer -->
+    <footer class="site-footer" role="contentinfo">
+
+        <div>
+            © @DateTime.Now.Year Sablou — All rights reserved.
+        </div>
+
+        <div class="footer-links">
+
+            <a href="https://www.instagram.com/sablou_cph/?hl=da"
+               target="_blank"
+               class="instagram-icon-link">
+
+                <img src="~/images/insta.png" alt="Instagram" />
+            </a>
+
+            <span>·</span>
+
+            <a href="/om">Om os</a>
+
+        </div>
+
+    </footer>
+</main>
+
+<style>
+    .site-footer {
+        position: relative; /* ensure footer can sit above fixed hero */
+        z-index: auto; /* higher than .hero-full (900) so footer appears on top */
+        background: #0f1720;
+        color: #e6eef8;
+        padding: 1.25rem 1rem;
+        text-align: center;
+        font-size: 0.95rem;
+        border-top: 1px solid rgba(255,255,255,0.04);
+    }
+
+        .site-footer a {
+            color: #e6eef8;
+            text-decoration: underline;
+            opacity: 0.9;
         }
+    .site-footer {
+        padding: 2rem 0;
+        text-align: center;
+    }
+
+    .footer-links {
+        margin-top: 0.7rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 14px;
+        font-size: 0.95rem;
+    }
+
+    .instagram-icon-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        line-height: 0;
+    }
+
+        .instagram-icon-link img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+            .instagram-icon-link img:hover {
+                transform: scale(1.12);
+            }
+
+    .footer-links a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+</style>
+  
+<body>
+
+<div class="product-grid"> 
+    @foreach (var c in Model.Repositories.ChokoladeRepository.Data.Values)
+    {
+    <div class="product">
+       
+        <div class="row" style="width: 10rem; height: 10rem">
+            <div class="col">
+                vis billede her  
+            </div>
+            <div class="col">
+                <h1>@c.Navn</h1>
+                @c.Beskrivelse
+            </div>
+
+
+        </div>
+      
+        <div class="row">
+                <a class="btn btn-primary btn-sm" type="button" title="Kignærmere" asp-page="Produktside" asp-route-id="@c.Id">Kig nærmere </a>
+        </div>
+       
+    </div>
+    
     }
 </div>
+</body>

@@ -2,3 +2,39 @@
 @model Sablou_Web.Pages.ProduktsideModel
 @{
 }
+
+
+<header>
+    <h1>@Model.Chokoladen.Navn</h1>
+</header>
+<tbody>
+<div class="row">
+    <div class="col">
+        Vis billede her
+    </div>
+    <div class="col">
+            <div class="card" style="width: 20rem; height: 40rem">
+                <div class="card-body">
+                    Vis tilføj kurv funktion her
+                </div>
+            </div>
+    </div>
+</div>
+
+<div class="card" >
+    <div class="card-body">
+        Her står beskrivelsen af chokoladen
+        @Model.Chokoladen.Beskrivelse
+    </div>
+</div>
+    <div class="card">
+        <div class="card-body">
+            Her står produktinformation
+            @foreach(var i in Model.Repositories.IngrediensListeRepository.Data.Values)
+            {
+                <p> @i.</p>
+            }
+        </div>
+    </div>
+</tbody>
+

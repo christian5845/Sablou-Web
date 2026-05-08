@@ -10,9 +10,9 @@ public class ProduktsideModel : PageModel
     public IDataService Repositories { get; }
     public Chokolade Chokoladen { get; set; }
 
-    public ProduktsideModel()
+    public ProduktsideModel(IDataService dataService)
     {
-        Repositories = new Dataservice();
+        Repositories = dataService;
     }
 
     public void OnGet(int id)

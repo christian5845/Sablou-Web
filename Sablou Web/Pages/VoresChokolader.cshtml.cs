@@ -3,19 +3,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sablou_Web.Services;
 using Sablou_Web.Models;
 
-namespace Sablou_Web.Pages
+namespace Sablou_Web.Pages;
+
+public class VoresChokoladerModel : PageModel
 {
-    public class VoresChokoladerModel : PageModel
+    public  IDataService Repositories { get; }
+
+    public VoresChokoladerModel(IDataService dataService)
     {
-        public  IDataService Repositories { get; }
+        Repositories = dataService;
+    }
 
-        public VoresChokoladerModel(IDataService dataService)
-        {
-            Repositories = dataService;
-        }
-
-        public void OnGet()
-        {
-        }
+    public void OnGet()
+    {
     }
 }

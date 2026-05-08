@@ -48,6 +48,9 @@ public partial class Chokolade : IHarId
         Stykpris = stykpris;
         Beskrivelse = beskrivelse;
     }
+
+   
+
 }
 
 
