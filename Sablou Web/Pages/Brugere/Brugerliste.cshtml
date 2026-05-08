@@ -1,23 +1,26 @@
 ﻿@page
 @model Sablou_Web.Pages.Brugere.BrugerlisteModel
-@{
-}
+@using System
+@using System.Security.Claims
 
 <h2>Brugerliste</h2>
 
-<table class="table table-striped">
+<form method="post" class="form-inline mb-3">
+    <div class="input-group">
+        <input asp-for="SearchString" class="form-control" placeholder="Søg efter Email" />
+        <button type="submit" asp-page-handler="NameSearch" class="btn btn-primary ms-2">Søg</button>
+        <a asp-page="./Brugerliste" class="btn btn-secondary ms-2">Ryd</a>
+    </div>
+</form>
+
+<table class="table table-striped align-middle">
     <thead>
-        <form method="post" class="form-inline">
-            <div class="input-group mb-3">
-                <input asp-for="SearchString" class="form-control mr-1" placeholder="Søg efter Email" />
-                <input type="submit" asp-page-handler="NameSearch" value="Søg" class="btn btn-primary" />
-            </div>
-        </form>
         <tr>
             <th>Navn</th>
             <th>Email</th>
             <th>Telefon</th>
             <th>Rolle</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -27,8 +30,73 @@
             <td>@b.Navn</td>
             <td>@b.Email</td>
             <td>@(b.Telefonnummer?.ToString() ?? "")</td>
-            <td>@b.Rolle</td>
+            <td>
+                <span class="badge @(string.Equals(b.Rolle, "Admin", StringComparison.OrdinalIgnoreCase) ? "bg-danger" : "bg-secondary")">
+                    @b.Rolle
+                </span>
+            </td>
+            <td>
+                <form method="post" asp-page-handler="SkiftRolle" class="d-inline">
+                    <input type="hidden" name="id" value="@b.Id" />
+                    <button type="submit" class="btn btn-sm btn-outline-primary me-2">
+                        @(string.Equals(b.Rolle, "Admin", StringComparison.OrdinalIgnoreCase) ? "Gør Kunde" : "Gør Admin")
+                    </button>
+                </form>
+
+                @* Slet-knap: åbner modal *@
+                <button type="button" class="btn btn-sm btn-danger btn-delete"
+                        data-id="@b.Id" data-name="@b.Navn" title="Slet bruger">
+                    Slet
+                </button>
+            </td>
         </tr>
     }
     </tbody>
 </table>
+
+@* Bekræftelsesmodal for slet *@
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDeleteLabel">Bekræft sletning</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Luk"></button>
+      </div>
+      <div class="modal-body">
+        <p>Er du sikker på, at du vil slette brugeren <strong id="modalUserName"></strong>?</p>
+      </div>
+      <div class="modal-footer">
+        <form method="post" asp-page-handler="Slet" id="deleteForm" class="m-0">
+            <input type="hidden" name="id" id="deleteUserId" />
+            <input type="hidden" name="SearchString" value="@Model.SearchString" />
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuller</button>
+            <button type="submit" class="btn btn-danger">Bekræft slet</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            const deleteButtons = document.querySelectorAll('.btn-delete');
+            const modalEl = document.getElementById('confirmDeleteModal');
+            const modalUserName = document.getElementById('modalUserName');
+            const deleteUserId = document.getElementById('deleteUserId');
+
+            // bootstrap 5 modal API
+            const bootstrapModal = new bootstrap.Modal(modalEl);
+
+            deleteButtons.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const id = this.getAttribute('data-id');
+                    const name = this.getAttribute('data-name') || id;
+                    modalUserName.textContent = name;
+                    deleteUserId.value = id;
+                    bootstrapModal.show();
+                });
+            });
+        })();
+    </script>
+}
