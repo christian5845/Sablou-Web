@@ -22,7 +22,7 @@ namespace Sablou_Web.Pages.Chokolader
         {
             if (LoginModel.CurrentBruger?.Rolle != "Admin")
             {
-                return RedirectToPage("/Forside");
+                return RedirectToPage("/BrugerLogin/AccessDenied");
             }
 
             if (id == null)
