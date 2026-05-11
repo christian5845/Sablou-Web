@@ -15,7 +15,7 @@
     <div class="col">
             <div class="card" style="width: 20rem; height: 40rem">
                 <div class="card-body">
-                    Vis tilføj kurv funktion her
+                    Vis/tilføj kurv funktion her
                 </div>
             </div>
     </div>
@@ -32,7 +32,7 @@
             Her står produktinformation
             @foreach(var i in Model.Repositories.IngrediensListeRepository.Data.Values)
             {
-                <p> @i.</p>
+                <p> @* @i.Ingrediens.Navn *@</p>
             }
         </div>
     </div>
