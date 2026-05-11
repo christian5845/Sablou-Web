@@ -29,11 +29,20 @@
 </div>
     <div class="card">
         <div class="card-body">
-            Her står produktinformation
-            @foreach(var i in Model.Repositories.IngrediensListeRepository.Data.Values)
-            {
-                <p> @* @i.Ingrediens.Navn *@</p>
+            <strong>Produktinformation</strong>
+
+            @{
+                var ingrediensIds = Model.Repositories.IngrediensListeRepository.Data.Values
+                .Where(il => il.ChokoladeId == Model.Chokoladen.Id)
+                .Select(il => il.IngrediensId)
+                .ToList();
+
+                var ingredienser = Model.Repositories.IngrediensRepository.Data.Values
+                .Where(i => ingrediensIds.Contains(i.Id))
+                .Select(i => i.Navn);
             }
+
+            <p>@string.Join(", ", ingredienser)</p>
         </div>
     </div>
 </tbody>
