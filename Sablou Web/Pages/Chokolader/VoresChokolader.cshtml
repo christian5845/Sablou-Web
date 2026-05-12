@@ -1,29 +1,137 @@
 ﻿@page
 @model Sablou_Web.Pages.Chokolader.VoresChokoladerModel
+@using System.Globalization
 
-<h1>Vores chokolader</h1>
+<h1 class="mb-4">Vores chokolader</h1>
+
+<div class="row mb-3 align-items-center">
+    <div class="col-md-6 mb-2">
+        <form method="get" class="d-flex">
+            <input asp-for="Search" class="form-control me-2" placeholder="Søg efter navn eller beskrivelse" />
+            <input type="hidden" asp-for="Sort" />
+            <button class="btn btn-primary" type="submit">Søg</button>
+        </form>
+    </div>
+
+    <div class="col-md-3 mb-2">
+        <select class="form-select" asp-for="Sort" onchange="this.form ? this.form.submit() : null">
+            <option value="name" selected="@(Model.Sort == "name")">Sorter: Navn A-Z</option>
+            <option value="name_desc" selected="@(Model.Sort == "name_desc")">Sorter: Navn Z-A</option>
+            <option value="price_asc" selected="@(Model.Sort == "price_asc")">Sorter: Pris lav → høj</option>
+            <option value="price_desc" selected="@(Model.Sort == "price_desc")">Sorter: Pris høj → lav</option>
+        </select>
+    </div>
+
+    <div class="col-md-3 text-end">
+        <small class="text-muted">Viser side @Model.Page af @Model.TotalPages</small>
+    </div>
+</div>
 
 <div class="row">
-    @foreach (var chokolade in Model.Chokolader)
+    @foreach (var c in Model.Chokolader)
     {
-        <div class="col-md-6 mb-4">
-            <div class="card h-100">
-                <img src="~/images/chokolade.jpg" class="card-img-top" alt="@chokolade.Navn" />
+        <div class="col-sm-6 col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="~/images/chokolade.jpg"
+                     class="card-img-top"
+                     alt="@c.Navn"
+                     loading="lazy"
+                     style="object-fit: cover; height: 180px;" />
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title mb-1">@c.Navn</h5>
+                    <p class="text-muted small mb-2">@(
+                        string.IsNullOrWhiteSpace(c.Beskrivelse) ? "Ingen beskrivelse" 
+                        : (c.Beskrivelse.Length > 90 ? c.Beskrivelse.Substring(0, 90) + "…" : c.Beskrivelse)
+                    )</p>
 
-                <div class="card-body">
-                    <h5 class="card-title">@chokolade.Navn</h5>
+                    <div class="mt-auto d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="badge bg-success fs-6">@string.Format(CultureInfo.GetCultureInfo("da-DK"), "{0:0.00} kr.", c.Stykpris)</span>
+                        </div>
 
-                    <p>
-                        <strong>Pris:</strong> @($"{chokolade.Stykpris:0.00} kroner")
-                    </p>
-
-                    <a class="btn btn-primary"
-                       asp-page="/Chokolader/Information"
-                       asp-route-id="@chokolade.Id">
-                        Læs mere
-                    </a>
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-outline-primary" asp-page="/Chokolader/Informaiton" asp-route-id="@c.Id">Læs mere</a>
+                            <button type="button"
+                                    class="btn btn-sm btn-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#quickViewModal"
+                                    data-id="@c.Id"
+                                    data-name="@c.Navn"
+                                    data-price="@c.Stykpris"
+                                    data-desc="@c.Beskrivelse">
+                                Hurtig visning
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     }
 </div>
+
+@* Pagination *@
+@if (Model.TotalPages > 1)
+{
+    <nav aria-label="Side-navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(Model.Page == 1 ? "disabled" : "")">
+                <a class="page-link" asp-route-Page="@(Model.Page - 1)" asp-route-Search="@Model.Search" asp-route-Sort="@Model.Sort">Forrige</a>
+            </li>
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(Model.Page == i ? "active" : "")">
+                    <a class="page-link" asp-route-Page="@i" asp-route-Search="@Model.Search" asp-route-Sort="@Model.Sort">@i</a>
+                </li>
+            }
+            <li class="page-item @(Model.Page == Model.TotalPages ? "disabled" : "")">
+                <a class="page-link" asp-route-Page="@(Model.Page + 1)" asp-route-Search="@Model.Search" asp-route-Sort="@Model.Sort">Næste</a>
+            </li>
+        </ul>
+    </nav>
+}
+
+@* Quick view modal *@
+<div class="modal fade" id="quickViewModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="quickViewTitle">Produkt</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Luk"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3">
+            <div class="col-md-5">
+                <img id="quickViewImage" src="~/images/chokolade.jpg" class="img-fluid" alt="Produktbillede" />
+            </div>
+            <div class="col-md-7">
+                <h4 id="quickViewName"></h4>
+                <p id="quickViewPrice" class="fw-bold text-success"></p>
+                <p id="quickViewDesc"></p>
+                <a id="quickViewDetails" class="btn btn-outline-primary" href="#">Se fuld info</a>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            var quickModal = document.getElementById('quickViewModal');
+            quickModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget;
+                var id = button.getAttribute('data-id');
+                var name = button.getAttribute('data-name') || '';
+                var price = parseFloat(button.getAttribute('data-price')) || 0;
+                var desc = button.getAttribute('data-desc') || '';
+
+                document.getElementById('quickViewTitle').textContent = name;
+                document.getElementById('quickViewName').textContent = name;
+                document.getElementById('quickViewPrice').textContent = price.toLocaleString('da-DK', { minimumFractionDigits: 2 }) + ' kr.';
+                document.getElementById('quickViewDesc').textContent = desc;
+                document.getElementById('quickViewDetails').setAttribute('href', '/Chokolader/Informaiton/' + id);
+            });
+        })();
+    </script>
+}
