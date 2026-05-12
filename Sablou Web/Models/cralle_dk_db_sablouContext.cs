@@ -51,13 +51,6 @@ public partial class cralle_dk_db_sablouContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK__Chokolad__3214EC07380F5FC6");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.Beskrivelse)
-                .IsRequired()
-                .HasMaxLength(200);
-            entity.Property(e => e.Navn)
-                .IsRequired()
-                .HasMaxLength(30);
-            entity.Property(e => e.Stykpris).HasColumnType("decimal(18, 0)");
         });
 
         modelBuilder.Entity<Højtider>(entity =>
@@ -112,23 +105,6 @@ public partial class cralle_dk_db_sablouContext : DbContext
                 .HasConstraintName("FK_ChokoladeId");
 
             entity.HasOne(d => d.Ingrediens).WithMany(p => p.IngrediensListe)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_IngrediensId");
-        });
-
-        modelBuilder.Entity<IngrediensListe>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__tmp_ms_x__3214EC071FAA53D9");
-
-            entity.Property(e => e.Id).ValueGeneratedNever();
-
-            entity.HasOne(d => d.Chokolade).WithMany(p => p.IngrediensListe)
-                .HasForeignKey(d => d.ChokoladeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ChokoladeId");
-
-            entity.HasOne(d => d.Ingrediens).WithMany(p => p.IngrediensListe)
-                .HasForeignKey(d => d.IngrediensId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_IngrediensId");
         });

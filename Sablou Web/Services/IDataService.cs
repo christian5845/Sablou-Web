@@ -9,5 +9,8 @@ public interface IDataService
     IBrugerRepository BrugerRepository { get; }
     IRepository<Chokolade> ChokoladeRepository { get; }
     IRepository<IngrediensListe> IngrediensListeRepository { get; }
+    IRepository<HøjtidsKatalog> HøjtidsKatalogRepository { get; }
+    IRepository<Højtider> HøjtiderRepository { get; }
+
 
 }
