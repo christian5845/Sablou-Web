@@ -14,6 +14,8 @@ public class Dataservice : IDataService
 
     public IRepository<Højtider> HøjtiderRepository { get; }
 
+    public IRepository<ChokoladerIkatalog> ChokoladerIKatalogRepository { get; }
+
     public Dataservice()
     {
         IngrediensRepository = new IngrediensRepository();
@@ -22,5 +24,6 @@ public class Dataservice : IDataService
         IngrediensListeRepository = new IngrediensListeRepository();
         HøjtidsKatalogRepository = new HøjtidsKatalogRepository();
         HøjtiderRepository = new HøjtiderRepository();
+        ChokoladerIKatalogRepository = new ChokoladerIKatalogRepository();
     }
 }

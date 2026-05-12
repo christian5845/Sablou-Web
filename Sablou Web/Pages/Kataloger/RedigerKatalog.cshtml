@@ -1,0 +1,44 @@
+﻿@page
+@model Sablou_Web.Pages.Kataloger.RedigerKatalogModel
+@{
+}
+<h2>Chokolade liste</h2>
+
+@* <form method="post" class="form-inline mb-3">
+    <div class="input-group">
+        <input asp-for="SearchString" class="form-control" placeholder="Søg efter Email" />
+        <button type="submit" asp-page-handler="NameSearch" class="btn btn-primary ms-2">Søg</button>
+        <a asp-page="./Brugerliste" class="btn btn-secondary ms-2">Ryd</a>
+    </div>
+</form> *@
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Navn</th>
+            <th>Er i katalog</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var chokolade in Model.Repo.ChokoladeRepository.Data.Values)
+        {
+            <tr>
+                <td>@chokolade.Navn</td>
+                <td>
+                    <span class="badge @(bool.Equals(Model.IdListe.Contains(chokolade.Id), "Er i katalog" ) ? "bg-danger" : "bg-secondary")">
+                        @chokolade.Navn
+                    </span>
+                </td>
+                <td>
+                    <form method="post" class="d-inline">
+                        <button type="submit" asp-page-handler="OpdaterKatalog" asp-route-id="@Model.Kataloget.Id" asp-route-cid="@chokolade.Id"
+                            class="btn btn-sm btn-outline-primary me-2">
+                            @(bool.Equals(Model.IdListe.Contains(chokolade.Id), "Er i katalog") ? "Fjern" : "Tilføj")
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -57,9 +57,23 @@ public partial class Højtider : IHarId
 
 }
 
+public partial class ChokoladerIkatalog : IHarId
+{
+    public ChokoladerIkatalog()
+    {
+
+    }
+    public ChokoladerIkatalog(int chokoladeid, int katalogid)
+    {
+        ChokoladeId = chokoladeid;
+        KatalogId = katalogid;
+    }
+}
+
 public partial class HøjtidsKatalog : IHarId
 {
-  
+
+
 
     [NotMapped]
     public string Højtidsnavn

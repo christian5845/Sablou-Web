@@ -4,4 +4,5 @@ namespace Sablou_Web.Services.Repositories;
 
 public class HøjtidsKatalogRepository : RepositoryBase<HøjtidsKatalog>
 {
+    
 }
