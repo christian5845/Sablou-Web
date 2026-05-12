@@ -1,0 +1,20 @@
+﻿@page
+@model Sablou_Web.Pages.Kataloger.OpdaterKatalogModel
+@{
+}
+<form method="post">
+    <div class="form-group">
+        <label>Kataloger</label>
+
+        @foreach (var katalog in Model.Repositories.HøjtidsKatalogRepository.Data.Values)
+        {
+            <div>
+                <input type="radio" id="@katalog.Id" name="Valg" value="@katalog.Id"/>
+                <label for="@katalog.Id">@katalog.Højtidsnavn</label>
+            </div>
+        }
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>

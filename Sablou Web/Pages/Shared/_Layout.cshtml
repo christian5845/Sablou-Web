@@ -103,6 +103,19 @@
                             }
                         }
                         <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="Vores Kataloger" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                Vores Kataloger
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="Vores Kataloger">
+                                <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/SommerKatalog" asp-route-id="Sommerkatalog">Sommer Katalog</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/EfterårsKatalog" asp-route-id="EfterårsKatalog">Efterårs Katalog</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/VinterKatalog" asp-route-id="VinterKatalog">Vinter Katalog</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/ForårsKatalog" asp-route-id="ForårsKatalog">Forårs Katalog</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/OpdaterKatalog" asp-route-id="OpdaterKatalog">Opdater Katalog</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" href="#" id="menu" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
                                 Menu
@@ -110,9 +123,6 @@
                             <ul class="dropdown-menu" aria-labelledby="menu">
                                 <li><a class="dropdown-item" asp-area="" asp-page="/Produkter">Alle produkter</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-page="/Chokolader/Index">Opret chokolader</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-page="/Produkter/Details" asp-route-id="saltkaramel">Saltkaramel</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-page="/Produkter/Details" asp-route-id="signatur">Signaturmørk 75%</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-page="/Ingredienser/Alle" asp-route-id="signatur">Vores ingredienser</a></li>
                                 <li><hr class="dropdown-divider" /></li>
                                 <li><a class="dropdown-item" asp-area="" asp-page="/Brugere/BrugerOprettelse">Opret bruger</a></li>
                                 @{

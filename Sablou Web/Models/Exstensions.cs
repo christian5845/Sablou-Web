@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -45,7 +46,48 @@ public partial class Chokolade : IHarId
         Navn = navn;
         Stykpris = stykpris;
         Beskrivelse = beskrivelse;
+<<<<<<< HEAD
     }   
+=======
+    }
+
+  
+}
+public partial class Højtider : IHarId
+{
+
+>>>>>>> 9c6e00a1552442b5a0a42a2fe1070a0667e407bc
 }
 
+public partial class HøjtidsKatalog : IHarId
+{
+  
 
+    [NotMapped]
+    public string Højtidsnavn
+    {
+        get
+        {
+            if (Højtid == 1)
+            {
+                return "Vinter";
+            }
+            else if (Højtid == 2)
+            {
+                return "Sommer";
+            }
+            else if (Højtid == 3)
+            {
+                return "Forår";
+            }
+            else if (Højtid == 4)
+            {
+                return "Efterår";
+            }
+            else
+                return "tom";
+
+        }
+    }
+
+}

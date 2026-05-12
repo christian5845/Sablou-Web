@@ -11,6 +11,7 @@ namespace Sablou_Web.Models;
 public partial class Chokolade
 {
     [Key]
+    [Column("ID")]
     public int Id { get; set; }
 
     [Required]
@@ -24,10 +25,11 @@ public partial class Chokolade
     [StringLength(200)]
     public string Beskrivelse { get; set; }
 
+    public int Antal { get; set; }
+
+    [InverseProperty("Chokolade")]
+    public virtual ICollection<ChokoladerIkatalog> ChokoladerIkatalog { get; set; } = new List<ChokoladerIkatalog>();
+
     [InverseProperty("Chokolade")]
     public virtual ICollection<IngrediensListe> IngrediensListe { get; set; } = new List<IngrediensListe>();
-
-    [ForeignKey("ChokoladeId")]
-    [InverseProperty("Chokolade")]
-    public virtual ICollection<HøjtidsKatalog> Katalog { get; set; } = new List<HøjtidsKatalog>();
 }

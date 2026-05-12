@@ -47,6 +47,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Kurv]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[KurvLinje]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Ordre]",
          "ObjectType": 0
       },
