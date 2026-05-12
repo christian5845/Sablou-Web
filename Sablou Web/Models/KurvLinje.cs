@@ -8,17 +8,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Sablou_Web.Models;
 
-public partial class HøjtidsKatalog
+public partial class KurvLinje
 {
     [Key]
+    [Column("ID")]
     public int Id { get; set; }
 
-    public int? Højtid { get; set; }
+    [Column("KurvID")]
+    public int KurvId { get; set; }
 
-    [InverseProperty("Katalog")]
-    public virtual ICollection<ChokoladerIkatalog> ChokoladerIkatalog { get; set; } = new List<ChokoladerIkatalog>();
+    [Column("ChokoladeID")]
+    public int ChokoladeId { get; set; }
 
-    [ForeignKey("Højtid")]
-    [InverseProperty("HøjtidsKatalog")]
-    public virtual Højtider Højt { get; set; }
+    public int Antal { get; set; }
+
+    [ForeignKey("KurvId")]
+    [InverseProperty("KurvLinje")]
+    public virtual Kurv Kurv { get; set; }
 }

@@ -34,4 +34,7 @@ public partial class Bruger
     [Required]
     [StringLength(50)]
     public string Rolle { get; set; }
+
+    [InverseProperty("Bruger")]
+    public virtual ICollection<Kurv> Kurv { get; set; } = new List<Kurv>();
 }
