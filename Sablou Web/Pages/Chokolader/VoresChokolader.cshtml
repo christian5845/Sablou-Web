@@ -1,137 +1,144 @@
 ﻿@page
-@model Sablou_Web.Pages.Chokolader.VoresChokoladerModel
-@using System.Globalization
+@model Sablou_Web.Pages.VoresChokoladerModel
+@{
+}
 
-<h1 class="mb-4">Vores chokolader</h1>
+<style>
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 20px;
+        padding: 20px;
+    }
+</style>
 
-<div class="row mb-3 align-items-center">
-    <div class="col-md-6 mb-2">
-        <form method="get" class="d-flex">
-            <input asp-for="Search" class="form-control me-2" placeholder="Søg efter navn eller beskrivelse" />
-            <input type="hidden" asp-for="Sort" />
-            <button class="btn btn-primary" type="submit">Søg</button>
-        </form>
-    </div>
+<style>
+    .product {
+        aspect-ratio: 1 / 1;
+        background: #fff;
+        border-radius: 12px;
+        padding: 16px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+</style>
 
-    <div class="col-md-3 mb-2">
-        <select class="form-select" asp-for="Sort" onchange="this.form ? this.form.submit() : null">
-            <option value="name" selected="@(Model.Sort == "name")">Sorter: Navn A-Z</option>
-            <option value="name_desc" selected="@(Model.Sort == "name_desc")">Sorter: Navn Z-A</option>
-            <option value="price_asc" selected="@(Model.Sort == "price_asc")">Sorter: Pris lav → høj</option>
-            <option value="price_desc" selected="@(Model.Sort == "price_desc")">Sorter: Pris høj → lav</option>
-        </select>
-    </div>
+<main class="page-content container">
 
-    <div class="col-md-3 text-end">
-        <small class="text-muted">Viser side @Model.Page af @Model.TotalPages</small>
-    </div>
-</div>
+    <!-- Footer -->
+    <footer class="site-footer" role="contentinfo">
 
-<div class="row">
-    @foreach (var c in Model.Chokolader)
-    {
-        <div class="col-sm-6 col-md-4 mb-4">
-            <div class="card h-100 shadow-sm">
-                <img src="~/images/chokolade.jpg"
-                     class="card-img-top"
-                     alt="@c.Navn"
-                     loading="lazy"
-                     style="object-fit: cover; height: 180px;" />
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title mb-1">@c.Navn</h5>
-                    <p class="text-muted small mb-2">@(
-                        string.IsNullOrWhiteSpace(c.Beskrivelse) ? "Ingen beskrivelse" 
-                        : (c.Beskrivelse.Length > 90 ? c.Beskrivelse.Substring(0, 90) + "…" : c.Beskrivelse)
-                    )</p>
+        <div>
+            © @DateTime.Now.Year Sablou — All rights reserved.
+        </div>
 
-                    <div class="mt-auto d-flex justify-content-between align-items-center">
-                        <div>
-                            <span class="badge bg-success fs-6">@string.Format(CultureInfo.GetCultureInfo("da-DK"), "{0:0.00} kr.", c.Stykpris)</span>
-                        </div>
+        <div class="footer-links">
 
-                        <div class="btn-group">
-                            <a class="btn btn-sm btn-outline-primary" asp-page="/Chokolader/Informaiton" asp-route-id="@c.Id">Læs mere</a>
-                            <button type="button"
-                                    class="btn btn-sm btn-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#quickViewModal"
-                                    data-id="@c.Id"
-                                    data-name="@c.Navn"
-                                    data-price="@c.Stykpris"
-                                    data-desc="@c.Beskrivelse">
-                                Hurtig visning
-                            </button>
-                        </div>
+            <a href="https://www.instagram.com/sablou_cph/?hl=da"
+                   target="_blank"
+                   class="instagram-icon-link">
+
+                <img src="~/images/insta.png" alt="Instagram" />
+            </a>
+
+            <span>·</span>
+
+            <a href="/om">Om os</a>
+
+        </div>
+
+    </footer>
+</main>
+
+<style>
+    .site-footer {
+        position: relative; /* ensure footer can sit above fixed hero */
+        z-index: auto; /* higher than .hero-full (900) so footer appears on top */
+        background: #0f1720;
+        color: #e6eef8;
+        padding: 1.25rem 1rem;
+        text-align: center;
+        font-size: 0.95rem;
+        border-top: 1px solid rgba(255,255,255,0.04);
+    }
+
+        .site-footer a {
+            color: #e6eef8;
+            text-decoration: underline;
+            opacity: 0.9;
+        }
+
+    .site-footer {
+        padding: 2rem 0;
+        text-align: center;
+    }
+
+    .footer-links {
+        margin-top: 0.7rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 14px;
+        font-size: 0.95rem;
+    }
+
+    .instagram-icon-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        line-height: 0;
+    }
+
+        .instagram-icon-link img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+            .instagram-icon-link img:hover {
+                transform: scale(1.12);
+            }
+
+    .footer-links a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+</style>
+  
+<body>
+
+    <div class="product-grid">
+        @foreach (var c in Model.Repositories.ChokoladeRepository.Data.Values)
+        {
+            <div class="product">
+       
+                <div class="row" style="width: 10rem; height: 10rem">
+                    <div class="col">
+                        vis billede her
+                    </div>
+                    <div class="col">
+                        <h1>@c.Navn</h1>
+                        @c.Beskrivelse
                     </div>
                 </div>
+      
+                <div class="row">
+                    <a class="btn btn-primary btn-sm" type="button" title="Kignærmere" asp-page="Produktside" asp-route-id="@c.Id">Kig nærmere </a>
+                </div>
+                <div class="btn-group">
+                    <form method="post" asp-page="/Kurve/Kurv" asp-page-handler="TilføjTilKurv">
+                        <input type="hidden" name="chokoladeId" value="@c.Id" />
+                        <button type="submit" class="btn btn-sm btn-success">🛒 Læg i kurv</button>
+                    </form>
+                </div>
             </div>
-        </div>
-    }
-</div>
 
-@* Pagination *@
-@if (Model.TotalPages > 1)
-{
-    <nav aria-label="Side-navigation">
-        <ul class="pagination justify-content-center">
-            <li class="page-item @(Model.Page == 1 ? "disabled" : "")">
-                <a class="page-link" asp-route-Page="@(Model.Page - 1)" asp-route-Search="@Model.Search" asp-route-Sort="@Model.Sort">Forrige</a>
-            </li>
-            @for (int i = 1; i <= Model.TotalPages; i++)
-            {
-                <li class="page-item @(Model.Page == i ? "active" : "")">
-                    <a class="page-link" asp-route-Page="@i" asp-route-Search="@Model.Search" asp-route-Sort="@Model.Sort">@i</a>
-                </li>
-            }
-            <li class="page-item @(Model.Page == Model.TotalPages ? "disabled" : "")">
-                <a class="page-link" asp-route-Page="@(Model.Page + 1)" asp-route-Search="@Model.Search" asp-route-Sort="@Model.Sort">Næste</a>
-            </li>
-        </ul>
-    </nav>
-}
-
-@* Quick view modal *@
-<div class="modal fade" id="quickViewModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="quickViewTitle">Produkt</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Luk"></button>
-      </div>
-      <div class="modal-body">
-        <div class="row g-3">
-            <div class="col-md-5">
-                <img id="quickViewImage" src="~/images/chokolade.jpg" class="img-fluid" alt="Produktbillede" />
-            </div>
-            <div class="col-md-7">
-                <h4 id="quickViewName"></h4>
-                <p id="quickViewPrice" class="fw-bold text-success"></p>
-                <p id="quickViewDesc"></p>
-                <a id="quickViewDetails" class="btn btn-outline-primary" href="#">Se fuld info</a>
-            </div>
-        </div>
-      </div>
+        }
     </div>
-  </div>
-</div>
-
-@section Scripts {
-    <script>
-        (function () {
-            var quickModal = document.getElementById('quickViewModal');
-            quickModal.addEventListener('show.bs.modal', function (event) {
-                var button = event.relatedTarget;
-                var id = button.getAttribute('data-id');
-                var name = button.getAttribute('data-name') || '';
-                var price = parseFloat(button.getAttribute('data-price')) || 0;
-                var desc = button.getAttribute('data-desc') || '';
-
-                document.getElementById('quickViewTitle').textContent = name;
-                document.getElementById('quickViewName').textContent = name;
-                document.getElementById('quickViewPrice').textContent = price.toLocaleString('da-DK', { minimumFractionDigits: 2 }) + ' kr.';
-                document.getElementById('quickViewDesc').textContent = desc;
-                document.getElementById('quickViewDetails').setAttribute('href', '/Chokolader/Informaiton/' + id);
-            });
-        })();
-    </script>
-}
+</body>
