@@ -1,5 +1,5 @@
 ﻿@page
-@model Sablou_Web.Pages.Kurv.KurvModel
+@model Sablou_Web.Pages.Kurve.KurvModel
 @using Sablou_Web.Pages.BrugerLogin
 @{
     ViewData["Title"] = "Din kurv";
@@ -74,3 +74,8 @@
         </div>
     </div>
 </div>
+
+@foreach (var b in Model.KurvLinje)
+{
+    <td>@b.Kurv</td>
+}
