@@ -17,6 +17,8 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.AuthorizeFolder("/Chokolader");
    
 });
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
 
 
 
@@ -47,6 +49,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseSession();
 app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
