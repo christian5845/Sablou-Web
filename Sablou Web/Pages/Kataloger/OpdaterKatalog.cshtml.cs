@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sablou_Web.Services;
 
 namespace Sablou_Web.Pages.Kataloger;
-
+[Authorize(Roles = "Admin")]
 public class OpdaterKatalogModel : PageModel
 {
 

@@ -1,11 +1,15 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Build.Tasks;
 using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow;
 using Sablou_Web.Models;
 using Sablou_Web.Services;
+using Sablou_Web.Services.Repositories;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Sablou_Web.Pages.Kataloger;
+[Authorize(Roles = "Admin")]
 
 public class RedigerKatalogModel : PageModel
 {
@@ -23,6 +27,7 @@ public class RedigerKatalogModel : PageModel
         {
             return NotFound();
         }
+        Id = id;
         IdListe = new List<int>();
         foreach (var listeid in Repo.ChokoladerIKatalogRepository.Data.Values)
         {
@@ -37,9 +42,17 @@ public class RedigerKatalogModel : PageModel
     }
     public IActionResult OnPostOpdaterKatalog(int id, int cid)
     {
+        IdListe = new List<int>();
+        foreach (var listeid in Repo.ChokoladerIKatalogRepository.Data.Values)
+        {
+            if (listeid.KatalogId == id)
+            {
+                IdListe.Add(listeid.ChokoladeId);
+            }
+        }
         if (IdListe.Contains(cid))
         {
-            Repo.ChokoladerIKatalogRepository.Delete(cid);
+            DeleteMedChokoladeId(cid);
         }
         else
         {
@@ -52,5 +65,22 @@ public class RedigerKatalogModel : PageModel
     public RedigerKatalogModel(IDataService repo)
     {
         Repo = repo;
+
     }
+
+    public bool DeleteMedChokoladeId(int cid)
+    {
+        int id = 0;
+        foreach (var item in Repo.ChokoladerIKatalogRepository.Data)
+        {
+            if (item.Value.ChokoladeId == cid)
+            {
+                id = item.Key;
+            }
+
+        }
+
+        return Repo.ChokoladerIKatalogRepository.Delete(id);
+    }
+
 }
