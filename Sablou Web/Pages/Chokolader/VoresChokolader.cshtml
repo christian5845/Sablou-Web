@@ -132,13 +132,12 @@
                     <a class="btn btn-primary btn-sm" type="button" title="Kignærmere" asp-page="Produktside" asp-route-id="@c.Id">Kig nærmere </a>
                 </div>
                 <div class="btn-group">
-                    <form method="post" asp-page="/Kurve/Kurv" asp-page-handler="TilføjTilKurv">
+                    <form method="post" asp-page="/Chokolader/VoresChokolader" asp-page-handler="TilføjTilKurv">
                         <input type="hidden" name="chokoladeId" value="@c.Id" />
                         <button type="submit" class="btn btn-sm btn-success">🛒 Læg i kurv</button>
                     </form>
                 </div>
             </div>
-
         }
     </div>
 </body>
