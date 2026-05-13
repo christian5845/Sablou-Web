@@ -19,6 +19,8 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.AuthorizePage("/RedigerKatalog");
 
 });
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
 
 
 
@@ -49,6 +51,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseSession();
 app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
