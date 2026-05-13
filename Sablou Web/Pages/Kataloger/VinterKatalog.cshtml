@@ -2,3 +2,50 @@
 @model Sablou_Web.Pages.Kataloger.VinterKatalogModel
 @{
 }
+<style>
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 20px;
+        padding: 20px;
+    }
+</style>
+
+<style>
+    .product {
+        aspect-ratio: 1 / 1;
+        background: #fff;
+        border-radius: 12px;
+        padding: 16px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+</style>
+
+<body>
+
+    <div class="product-grid">
+        @foreach (var c in Model.Chokolader)
+        {
+            <div class="product">
+
+                <div class="row" style="width: 10rem; height: 10rem">
+                    <div class="col">
+                        vis billede her
+                    </div>
+                    <div class="col">
+                        <h1>@c.Navn</h1>
+                        @c.Beskrivelse
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+                    <a class="btn btn-primary btn-sm" type="button" title="Kignærmere" asp-page="Produktside" asp-route-id="@c.Id">Kig nærmere </a>
+                </div>
+
+            </div>
+
+        }
+    </div>
+</body>
