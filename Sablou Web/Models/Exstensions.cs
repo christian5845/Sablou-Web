@@ -27,7 +27,6 @@ public partial class IngrediensListe : IHarId
     }
 }
 
-
 public partial class Bruger : IHarId
 {
     public Bruger(string navn, string email, string adresse, int? telefonnummer, string password)
@@ -35,7 +34,6 @@ public partial class Bruger : IHarId
         Navn = navn; Email = email; Adresse = adresse; Telefonnummer = telefonnummer; Password = password; Rolle = "Kunde";
     }
 }
-
 
 public partial class Chokolade : IHarId
 {
@@ -48,18 +46,36 @@ public partial class Chokolade : IHarId
         Navn = navn;
         Stykpris = stykpris;
         Beskrivelse = beskrivelse;
-    }
+
+    }   
+
+
 
   
 }
 public partial class Højtider : IHarId
 {
 
+
+}
+
+public partial class ChokoladerIkatalog : IHarId
+{
+    public ChokoladerIkatalog()
+    {
+
+    }
+    public ChokoladerIkatalog(int chokoladeid, int katalogid)
+    {
+        ChokoladeId = chokoladeid;
+        KatalogId = katalogid;
+    }
 }
 
 public partial class HøjtidsKatalog : IHarId
 {
-  
+
+
 
     [NotMapped]
     public string Højtidsnavn

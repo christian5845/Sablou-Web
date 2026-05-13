@@ -2,3 +2,26 @@
 @model Sablou_Web.Pages.Kataloger.OpdaterKatalogModel
 @{
 }
+<form method="post">
+    <div class="row">
+        @foreach (var katalog in Model.Repositories.HøjtidsKatalogRepository.Data.Values)
+        {
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/chokolade.jpg" class="card-img-top" alt="@katalog.Højtidsnavn" />
+
+                    <div class="card-body">
+                        <h5 class="card-title">@katalog.Højtidsnavn</h5>
+
+                        <a class="btn btn-primary"
+                           asp-page="/Kataloger/RedigerKatalog"
+                           asp-route-id="@katalog.Id">
+                           Rediger
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+   
+</form>

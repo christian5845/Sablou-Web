@@ -11,6 +11,7 @@ public interface IDataService
     IRepository<IngrediensListe> IngrediensListeRepository { get; }
     IRepository<HøjtidsKatalog> HøjtidsKatalogRepository { get; }
     IRepository<Højtider> HøjtiderRepository { get; }
+    IRepository<ChokoladerIkatalog> ChokoladerIKatalogRepository { get; }
 
 
 }
