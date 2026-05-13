@@ -15,7 +15,9 @@ builder.Services.AddRazorPages(options =>
     // Angiv hvilke foldere login giver adgang til
     options.Conventions.AuthorizeFolder("/Ingredienser");
     options.Conventions.AuthorizeFolder("/Chokolader");
-   
+    options.Conventions.AuthorizePage("/OpdaterKatalog");
+    options.Conventions.AuthorizePage("/RedigerKatalog");
+
 });
 
 

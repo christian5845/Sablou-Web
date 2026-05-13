@@ -26,15 +26,15 @@
             <tr>
                 <td>@chokolade.Navn</td>
                 <td>
-                    <span class="badge @(bool.Equals(Model.IdListe.Contains(chokolade.Id), "Er i katalog" ) ? "bg-danger" : "bg-secondary")">
-                        @chokolade.Navn
+                    <span class="badge @((Model.IdListe.Contains(chokolade.Id)) ? "bg-success" : "bg-danger")">
+                        Er i katalog
                     </span>
                 </td>
                 <td>
                     <form method="post" class="d-inline">
                         <button type="submit" asp-page-handler="OpdaterKatalog" asp-route-id="@Model.Kataloget.Id" asp-route-cid="@chokolade.Id"
                             class="btn btn-sm btn-outline-primary me-2">
-                            @(bool.Equals(Model.IdListe.Contains(chokolade.Id), "Er i katalog") ? "Fjern" : "Tilføj")
+                            @(Model.IdListe.Contains(chokolade.Id) ? "Fjern" : "Tilføj")
                         </button>
                     </form>
                 </td>

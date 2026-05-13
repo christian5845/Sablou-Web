@@ -90,4 +90,6 @@ public abstract class RepositoryBase<T> : IRepository<T> where T : class, IHarId
             .Cast<T>()
             .ToList();
     }
+
+
 }
