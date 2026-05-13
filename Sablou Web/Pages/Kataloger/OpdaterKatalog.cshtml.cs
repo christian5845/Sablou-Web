@@ -32,8 +32,8 @@ public class OpdaterKatalogModel : PageModel
         }
     }
 
-    //public IActionResult OnPost()
-    //{
-
-    //}
+    public IActionResult OnPost()
+    {
+        return RedirectToPage();
+    }
 }

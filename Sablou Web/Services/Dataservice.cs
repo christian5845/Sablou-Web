@@ -16,6 +16,8 @@ public class Dataservice : IDataService
 
     public IRepository<Kurv> KurvRepository { get; }
 
+    public IRepository<ChokoladerIkatalog> ChokoladerIKatalogRepository { get; }
+
     public Dataservice()
     {
         IngrediensRepository = new IngrediensRepository();
@@ -26,5 +28,6 @@ public class Dataservice : IDataService
         HøjtiderRepository = new HøjtiderRepository();
         KurvRepository = new KurvRepository();
 
+        ChokoladerIKatalogRepository = new ChokoladerIKatalogRepository();
     }
 }

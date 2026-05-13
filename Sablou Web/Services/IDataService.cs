@@ -12,6 +12,7 @@ public interface IDataService
     IRepository<HøjtidsKatalog> HøjtidsKatalogRepository { get; }
     IRepository<Højtider> HøjtiderRepository { get; }
     IRepository<Kurv> KurvRepository { get; }
+    IRepository<ChokoladerIkatalog> ChokoladerIKatalogRepository { get; }
 
 
 }
