@@ -91,3 +91,17 @@ public partial class HøjtidsKatalog : IHarId
     }
 
 }
+
+public partial class Kurv : IHarId
+{
+    public Kurv()
+    { 
+    }
+}
+
+public partial class KurvLinje : IHarId
+{
+    public KurvLinje()
+    {
+    }
+}
