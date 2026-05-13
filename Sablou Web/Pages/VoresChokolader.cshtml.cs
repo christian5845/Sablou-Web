@@ -17,4 +17,5 @@ public class VoresChokoladerModel : PageModel
     public void OnGet()
     {
     }
+
 }
