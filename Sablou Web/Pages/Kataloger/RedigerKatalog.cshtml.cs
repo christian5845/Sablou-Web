@@ -13,6 +13,7 @@ namespace Sablou_Web.Pages.Kataloger;
 
 public class RedigerKatalogModel : PageModel
 {
+    public IDataService Repo { get; }
     [BindProperty]
     public int Id { get; set; }
     [BindProperty]
@@ -20,6 +21,12 @@ public class RedigerKatalogModel : PageModel
 
     [BindProperty]
     public List<int> IdListe { get; set; }
+
+    public RedigerKatalogModel(IDataService repo)
+    {
+        Repo = repo;
+
+    }
 
     public IActionResult OnGet(int id)
     {
@@ -60,27 +67,22 @@ public class RedigerKatalogModel : PageModel
         }
         return RedirectToPage(new {id});
     }
-    public IDataService Repo { get; }
-
-    public RedigerKatalogModel(IDataService repo)
-    {
-        Repo = repo;
-
-    }
-
+    
     public bool DeleteMedChokoladeId(int cid)
     {
         int id = 0;
-        foreach (var item in Repo.ChokoladerIKatalogRepository.Data)
-        {
-            if (item.Value.ChokoladeId == cid)
-            {
-                id = item.Key;
-            }
+        //foreach (var item in Repo.ChokoladerIKatalogRepository.Data)
+        //{
+        //    if (item.Value.ChokoladeId == cid)
+        //    {
+        //        id = item.Key;
+        //    }
 
-        }
+        //}
+
+        var a = Repo.ChokoladerIKatalogRepository.Data.Select(t => t).Where(t => t.Value.ChokoladeId == cid);
+        id = a.Select(t => t.Key).First();
 
         return Repo.ChokoladerIKatalogRepository.Delete(id);
     }
-
 }
