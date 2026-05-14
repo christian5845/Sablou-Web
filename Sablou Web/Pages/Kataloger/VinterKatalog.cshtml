@@ -169,15 +169,17 @@
 
                 </div>
 
-                <div class="row">
-                    <a class="btn btn-primary btn-sm" type="button" title="Kignærmere" asp-page="Produktside" asp-route-id="@c.Id">Kig nærmere </a>
-                </div>
+                <div class="container">
+                    <div class="btn-group">
+                        <a class="btn btn-sm btn-success add-to-cart-btn" type="button" title="Kignærmere" asp-page="/Produktside" asp-route-id="@c.Id">Kig nærmere </a>
+                    </div>
 
-                <div class="btn-group">
-                    <form method="post" asp-page="/Kataloger/VinterKatalog" asp-page-handler="TilføjTilKurv" class="add-to-cart-form">
-                        <input type="hidden" name="chokoladeId" value="@c.Id" />
-                        <button type="submit" class="btn btn-sm btn-success add-to-cart-btn">🛒 Læg i kurv</button>
-                    </form>
+                    <div class="btn-group">
+                        <form method="post" asp-page="/Kataloger/VinterKatalog" asp-page-handler="TilføjTilKurv" class="add-to-cart-form">
+                            <input type="hidden" name="chokoladeId" value="@c.Id" />
+                            <button type="submit" class="btn btn-sm btn-success add-to-cart-btn">🛒 Læg i kurv</button>
+                        </form>
+                    </div>
                 </div>
 
             </div>
