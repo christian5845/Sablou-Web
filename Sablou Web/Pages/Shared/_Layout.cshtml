@@ -1,4 +1,28 @@
-﻿@using Sablou_Web.Pages.BrugerLogin
+﻿@using Microsoft.AspNetCore.Http
+@using Sablou_Web.Pages.BrugerLogin
+@inject Sablou_Web.Services.IDataService DataService
+@{
+    var cartCount = 0;
+    if (LoginModel.CurrentBruger != null)
+    {
+        var kurv = DataService.KurvRepository.Data.Values.FirstOrDefault(k => k.BrugerId == LoginModel.CurrentBruger.Id);
+        if (kurv != null)
+        {
+            cartCount = DataService.KurvLinjeRepository.Data.Values
+                .Where(l => l.KurvId == kurv.Id)
+                .Sum(l => l.Antal);
+        }
+    }
+    else
+    {
+        var guestCartJson = Context.Session.GetString("GæsteKurv");
+        if (!string.IsNullOrWhiteSpace(guestCartJson))
+        {
+            var guestCart = System.Text.Json.JsonSerializer.Deserialize<List<Sablou_Web.Models.KurvLinje>>(guestCartJson);
+            cartCount = guestCart?.Sum(l => l.Antal) ?? 0;
+        }
+    }
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,6 +66,49 @@
                 margin-top: 2px;
                 line-height: 1;
             }
+
+        .cart-link {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding-right: 0.75rem !important;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -0.25rem;
+            right: -0.15rem;
+            min-width: 1.25rem;
+            height: 1.25rem;
+            padding: 0 0.35rem;
+            border-radius: 999px;
+            background: #dc3545;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            line-height: 1.25rem;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.35);
+            animation: cart-badge-pop 220ms ease-out;
+        }
+
+        @@keyframes cart-badge-pop {
+            0% {
+                transform: scale(0.6);
+                opacity: 0;
+            }
+
+            70% {
+                transform: scale(1.12);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body>
@@ -68,8 +135,12 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Chokolader/VoresChokolader">Vores Chokolader</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Kurve/Kurv">
+                            <a class="nav-link text-dark cart-link" asp-area="" asp-page="/Kurve/Kurv">
                                 🛒 
+                                @if (cartCount > 0)
+                                {
+                                    <span class="cart-badge" aria-label="@cartCount varer i kurven">@cartCount</span>
+                                }
                             </a>
                         </li>
                         @{

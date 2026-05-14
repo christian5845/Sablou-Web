@@ -67,6 +67,7 @@ public class VoresChokoladerModel : PageModel
             GemSessionData(kurv);
         }
 
+        TempData["CartFeedback"] = "Varen er lagt i kurven.";
         return RedirectToPage();
     }
     private List<KurvLinje> HentSessionData()

@@ -10,6 +10,50 @@
         gap: 20px;
         padding: 20px;
     }
+
+    .cart-feedback {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 1rem 20px 0;
+        padding: 0.9rem 1rem;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #e8fff1, #d9fbe8);
+        color: #14532d;
+        border: 1px solid #86efac;
+        box-shadow: 0 8px 20px rgba(20, 83, 45, 0.12);
+        font-weight: 600;
+        animation: cart-feedback-in 180ms ease-out, cart-feedback-glow 1.4s ease-in-out infinite;
+    }
+
+    .cart-feedback-icon {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #16a34a;
+        color: white;
+        flex: 0 0 auto;
+    }
+
+    .cart-feedback-text {
+        flex: 1;
+    }
+
+    @@keyframes cart-feedback-in {
+        from {
+            opacity: 0;
+            transform: translateY(-6px) scale(0.99);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
 </style>
 
 <style>
@@ -20,9 +64,80 @@
         padding: 16px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
+
+    .add-to-cart-btn {
+        transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, filter 0.15s ease;
+        min-width: 10rem;
+        font-weight: 700;
+        border-radius: 999px;
+        box-shadow: 0 4px 12px rgba(25, 135, 84, 0.18);
+    }
+
+    .add-to-cart-btn:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.03);
+        box-shadow: 0 8px 18px rgba(25, 135, 84, 0.24);
+    }
+
+    .add-to-cart-btn.is-animating {
+        animation: cart-success-pulse 520ms ease-out;
+    }
+
+    .add-to-cart-btn.is-loading {
+        transform: scale(0.97);
+        box-shadow: 0 0 0 0.25rem rgba(15, 157, 88, 0.24), 0 8px 18px rgba(15, 157, 88, 0.25);
+        background-color: #0f9d58;
+        border-color: #0f9d58;
+        color: white;
+    }
+
+    .add-to-cart-btn.is-loading::after {
+        content: "";
+        display: inline-block;
+        width: 0.85rem;
+        height: 0.85rem;
+        margin-left: 0.55rem;
+        border: 2px solid rgba(255,255,255,0.55);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: cart-spinner 0.8s linear infinite;
+        vertical-align: -0.12rem;
+    }
+
+    @@keyframes cart-feedback-glow {
+        0%, 100% {
+            box-shadow: 0 8px 20px rgba(20, 83, 45, 0.12);
+        }
+
+        50% {
+            box-shadow: 0 10px 26px rgba(20, 83, 45, 0.18);
+        }
+    }
+
+    @@keyframes cart-success-pulse {
+        0% { transform: scale(1); }
+        40% { transform: scale(1.03); }
+        100% { transform: scale(1); }
+    }
+
+    @@keyframes cart-spinner {
+        to {
+            transform: rotate(360deg);
+        }
+    }
 </style>
 
 <main class="page-content container">
+
+    @{ var cartFeedback = TempData["CartFeedback"] as string; }
+
+    @if (!string.IsNullOrWhiteSpace(cartFeedback))
+    {
+        <div class="cart-feedback" role="status" aria-live="polite">
+            <span class="cart-feedback-icon">✓</span>
+            <span class="cart-feedback-text">@cartFeedback</span>
+        </div>
+    }
 
     <!-- Footer -->
     <footer class="site-footer" role="contentinfo">
@@ -132,9 +247,9 @@
                     <a class="btn btn-primary btn-sm" type="button" title="Kignærmere" asp-page="Produktside" asp-route-id="@c.Id">Kig nærmere </a>
                 </div>
                 <div class="btn-group">
-                    <form method="post" asp-page="/Chokolader/VoresChokolader" asp-page-handler="TilføjTilKurv">
+                    <form method="post" asp-page="/Chokolader/VoresChokolader" asp-page-handler="TilføjTilKurv" class="add-to-cart-form">
                         <input type="hidden" name="chokoladeId" value="@c.Id" />
-                        <button type="submit" class="btn btn-sm btn-success">🛒 Læg i kurv</button>
+                        <button type="submit" class="btn btn-sm btn-success add-to-cart-btn">🛒 Læg i kurv</button>
                     </form>
                 </div>
             </div>
