@@ -103,6 +103,68 @@ namespace Sablou_Web.Pages.Kurve
             return RedirectToPage();
         }
 
+        public IActionResult OnPostOpretAntal(int chokoladeId)
+        {
+            JusterAntal(chokoladeId, 1);
+            return RedirectToPage();
+        }
+
+        public IActionResult OnPostReducerAntal(int chokoladeId)
+        {
+            JusterAntal(chokoladeId, -1);
+            return RedirectToPage();
+        }
+
+        private void JusterAntal(int chokoladeId, int antalSkift)
+        {
+            var bruger = LoginModel.CurrentBruger;
+
+            if (bruger != null)
+            {
+                var kurv = _repo.KurvRepository.Data.Values
+                    .FirstOrDefault(k => k.BrugerId == bruger.Id);
+
+                if (kurv == null)
+                    return;
+
+                var linje = _repo.KurvLinjeRepository.Data.Values
+                    .FirstOrDefault(l => l.KurvId == kurv.Id && l.ChokoladeId == chokoladeId);
+
+                if (linje == null)
+                {
+                    return;
+                }
+
+                linje.Antal += antalSkift;
+                if (linje.Antal <= 0)
+                {
+                    _repo.KurvLinjeRepository.Delete(linje.Id);
+                }
+                else
+                {
+                    _repo.KurvLinjeRepository.Update(linje);
+                }
+            }
+            else
+            {
+                var kurv = HentSessionData();
+                var linje = kurv.FirstOrDefault(l => l.ChokoladeId == chokoladeId);
+
+                if (linje == null)
+                {
+                    return;
+                }
+
+                linje.Antal += antalSkift;
+                if (linje.Antal <= 0)
+                {
+                    kurv.RemoveAll(l => l.ChokoladeId == chokoladeId);
+                }
+
+                GemSessionData(kurv);
+            }
+        }
+
         private List<KurvLinjeViewModel> HentKurvLinjer()
         {
             var bruger = LoginModel.CurrentBruger;

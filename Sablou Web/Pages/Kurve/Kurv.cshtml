@@ -11,10 +11,58 @@
 
     @if (!Model.KurvLinjer.Any())
     {
-        <p class="text-muted">Din kurv er tom. <a asp-page="/VoresChokolader">Se vores chokolader</a></p>
+        <p class="text-muted">Din kurv er tom. <a asp-page="/Chokolader/VoresChokolader">Se vores chokolader</a></p>
     }
     else
     {
+        <style>
+            .qty-controls {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
+                background: #f8f9fa;
+                border-radius: 999px;
+                padding: 0.25rem;
+                border: 1px solid rgba(0,0,0,0.08);
+            }
+
+            .qty-btn {
+                width: 2rem;
+                height: 2rem;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 999px;
+                border: none;
+                background: white;
+                color: #212529;
+                font-weight: 700;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+                transition: transform 0.12s ease, background-color 0.12s ease, box-shadow 0.12s ease;
+            }
+
+            .qty-btn:hover {
+                transform: translateY(-1px);
+                background: #e9ecef;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+            }
+
+            .qty-value {
+                min-width: 2rem;
+                text-align: center;
+                font-weight: 700;
+            }
+
+            .remove-btn {
+                border: none;
+                background: transparent;
+                color: #dc3545;
+                font-size: 1.2rem;
+                line-height: 1;
+                padding: 0.25rem 0.4rem;
+            }
+        </style>
+
         <div class="row">
             <div class="col-md-8">
                 @foreach (var linje in Model.KurvLinjer)
@@ -25,11 +73,24 @@
                                 <h5 class="mb-1">@linje.Navn</h5>
                                 <small class="text-muted">@string.Format(CultureInfo.GetCultureInfo("da-DK"), "{0:0.00} kr.", linje.Stykpris) stk.</small>
                             </div>
-                            <span class="fw-bold">Antal: @linje.Antal</span>
+                            <!-- Justering og visning af antal -->
+                            <div class="qty-controls" aria-label="Antal for @linje.Navn">
+                                <form method="post" asp-page-handler="ReducerAntal" class="m-0">
+                                    <input type="hidden" name="chokoladeId" value="@linje.ChokoladeId" />
+                                    <button type="submit" class="qty-btn" aria-label="Reducer antal">−</button>
+                                </form>
+
+                                <span class="qty-value">@linje.Antal</span>
+
+                                <form method="post" asp-page-handler="OpretAntal" class="m-0">
+                                    <input type="hidden" name="chokoladeId" value="@linje.ChokoladeId" />
+                                    <button type="submit" class="qty-btn" aria-label="Øg antal">+</button>
+                                </form>
+                            </div>
                             <div class="fw-bold">@string.Format(CultureInfo.GetCultureInfo("da-DK"), "{0:0.00} kr.", linje.Subtotal)</div>
                             <form method="post" asp-page-handler="Fjern">
                                 <input type="hidden" name="chokoladeId" value="@linje.ChokoladeId" />
-                                <button type="submit" class="btn btn-link text-danger p-0">✕</button>
+                                <button type="submit" class="remove-btn" aria-label="Fjern vare">✕</button>
                             </form>
                         </div>
                     </div>
