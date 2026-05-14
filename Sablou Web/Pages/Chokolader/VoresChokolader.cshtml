@@ -219,10 +219,14 @@
                         @c.Beskrivelse
                     </div>
                 </div>
-      
-                <div class="row">
-                    <a class="btn btn-primary btn-sm" type="button" title="Kignærmere" asp-page="Produktside" asp-route-id="@c.Id">Kig nærmere </a>
-                </div>
+
+                <a class="btn btn-primary btn-sm"
+                   type="button"
+                   title="Kignærmere"
+                   asp-page="/Produktside"
+                   asp-route-id="@c.Id">
+                    Kig nærmere
+                </a>
                 <div class="btn-group">
                     <form method="post" asp-page="/Chokolader/VoresChokolader" asp-page-handler="TilføjTilKurv" class="add-to-cart-form">
                         <input type="hidden" name="chokoladeId" value="@c.Id" />

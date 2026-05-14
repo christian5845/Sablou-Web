@@ -39,10 +39,39 @@
 
                 var ingredienser = Model.Repositories.IngrediensRepository.Data.Values
                 .Where(i => ingrediensIds.Contains(i.Id))
-                .Select(i => i.Navn);
+                .ToList();
             }
 
-            <p>@string.Join(", ", ingredienser)</p>
+            @if (ingredienser.Any())
+            {
+                <ul class="list-group mt-3">
+                    @foreach (var ingrediens in ingredienser)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>
+                                <strong>@ingrediens.Navn</strong>
+                                @if (!string.IsNullOrWhiteSpace(ingrediens.Beskrivelse))
+                                {
+                                    <span class="text-muted">- @ingrediens.Beskrivelse</span>
+                                }
+                            </span>
+
+                            @if (Sablou_Web.Pages.BrugerLogin.LoginModel.CurrentBruger?.Rolle == "Admin")
+                            {
+                                <a class="btn btn-sm btn-outline-primary"
+                                   asp-page="/Ingredienser/Opdater"
+                                   asp-route-id="@ingrediens.Id">
+                                    Rediger ingrediens
+                                </a>
+                            }
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>Ingen ingredienser fundet.</p>
+            }
         </div>
     </div>
 </tbody>

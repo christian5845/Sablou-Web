@@ -150,15 +150,21 @@
                             </a>
                         </li>
                         @{
-                            if (LoginModel.CurrentBruger != null)
+                            @if (LoginModel.CurrentBruger != null)
                             {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/RedigerProfil/MinSide">
+                                        Min Side
+                                    </a>
+                                </li>
+
                                 <li class="nav-item nav-link text-dark me-3">
                                     <span>User:</span> <span><b>@LoginModel.CurrentBruger.Email</b></span>
                                 </li>
                             }
-                        
                         }
                         @{
+
                             // Vis kunne dette menu-punkt, hvis en User med "admin"-rolle er logget ind
                             if (LoginModel.CurrentBruger?.Rolle == "Admin" /*Context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value == "admin"*/)
                             {
@@ -208,6 +214,7 @@
                                         <li><a class="dropdown-item" asp-area="" asp-page="/BrugerLogin/Logout" >Log ud</a></li>
                                     }
                                 }
+
                             </ul>
                         </li>
                     </ul>

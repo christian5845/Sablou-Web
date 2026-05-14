@@ -18,7 +18,11 @@ namespace Sablou_Web.Pages.Brugere
         [BindProperty]
         public string Navn { get; set; }
 
+
         [BindProperty]
+        //Validerer om emailen ligner en rigtig email.
+        [Required(ErrorMessage = "Email skal udfyldes")]
+        [EmailAddress(ErrorMessage = "Indtast en gyldig emailadresse")]
         public string Email { get; set; }
 
         [BindProperty]

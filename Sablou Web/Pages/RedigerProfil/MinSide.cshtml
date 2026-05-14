@@ -1,0 +1,39 @@
+﻿@page
+@model Sablou_Web.Pages.RedigerProfil.MinSideModel
+
+<h1 class="display-5 mb-4">Min side</h1>
+
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h4 class="mb-0">Mine oplysninger</h4>
+    </div>
+
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Navn</dt>
+            <dd class="col-sm-9">@Model.Bruger.Navn</dd>
+
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9">@Model.Bruger.Email</dd>
+
+            <dt class="col-sm-3">Adresse</dt>
+            <dd class="col-sm-9">@Model.Bruger.Adresse</dd>
+
+            <dt class="col-sm-3">Telefon</dt>
+            <dd class="col-sm-9">
+                @(Model.Bruger.Telefonnummer?.ToString() ?? "Ikke angivet")
+            </dd>
+
+            <dt class="col-sm-3">Rolle</dt>
+            <dd class="col-sm-9">
+                <span class="badge @(Model.Bruger.Rolle == "Admin" ? "bg-danger" : "bg-secondary")">
+                    @Model.Bruger.Rolle
+                </span>
+            </dd>
+        </dl>
+
+        <a asp-area="" asp-page="/RedigerProfil/RedigerProfil" class="btn btn-outline-primary">
+            Rediger profil
+        </a>
+    </div>
+</div>
