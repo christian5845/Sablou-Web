@@ -93,6 +93,12 @@
             animation: cart-badge-pop 220ms ease-out;
         }
 
+        .dropdown-header {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: black;
+        }
+
         @@keyframes cart-badge-pop {
             0% {
                 transform: scale(0.6);
@@ -174,25 +180,20 @@
                             }
                         }
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="Vores Kataloger" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                Højtider
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="Vores Kataloger">
-                                <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/SommerKatalog" asp-route-id="Sommerkatalog">Sommer</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/EfterårsKatalog" asp-route-id="EfterårsKatalog">Efterår</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/VinterKatalog" asp-route-id="VinterKatalog">Vinter</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/ForårsKatalog" asp-route-id="ForårsKatalog">Forår</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/OpdaterKatalog" asp-route-id="OpdaterKatalog">Opdater Katalog</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" href="#" id="menu" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
                                 Menu
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="menu">
                                 <li><a class="dropdown-item" asp-area="" asp-page="/Produkter">Alle produkter</a></li>
+                                <li <h5 style="" class="dropdown-header">Højtider </h5> </li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/SommerKatalog" asp-route-id="Sommerkatalog">- Påske</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/EfterårsKatalog" asp-route-id="EfterårsKatalog">- Mors dag</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/VinterKatalog" asp-route-id="VinterKatalog">- Fars dag</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/ForårsKatalog" asp-route-id="ForårsKatalog">- Halloween</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/OpdaterKatalog" asp-route-id="OpdaterKatalog">Opdater Katalog</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-page="/Chokolader/Index">Opret chokolader</a></li>
                                 <li><hr class="dropdown-divider" /></li>
                                 <li><a class="dropdown-item" asp-area="" asp-page="/Brugere/BrugerOprettelse">Opret bruger</a></li>

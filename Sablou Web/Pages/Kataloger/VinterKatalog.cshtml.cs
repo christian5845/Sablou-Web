@@ -10,7 +10,7 @@ namespace Sablou_Web.Pages.Kataloger;
 public class VinterKatalogModel : KatalogBase
 {
     public IDataService Repo { get; }
-    protected override string Højtidsnavn => "Vinter";
+    protected override string Højtidsnavn => "Halloween";
     private const string SessionKey = "GæsteKurv";
 
     public VinterKatalogModel(IDataService repo) : base(repo)
