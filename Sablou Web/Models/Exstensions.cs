@@ -84,19 +84,19 @@ public partial class HøjtidsKatalog : IHarId
         {
             if (Højtid == 1)
             {
-                return "Vinter";
+                return "Påske";
             }
             else if (Højtid == 2)
             {
-                return "Sommer";
+                return "Mors dag";
             }
             else if (Højtid == 3)
             {
-                return "Forår";
+                return "Fars dag";
             }
             else if (Højtid == 4)
             {
-                return "Efterår";
+                return "Halloween";
             }
             else
                 return "tom";
