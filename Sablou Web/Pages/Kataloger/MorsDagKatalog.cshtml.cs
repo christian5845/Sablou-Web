@@ -7,13 +7,13 @@ using System.Text.Json;
 
 namespace Sablou_Web.Pages.Kataloger;
 
-public class VinterKatalogModel : KatalogBase
+public class MorsDagKatalogModel : KatalogBase
 {
     public IDataService Repo { get; }
-    protected override string Højtidsnavn => "Halloween";
-    private const string SessionKey = "GæsteKurv";
+    protected override string HÃ¸jtidsnavn => "Mors dag";
+    private const string SessionKey = "GÃ¦steKurv";
 
-    public VinterKatalogModel(IDataService repo) : base(repo)
+    public MorsDagKatalogModel(IDataService repo) : base(repo)
     {
     }
 
@@ -22,7 +22,7 @@ public class VinterKatalogModel : KatalogBase
     {
     }
 
-    public IActionResult OnPostTilføjTilKurv(int chokoladeId)
+    public IActionResult OnPostTilfÃ¸jTilKurv(int chokoladeId)
     {
         var bruger = LoginModel.CurrentBruger;
 
@@ -59,7 +59,7 @@ public class VinterKatalogModel : KatalogBase
         }
         else
         {
-            // Gæst – gem i session
+            // GÃ¦st â€“ gem i session
             var kurv = HentSessionData();
             var linje = kurv.FirstOrDefault(l => l.ChokoladeId == chokoladeId);
             if (linje != null)
@@ -86,6 +86,5 @@ public class VinterKatalogModel : KatalogBase
     }
 
 
+
 }
-
-

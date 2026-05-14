@@ -3,26 +3,28 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sablou_Web.Models;
 using Sablou_Web.Pages.BrugerLogin;
 using Sablou_Web.Services;
+using Sablou_Web.Services.Repositories;
 using System.Text.Json;
+
 
 namespace Sablou_Web.Pages.Kataloger;
 
-public class SommerKatalogModel : KatalogBase
+public class PÃ¥skeKatalogModel : KatalogBase
 {
     public IDataService Repo { get; }
-    protected override string Højtidsnavn => "Fars dag";
-    private const string SessionKey = "GæsteKurv";
+    protected override string HÃ¸jtidsnavn => "PÃ¥ske";
+    private const string SessionKey = "GÃ¦steKurv";
 
-    public SommerKatalogModel(IDataService repo) : base(repo)
+    public PÃ¥skeKatalogModel(IDataService repo) : base(repo)
     {
     }
 
-
+    
     public void OnGet()
     {
     }
 
-    public IActionResult OnPostTilføjTilKurv(int chokoladeId)
+    public IActionResult OnPostTilfÃ¸jTilKurv(int chokoladeId)
     {
         var bruger = LoginModel.CurrentBruger;
 
@@ -59,7 +61,7 @@ public class SommerKatalogModel : KatalogBase
         }
         else
         {
-            // Gæst – gem i session
+            // GÃ¦st â€“ gem i session
             var kurv = HentSessionData();
             var linje = kurv.FirstOrDefault(l => l.ChokoladeId == chokoladeId);
             if (linje != null)
@@ -86,6 +88,4 @@ public class SommerKatalogModel : KatalogBase
     }
 
 
-
 }
-

@@ -3,28 +3,26 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sablou_Web.Models;
 using Sablou_Web.Pages.BrugerLogin;
 using Sablou_Web.Services;
-using Sablou_Web.Services.Repositories;
 using System.Text.Json;
-
 
 namespace Sablou_Web.Pages.Kataloger;
 
-public class EfterårsKatalogModel : KatalogBase
+public class HalloweenKatalogModel : KatalogBase
 {
     public IDataService Repo { get; }
-    protected override string Højtidsnavn => "Påske";
-    private const string SessionKey = "GæsteKurv";
+    protected override string H�jtidsnavn => "Halloween";
+    private const string SessionKey = "G�steKurv";
 
-    public EfterårsKatalogModel(IDataService repo) : base(repo)
+    public HalloweenKatalogModel(IDataService repo) : base(repo)
     {
     }
 
-    
+
     public void OnGet()
     {
     }
 
-    public IActionResult OnPostTilføjTilKurv(int chokoladeId)
+    public IActionResult OnPostTilf�jTilKurv(int chokoladeId)
     {
         var bruger = LoginModel.CurrentBruger;
 
@@ -61,7 +59,7 @@ public class EfterårsKatalogModel : KatalogBase
         }
         else
         {
-            // Gæst – gem i session
+            // G�st � gem i session
             var kurv = HentSessionData();
             var linje = kurv.FirstOrDefault(l => l.ChokoladeId == chokoladeId);
             if (linje != null)
@@ -89,3 +87,5 @@ public class EfterårsKatalogModel : KatalogBase
 
 
 }
+
+
