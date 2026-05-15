@@ -9,7 +9,8 @@ namespace Sablou_Web.Pages.Kataloger;
 
 public class HalloweenKatalogModel : KatalogBase
 {
-    public IDataService Repo { get; }
+
+    public IDataService Repo { get; set; }
     protected override string Højtidsnavn => "Halloween";
     private const string SessionKey = "GæsteKurv";
 
@@ -24,6 +25,7 @@ public class HalloweenKatalogModel : KatalogBase
 
     public IActionResult OnPostTilføjTilKurv(int chokoladeId)
     {
+        Repo = new Dataservice();
         var bruger = LoginModel.CurrentBruger;
 
         if (bruger != null)

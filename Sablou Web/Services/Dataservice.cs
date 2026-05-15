@@ -29,7 +29,6 @@ public class Dataservice : IDataService
         HøjtiderRepository = new HøjtiderRepository();
         KurvRepository = new KurvRepository();
         KurvLinjeRepository = new KurvLinjeRepository();
-
         ChokoladerIKatalogRepository = new ChokoladerIKatalogRepository();
     }
 }

@@ -11,12 +11,13 @@ namespace Sablou_Web.Pages.Kataloger;
 
 public class PåskeKatalogModel : KatalogBase
 {
-    public IDataService Repo { get; }
+    public IDataService Repo { get; set; }
     protected override string Højtidsnavn => "Påske";
     private const string SessionKey = "GæsteKurv";
 
     public PåskeKatalogModel(IDataService repo) : base(repo)
     {
+
     }
 
     
@@ -26,6 +27,7 @@ public class PåskeKatalogModel : KatalogBase
 
     public IActionResult OnPostTilføjTilKurv(int chokoladeId)
     {
+        Repo = new Dataservice();
         var bruger = LoginModel.CurrentBruger;
 
         if (bruger != null)
