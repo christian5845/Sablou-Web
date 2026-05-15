@@ -37,8 +37,6 @@ public partial class cralle_dk_db_sablouContext : DbContext
 
     public virtual DbSet<Ordre> Ordre { get; set; }
 
-    public virtual DbSet<OrdreLinje> OrdreLinje { get; set; }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Data Source=mssql13.unoeuro.com;Initial Catalog=cralle_dk_db_sablou;Persist Security Info=True;User ID=cralle_dk;Password=mDz296f5FegxdnrhG3EA;Encrypt=True");
@@ -128,7 +126,9 @@ public partial class cralle_dk_db_sablouContext : DbContext
 
             entity.Property(e => e.Id).ValueGeneratedNever();
 
-            entity.HasOne(d => d.Kurv).WithMany(p => p.KurvLinje).HasConstraintName("FK_KurvLinje_Kurv");
+            entity.HasOne(d => d.Kurv).WithMany(p => p.KurvLinje)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_KurvLinje_Kurv");
         });
 
         modelBuilder.Entity<Ordre>(entity =>
@@ -136,15 +136,10 @@ public partial class cralle_dk_db_sablouContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK__Ordre__3214EC078C58FAB4");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
-        });
-
-        modelBuilder.Entity<OrdreLinje>(entity =>
-        {
-            entity.HasKey(e => new { e.ChokoladeId, e.OrdreId }).HasName("PK__OrdreLin__58E4A1147A4D30C3");
-
-            entity.HasOne(d => d.Ordre).WithMany(p => p.OrdreLinje)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_OrdreId");
+            entity.Property(e => e.Adresse).HasDefaultValue("");
+            entity.Property(e => e.Dato).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.Email).HasDefaultValue("");
+            entity.Property(e => e.Navn).HasDefaultValue("");
         });
 
         OnModelCreatingPartial(modelBuilder);

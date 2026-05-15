@@ -15,7 +15,7 @@ public partial class KurvLinje
     public int Id { get; set; }
 
     [Column("KurvID")]
-    public int KurvId { get; set; }
+    public int? KurvId { get; set; }
 
     [Column("ChokoladeID")]
     public int ChokoladeId { get; set; }

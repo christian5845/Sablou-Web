@@ -119,3 +119,10 @@ public partial class KurvLinje : IHarId
     {
     }
 }
+
+public partial class Ordre : IHarId
+{
+    public Ordre()
+    {
+    }
+}

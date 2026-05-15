@@ -1,0 +1,28 @@
+﻿@page
+@{
+    ViewData["Title"] = "Bestilling bekræftet";
+    var navn = TempData["BestillingNavn"]?.ToString() ?? "kunde";
+    var kurvId = TempData["BestillingId"]?.ToString() ?? "";
+}
+
+<div class="container py-5 text-center" style="max-width: 600px;">
+    <div class="mb-4" style="font-size: 4rem;">🍫</div>
+    <h2 class="fw-bold mb-2">Tak for din bestilling, @navn!</h2>
+    <p class="text-muted mb-1">Din ordre er modtaget og behandles hurtigst muligt.</p>
+    @if (!string.IsNullOrEmpty(kurvId))
+    {
+        <p class="text-muted small">Ordre-ID: <code>@kurvId</code></p>
+    }
+    <div class="alert alert-success mt-4 text-start">
+        <strong>Hvad sker der nu?</strong>
+        <ul class="mb-0 mt-2">
+            <li>Vi sender en bekræftelse til din e-mail</li>
+            <li>Ordren pakkes og afsendes inden for 1–2 hverdage</li>
+            <li>Du modtager en sporings-SMS, når pakken er afsendt</li>
+        </ul>
+    </div>
+    <a asp-page="/Chokolader/VoresChokolader" class="btn btn-dark mt-4 px-5">
+        Fortsæt shopping
+    </a>
+</div>
+

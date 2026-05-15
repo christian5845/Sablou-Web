@@ -18,7 +18,7 @@ public partial class Chokolade
     [StringLength(30)]
     public string Navn { get; set; }
 
-    [Column(TypeName = "decimal(18, 0)")]
+    [Column(TypeName = "decimal(18, 2)")]
     public decimal Stykpris { get; set; }
 
     [Required]

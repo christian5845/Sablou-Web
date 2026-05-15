@@ -14,6 +14,7 @@ public interface IDataService
     IRepository<Kurv> KurvRepository { get; }
     IRepository<ChokoladerIkatalog> ChokoladerIKatalogRepository { get; }
     IRepository<KurvLinje> KurvLinjeRepository { get; }
+    IRepository<Ordre> OrdreRepository { get; }
 
 
 }

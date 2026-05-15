@@ -142,7 +142,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark cart-link" asp-area="" asp-page="/Kurve/Kurv">
-                                🛒 
+                                🛒
                                 @if (cartCount > 0)
                                 {
                                     <span class="cart-badge" aria-label="@cartCount varer i kurven">@cartCount</span>
@@ -179,6 +179,7 @@
                                         <li><a class="dropdown-item" asp-area="" asp-page="/Brugere/Brugerliste" asp-route-id="Brugerliste">Brugerliste</a></li>
                                         <li><a class="dropdown-item" asp-area="" asp-page="/Produkter/Details" asp-route-id="signatur">Signaturmørk 75%</a></li>
                                         <li><a class="dropdown-item" asp-area="" asp-page="/Ingredienser/Alle" asp-route-id="signatur">Vores ingredienser</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-page="/Betalinger/Bestillinger">📋 Bestillinger</a></li>
                                         <li><hr class="dropdown-divider" /></li>
                                         <li><a class="dropdown-item" asp-area="" asp-page="/om">Om os</a></li>
                                     </ul>
@@ -206,12 +207,12 @@
                                 @{
                                     if (LoginModel.CurrentBruger == null) // Ingen logget ind -> vis "Log ind"
                                     {
-                                        <li><a class="dropdown-item" asp-area="" asp-page="/BrugerLogin/Login" >Log ind</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-page="/BrugerLogin/Login">Log ind</a></li>
                                     }
                                     else // En User er logget ind -> vis navn og "Log ud"
                                     {
 
-                                        <li><a class="dropdown-item" asp-area="" asp-page="/BrugerLogin/Logout" >Log ud</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-page="/BrugerLogin/Logout">Log ud</a></li>
                                     }
                                 }
 
