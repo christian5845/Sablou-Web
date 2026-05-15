@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Sablou_Web.Pages.Kataloger
 {
-    public class VoreshøjtidModel : PageModel
+    public class VoresHøjtidModel : PageModel
     {
         public void OnGet()
         {
