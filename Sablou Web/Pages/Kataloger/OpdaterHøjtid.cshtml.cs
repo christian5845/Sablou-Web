@@ -5,7 +5,7 @@ using Sablou_Web.Services;
 
 namespace Sablou_Web.Pages.Kataloger;
 [Authorize(Roles = "Admin")]
-public class OpdaterKatalogModel : PageModel
+public class OpdaterHøjtidModel : PageModel
 {
 
 
@@ -14,9 +14,9 @@ public class OpdaterKatalogModel : PageModel
     [BindProperty]
     public string Valg { get; set; }
 
-    public bool ErKatalogValgt { get; set; }
+    public bool ErHøjtidValgt { get; set; }
 
-    public OpdaterKatalogModel(IDataService ds)
+    public OpdaterHøjtidModel(IDataService ds)
     {
         Repositories = ds;
     }
@@ -25,11 +25,11 @@ public class OpdaterKatalogModel : PageModel
     {
         if (id == null)
         {
-            ErKatalogValgt = false;
+            ErHøjtidValgt = false;
         }
         else
         {
-            ErKatalogValgt = true;
+            ErHøjtidValgt = true;
         }
     }
 

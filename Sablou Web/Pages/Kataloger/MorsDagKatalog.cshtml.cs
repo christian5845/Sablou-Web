@@ -9,7 +9,7 @@ namespace Sablou_Web.Pages.Kataloger;
 
 public class MorsDagKatalogModel : KatalogBase
 {
-    public IDataService Repo { get; }
+    public IDataService Repo { get; set; }
     protected override string Højtidsnavn => "Mors dag";
     private const string SessionKey = "GæsteKurv";
 
@@ -24,6 +24,7 @@ public class MorsDagKatalogModel : KatalogBase
 
     public IActionResult OnPostTilføjTilKurv(int chokoladeId)
     {
+        Repo = new Dataservice();
         var bruger = LoginModel.CurrentBruger;
 
         if (bruger != null)
