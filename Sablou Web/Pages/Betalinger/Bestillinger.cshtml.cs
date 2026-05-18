@@ -35,7 +35,7 @@ namespace Sablou_Web.Pages.Bestillinger
                         Adresse = o.Adresse,
                         Besked = o.Besked,
                         ErLoggetInd = o.ErLoggetInd,
-                        BrugerId = o.BrugerId
+                        BrugerId = o.BrugerId                
                     };
 
                     gemt.Linjer = _repo.KurvLinjeRepository.Data.Values

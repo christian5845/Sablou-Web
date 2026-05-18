@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Sablou_Web.styles.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Allison&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -58,13 +59,15 @@
                 line-height: 1;
                 font-weight: 700;
                 letter-spacing: 0.5px;
+                font-family: 'Poiret One';
             }
 
             .navbar-brand .brand-sub {
-                font-size: 0.9rem;
+                font-size: 1.4rem;
                 color: #6c757d;
                 margin-top: 2px;
                 line-height: 1;
+                font-family: 'Allison';
             }
 
         .cart-link {
@@ -94,10 +97,17 @@
         }
 
         .dropdown-header {
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-family: 'Allison', cursive;
+            font-size: 1.5rem;
+            font-weight: 400; 
             color: black;
         }
+
+        .nav-link,
+        .dropdown-item,
+        .dropdown-toggle {
+            font-family: 'Allison';
+            font-size: 1.4rem;
 
         @@keyframes cart-badge-pop {
             0% {
@@ -130,13 +140,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Forside">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
+                    <ul class="navbar-nav ms-auto">                 
                         <li class="nav-item">
                             <a class="nav-link text-dark cart-link" asp-area="" asp-page="/Kurve/Kurv">
                                 🛒
