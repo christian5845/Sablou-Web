@@ -1,48 +1,63 @@
 ﻿@page
-@model Sablou_Web.Pages.Chokolader.IndexModel
 @using Sablou_Web.Models
+@model Sablou_Web.Pages.Chokolader.IndexModel
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Chokolader";
 }
 
-<h1>Index</h1>
+<div class="mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="mb-1">Chokolader</h2>
+            <p class="text-muted mb-0">Oversigt over alle registrerede chokolader.</p>
+        </div>
+        <a asp-page="Create" class="btn btn-primary">+ Opret ny chokolade</a>
+    </div>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Chokolader[0].Navn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Chokolader[0].Stykpris)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Chokolader[0].Beskrivelse)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Chokolader) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Navn)
-            </td>
-            <td>
-                    @item.VisPris()
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Beskrivelse)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            @if (Model.Chokolader?.Any() == true)
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Navn</th>
+                                <th>Pris</th>
+                                <th>Beskrivelse</th>
+                                <th class="text-end">Handlinger</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Chokolader)
+                            {
+                                <tr>
+                                    <td class="fw-semibold">
+                                        @Html.DisplayFor(modelItem => item.Navn)
+                                    </td>
+                                    <td>
+                                        @item.VisPris()
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Beskrivelse)
+                                    </td>
+                                    <td class="text-end text-nowrap">
+                                        <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Opdater</a>
+                                        <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">Detaljer</a>
+                                        <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Slet</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="p-4 text-center text-muted">
+                    Der er ingen chokolader endnu.
+                </div>
+            }
+        </div>
+    </div>
+</div>
