@@ -104,7 +104,7 @@ namespace Sablou_Web.Pages.Kurve
                     var ny = new KurvLinje
                     {
                         ChokoladeId = linje.ChokoladeId,
-                        Antal = linje.Antal,                      
+                        Antal = linje.Antal,
                     };
                     _repo.KurvLinjeRepository.Create(ny);
                 }
@@ -179,7 +179,7 @@ namespace Sablou_Web.Pages.Kurve
         }
     }
 
-    // DTO-klasser til visning (uændret struktur)
+    //DTO-klasser til visning(uændret struktur)
     public class GemtOrdre
     {
         public string Id { get; set; }
