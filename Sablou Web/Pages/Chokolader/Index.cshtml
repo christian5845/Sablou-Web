@@ -1,6 +1,6 @@
 ﻿@page
 @model Sablou_Web.Pages.Chokolader.IndexModel
-
+@using Sablou_Web.Models
 @{
     ViewData["Title"] = "Index";
 }
@@ -32,7 +32,7 @@
                 @Html.DisplayFor(modelItem => item.Navn)
             </td>
             <td>
-                    @($"{item.Stykpris:0.00} Kroner.")
+                    @item.VisPris()
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Beskrivelse)

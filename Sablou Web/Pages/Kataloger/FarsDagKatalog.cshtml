@@ -1,5 +1,6 @@
 ﻿@page
 @model Sablou_Web.Pages.Kataloger.FarsDagKatalogModel
+@using Sablou_Web.Models
 @{
 }
 <style>
@@ -110,7 +111,7 @@
 
                 <p>@c.Beskrivelse</p>
 
-                <p>Pris per styk: @c.Stykpris dkk</p>
+                <p class="fw-bold">Pris: @c.VisPris()</p>
             </div>
 
             <div class="d-flex gap-2 flex-wrap mt-3">

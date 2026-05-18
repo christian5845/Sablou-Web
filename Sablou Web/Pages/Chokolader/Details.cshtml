@@ -1,6 +1,6 @@
 ﻿@page
 @model Sablou_Web.Pages.Chokolader.DetailsModel
-
+@using Sablou_Web.Models
 @{
     ViewData["Title"] = "Details";
 }
@@ -21,7 +21,7 @@
             @Html.DisplayNameFor(model => model.Chokolade.Stykpris)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Chokolade.Stykpris)
+            @Model.Chokolade.VisPris()
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Chokolade.Beskrivelse)
