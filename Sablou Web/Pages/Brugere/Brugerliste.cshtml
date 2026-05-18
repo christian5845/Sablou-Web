@@ -78,6 +78,15 @@
 </div>
 
 @section Scripts {
+
+    <!-- 1.	Finder alle sletteknapper.
+         2.	Når man klikker på en knap:
+            •	læses brugerens id og navn,
+            •	modalens tekst opdateres,
+            •	det skjulte input får id’et,
+            •	og modalet åbnes.
+         3.	Når man bekræfter i modalet, sendes formularen med den valgte bruger 
+            til asp-page-handleren "Slet".-->
     <script>
         (function () {
             const deleteButtons = document.querySelectorAll('.btn-delete');

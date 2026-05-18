@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Sablou Web/Pages/Betalinger/Betaling.cshtml
+/Sablou Web/Pages/Betalinger/Betaling.cshtml.cs
