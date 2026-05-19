@@ -20,7 +20,7 @@ namespace Sablou_Web.Pages.BrugerLogin
         public string Email { get; set; }
 
         [BindProperty, DataType(DataType.Password)]
-        public string Password { get; set; }
+        public string Adgangskode { get; set; }
 
         public string ErrorMessage { get; set; }
 
@@ -31,7 +31,7 @@ namespace Sablou_Web.Pages.BrugerLogin
 
         public async Task<IActionResult> OnPost()
         {
-            CurrentBruger = VerifyUser(Email, Password);
+            CurrentBruger = VerifyUser(Email, Adgangskode);
 
             if (CurrentBruger == null)
             {

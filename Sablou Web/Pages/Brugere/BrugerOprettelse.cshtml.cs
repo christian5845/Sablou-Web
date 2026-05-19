@@ -32,7 +32,7 @@ namespace Sablou_Web.Pages.Brugere
         public int? Telefonnummer { get; set; }
 
         [BindProperty]
-        public string Password { get; set; }
+        public string Adgangskode { get; set; }
 
         public BrugerOprettelseModel(IDataService repo)
         {
@@ -50,7 +50,7 @@ namespace Sablou_Web.Pages.Brugere
             try
             {
                 // Send data videre til repository
-                _repo.BrugerRepository.Create(new Bruger(Navn, Email, Adresse, Telefonnummer, Password));
+                _repo.BrugerRepository.Create(new Bruger(Navn, Email, Adresse, Telefonnummer, Adgangskode));
             }
             catch (InvalidOperationException ex)
             {
