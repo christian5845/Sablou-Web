@@ -101,6 +101,7 @@
             font-size: 1.5rem;
             font-weight: 400; 
             color: black;
+            font-weight: bold;
         }
 
         .nav-link,
@@ -177,12 +178,10 @@
                                     <ul class="dropdown-menu" aria-labelledby="menu">
                                         <li><a class="dropdown-item" asp-area="" asp-page="/Produkter">Alle produkter</a></li>
                                         <li><a class="dropdown-item" asp-area="" asp-page="/Chokolader/Index">Opret chokolader</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/OpdaterHøjtid" asp-route-id="OpdaterHøjtid">Opdater højtid</a></li>
                                         <li><a class="dropdown-item" asp-area="" asp-page="/Brugere/Brugerliste" asp-route-id="Brugerliste">Brugerliste</a></li>
-                                        <li><a class="dropdown-item" asp-area="" asp-page="/Produkter/Details" asp-route-id="signatur">Signaturmørk 75%</a></li>
                                         <li><a class="dropdown-item" asp-area="" asp-page="/Ingredienser/Alle" asp-route-id="signatur">Vores ingredienser</a></li>
                                         <li><a class="dropdown-item" asp-area="" asp-page="/Betalinger/Bestillinger">📋 Bestillinger</a></li>
-                                        <li><hr class="dropdown-divider" /></li>
-                                        <li><a class="dropdown-item" asp-area="" asp-page="/om">Om os</a></li>
                                     </ul>
                                 </li>
                             }
@@ -194,16 +193,14 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="menu">
                                 <li><a class="dropdown-item" asp-area="" asp-page="/Chokolader/VoresChokolader" asp-route-id="VoresChokolader">Vores Chokolader</a></li>
-                                <li <h5 style="" class="dropdown-header">Højtider </h5> </li>
+                                <li><a class="dropdown-item" asp-area="" asp-page="/om">Om os</a></li>
                                 <li><hr class="dropdown-divider" /></li>
+                                <li <h5 style="" class="dropdown-header">Højtider </h5> </li>
                                 <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/VoresHøjtid" asp-route-id="VoresHøjtid">Om vores højtider</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/PåskeKatalog" asp-route-id="PåskeKatalog">Påske</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/MorsdagKatalog" asp-route-id="MorsDagKatalog">Mors dag</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/FarsDagKatalog" asp-route-id="FarsDagKatalog">Fars dag</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/HalloweenKatalog" asp-route-id="HalloweenKatalog">Halloween</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" asp-area="" asp-page="/Kataloger/OpdaterHøjtid" asp-route-id="OpdaterHøjtid">Opdater højtid</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-page="/Chokolader/Index">Opret chokolader</a></li>
                                 <li><hr class="dropdown-divider" /></li>
                                 <li><a class="dropdown-item" asp-area="" asp-page="/Brugere/BrugerOprettelse">Opret bruger</a></li>
                                 @{

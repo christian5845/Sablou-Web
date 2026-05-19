@@ -210,11 +210,30 @@
         @foreach (var c in Model._repo.ChokoladeRepository.Data.Values)
         {
             <div class="product">
-       
-                
-                    <div class="col">
-                        vis billede her
-                    </div>
+
+
+                <div class="col">
+                    @if (c.Navn.ToLower().Contains("sommer"))
+                    {
+                        <img src="~/Images/Sommerchokolade.png" alt="@c.Navn"
+                             style="width:100%; height:300px; object-fit:cover; border-radius:8px; margin-bottom:10px;" />
+
+                    }
+                </div>
+                <div class="col">
+                    @if (c.Navn.ToLower().Contains("jul"))
+                    {
+                        <img src="~/Images/Julechokolade.png" alt="@c.Navn"
+                             style="width:100%; height:300px; object-fit:cover; border-radius:8px; margin-bottom:10px;" />
+                    }
+                </div>
+                <div class="col">
+                    @if (c.Navn.ToLower().Contains("påske"))
+                    {
+                        <img src="~/Images/Påskechokolade.png" alt="@c.Navn"
+                             style="width:100%; height:300px; object-fit:cover; border-radius:8px; margin-bottom:10px;" />
+                    }
+                </div>
                     <div class="col">
                         <h1>@c.Navn</h1>
                         <p>@c.Beskrivelse</p>
