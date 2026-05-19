@@ -1,5 +1,8 @@
 ﻿@page
 @model Sablou_Web.Pages.ProduktsideModel
+@using Sablou_Web.Pages.BrugerLogin
+@using System.Globalization
+@using Sablou_Web.Models
 @{
 }
 
@@ -16,6 +19,22 @@
             <div class="card" style="width: 20rem; height: 40rem">
                 <div class="card-body">
                     Vis/tilføj kurv funktion her
+
+                    <div class="qty-controls" aria-label="Antal for @Model.AntalChokolader">
+                        <form method="post" asp-page-handler="ReducerAntal" class="m-0">
+                            <input type="hidden" name="chokoladeId" value="@Model.AntalChokolader" />
+                            <button type="submit" class="qty-btn" aria-label="Reducer antal">−</button>
+                        </form>
+
+                        <span class="qty-value">@Model.AntalChokolader</span>
+
+                        <form method="post" asp-page-handler="OpretAntal" class="m-0">
+                            <input type="hidden" name="chokoladeId" value="@Model.AntalChokolader" />
+                            <button type="submit" class="qty-btn" aria-label="Øg antal">+</button>
+                        </form>
+                    </div>
+                   @*  <div class="fw-bold">@string.Format(CultureInfo.GetCultureInfo("da-DK"), "{0:0.00} kr.", linje.Subtotal)</div> *@
+
                 </div>
             </div>
     </div>
