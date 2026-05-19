@@ -71,15 +71,6 @@ public class RedigerKatalogModel : PageModel
     public bool DeleteMedChokoladeId(int cid)
     {
         int id = 0;
-        //foreach (var item in Repo.ChokoladerIKatalogRepository.Data)
-        //{
-        //    if (item.Value.ChokoladeId == cid)
-        //    {
-        //        id = item.Key;
-        //    }
-
-        //}
-
         var a = Repo.ChokoladerIKatalogRepository.Data.Select(t => t).Where(t => t.Value.ChokoladeId == cid);
         id = a.Select(t => t.Key).First();
 

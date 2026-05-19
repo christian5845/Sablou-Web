@@ -5,42 +5,152 @@
 @using Sablou_Web.Models
 @{
 }
+<style>
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 20px;
+        align-items: stretch;
+    }
 
+    .product {
+        background: #fff;
+        border-radius: 12px;
+        padding: 16px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    .image-placeholder {
+        width: 100%;
+        height: 180px;
+        background: #f3f3f3;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    .add-to-cart-btn {
+        transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, filter 0.15s ease;
+        min-width: 10rem;
+        font-weight: 700;
+        border-radius: 999px;
+        box-shadow: 0 4px 12px rgba(25, 135, 84, 0.18);
+    }
+
+        .add-to-cart-btn:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.03);
+            box-shadow: 0 8px 18px rgba(25, 135, 84, 0.24);
+        }
+
+    .cart-feedback {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 1rem 20px 0;
+        padding: 0.9rem 1rem;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #e8fff1, #d9fbe8);
+        color: #14532d;
+        border: 1px solid #86efac;
+        box-shadow: 0 8px 20px rgba(20, 83, 45, 0.12);
+        font-weight: 600;
+    }
+
+    .cart-feedback-icon {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #16a34a;
+        color: white;
+        flex: 0 0 auto;
+    }
+
+    .cart-feedback-text {
+        flex: 1;
+    }
+</style>
+
+<main class="page-content container">
+
+    @{
+        var cartFeedback = TempData["CartFeedback"] as string;
+    }
+
+    @if (!string.IsNullOrWhiteSpace(cartFeedback))
+    {
+        <div class="cart-feedback" role="status" aria-live="polite">
+            <span class="cart-feedback-icon">✓</span>
+            <span class="cart-feedback-text">@cartFeedback</span>
+        </div>
+    }
+
+</main>
 
 <header>
     <h1>@Model.Chokoladen.Navn</h1>
 </header>
 <tbody>
-<div class="row">
-    <div class="col">
-        Vis billede her
-    </div>
-    <div class="col">
-            <div class="card" style="width: 20rem; height: 40rem">
-                <div class="card-body">
-                    Vis/tilføj kurv funktion her
+    <div class="row">
+        <div class="col">
+            Vis billede her
+        </div>
+        <div class="col">
+                <div class="card" style="width: 20rem; height: 40rem">
+                    <div class="card-body">
+                        Vis/tilføj kurv funktion her
 
-                    <div class="qty-controls" aria-label="Antal for @Model.AntalChokolader">
-                        <form method="post" asp-page-handler="ReducerAntal" class="m-0">
-                            <input type="hidden" name="chokoladeId" value="@Model.AntalChokolader" />
-                            <button type="submit" class="qty-btn" aria-label="Reducer antal">−</button>
-                        </form>
+                        <p class="row">Pris: @Model.TotalPris dkk    
+                        </p>
 
-                        <span class="qty-value">@Model.AntalChokolader</span>
 
-                        <form method="post" asp-page-handler="OpretAntal" class="m-0">
-                            <input type="hidden" name="chokoladeId" value="@Model.AntalChokolader" />
-                            <button type="submit" class="qty-btn" aria-label="Øg antal">+</button>
-                        </form>
+                        <div class="qty-controls" aria-label="Antal for @Model.AntalChokolader">
+                        <form method="post" asp-page-handler="ReducerAntal" asp-route-chokoladeId="@Model.Chokoladen.Id" class="m-0">
+                                <input type="hidden" name="id" value="@Model.Chokoladen.Id" />
+                                <button type="submit" class="qty-btn" aria-label="Reducer antal">−</button>
+                            </form>
+
+                            <span class="qty-value">@Model.AntalChokolader</span>
+
+                            <form method="post" asp-page-handler="OpretAntal" class="m-0">
+                                <input type="hidden" name="id" value="@Model.Chokoladen.Id" />
+                                <button type="submit" class="qty-btn" aria-label="Øg antal">+</button>
+                            </form>
+                        </div>
+                       @*  <div class="fw-bold">@string.Format(CultureInfo.GetCultureInfo("da-DK"), "{0:0.00} kr.", linje.Subtotal)</div> *@
+
+                    <form method="post"
+                          asp-page="/Produktside"
+                          asp-page-handler="TilføjTilKurv"
+                          class="add-to-cart-form">
+
+                        <input type="hidden"
+                               name="id"
+                               value="@Model.Chokoladen.Id" />
+
+                        <button type="submit"
+                                class="btn btn-sm btn-success add-to-cart-btn">
+                            🛒 Læg i kurv
+                        </button>
+
+                    </form>
                     </div>
-                   @*  <div class="fw-bold">@string.Format(CultureInfo.GetCultureInfo("da-DK"), "{0:0.00} kr.", linje.Subtotal)</div> *@
-
                 </div>
-            </div>
+        </div>
     </div>
-</div>
 
-<div class="card" >
+    <div class="card" >
     <div class="card-body">
         Her står beskrivelsen af chokoladen
         @Model.Chokoladen.Beskrivelse
@@ -51,12 +161,12 @@
             <strong>Produktinformation</strong>
 
             @{
-                var ingrediensIds = Model.Repositories.IngrediensListeRepository.Data.Values
+                var ingrediensIds = Model.Repo.IngrediensListeRepository.Data.Values
                 .Where(il => il.ChokoladeId == Model.Chokoladen.Id)
                 .Select(il => il.IngrediensId)
                 .ToList();
 
-                var ingredienser = Model.Repositories.IngrediensRepository.Data.Values
+                var ingredienser = Model.Repo.IngrediensRepository.Data.Values
                 .Where(i => ingrediensIds.Contains(i.Id))
                 .ToList();
             }
