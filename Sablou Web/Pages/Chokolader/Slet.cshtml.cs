@@ -6,11 +6,11 @@ using Sablou_Web.Services;
 
 namespace Sablou_Web.Pages.Chokolader
 {
-    public class DeleteModel : PageModel
+    public class SletModel : PageModel
     {
         private IDataService _repositories;
 
-        public DeleteModel()
+        public SletModel()
         {
             _repositories = new Dataservice();
         }

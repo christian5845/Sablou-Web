@@ -10,12 +10,12 @@ using Sablou_Web.Services;
 
 namespace Sablou_Web.Pages.Chokolader
 {
-    public class IndexModel : PageModel
+    public class OversigtModel : PageModel
     {
         private readonly Sablou_Web.Models.cralle_dk_db_sablouContext _context;
         private IDataService _repositories;
 
-        public IndexModel(Sablou_Web.Models.cralle_dk_db_sablouContext context)
+        public OversigtModel(Sablou_Web.Models.cralle_dk_db_sablouContext context)
         {
             _context = context;
             _repositories = new Dataservice();

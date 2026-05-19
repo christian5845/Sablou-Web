@@ -10,14 +10,14 @@ using Sablou_Web.Services;
 namespace Sablou_Web.Pages.Chokolader;
 
 [Authorize(Roles = "Admin")]
-public class CreateModel : PageModel
+public class OpretModel : PageModel
 {
     private IDataService _repositories;
     private readonly cralle_dk_db_sablouContext _context;
 
 
 
-    public CreateModel(cralle_dk_db_sablouContext context)
+    public OpretModel(cralle_dk_db_sablouContext context)
     {
         _context = context;
         _repositories = new Dataservice();

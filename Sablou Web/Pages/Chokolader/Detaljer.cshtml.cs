@@ -9,11 +9,11 @@ using Sablou_Web.Models;
 
 namespace Sablou_Web.Pages.Chokolader
 {
-    public class DetailsModel : PageModel
+    public class DetaljerModel : PageModel
     {
         private readonly Sablou_Web.Models.cralle_dk_db_sablouContext _context;
 
-        public DetailsModel(Sablou_Web.Models.cralle_dk_db_sablouContext context)
+        public DetaljerModel(Sablou_Web.Models.cralle_dk_db_sablouContext context)
         {
             _context = context;
         }

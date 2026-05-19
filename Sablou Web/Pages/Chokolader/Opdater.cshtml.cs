@@ -7,11 +7,11 @@ using Sablou_Web.Services;
 
 namespace Sablou_Web.Pages.Chokolader
 {
-    public class EditModel : PageModel
+    public class OpdaterModel : PageModel
     {
         private IDataService _repositories;
 
-        public EditModel()
+        public OpdaterModel()
         {
             _repositories = new Dataservice();
         }
