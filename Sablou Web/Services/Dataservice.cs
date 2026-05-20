@@ -18,7 +18,8 @@ public class Dataservice : IDataService
 
     public IRepository<ChokoladerIkatalog> ChokoladerIKatalogRepository { get; }
     public IRepository<KurvLinje> KurvLinjeRepository { get; }
-    public IRepository<Ordre> OrdreRepository { get; }
+    public IOrdreRepository OrdreRepository { get; }
+    public IOrdreLinjeRepository OrdreLinjeRepository { get; }
 
     public Dataservice()
     {
@@ -32,5 +33,6 @@ public class Dataservice : IDataService
         KurvLinjeRepository = new KurvLinjeRepository();
         ChokoladerIKatalogRepository = new ChokoladerIKatalogRepository();
         OrdreRepository = new OrdreRepository();
+        OrdreLinjeRepository = new OrdreLinjeRepository();
     }
 }

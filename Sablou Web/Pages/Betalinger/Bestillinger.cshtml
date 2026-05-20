@@ -1,5 +1,5 @@
 ﻿@page
-@model Sablou_Web.Pages.Bestillinger.BestillingerModel
+@model Sablou_Web.Pages.Betalinger.BestillingerModel
 @using Sablou_Web.Pages.BrugerLogin
 @using System.Globalization
 @using Sablou_Web.Models
@@ -91,14 +91,16 @@
                                     <h6 class="text-muted text-uppercase small fw-bold mb-2">Varer</h6>
                                     <table class="table table-sm table-borderless mb-0">
                                         <tbody>
-                                            @foreach (var gemtOrdre in ordre.Linjer)
+                                           
+                                            @foreach (GemtOrdreLinje gol in ordre.Linjer)
                                             {
                                                 <tr>
-                                                    <td>@gemtOrdre.Navn</td>
-                                                    <td class="text-muted text-center">×@gemtOrdre.Antal</td>
-                                                    <td class="text-end">@string.Format(CultureInfo.GetCultureInfo("da-DK"), "{0:0.00} kr." )</td>
+                                                    <td>@gol.Navn</td>
+                                                    <td class="text-muted text-center">×@gol.Antal</td>
+                                                    <td class="text-end">@string.Format(CultureInfo.GetCultureInfo("da-DK"), "{0:0.00} kr.", gol.Stykpris * gol.Antal)</td>
                                                 </tr>
                                             }
+                                            
                                             <tr class="border-top">
                                                 <td class="text-muted">Fragt</td>
                                                 <td></td>

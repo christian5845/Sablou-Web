@@ -74,6 +74,6 @@ public class OpretModel : PageModel
             _repositories.IngrediensListeRepository.Create(new IngrediensListe(Chokolade.Id, id));
         }
 
-        return RedirectToPage("./Index");
+        return RedirectToPage("./Oversigt");
     }
 }

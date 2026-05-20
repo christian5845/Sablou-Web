@@ -1,13 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sablou_Web.Models;
-using System.Xml.Linq;
-
 namespace Sablou_Web.Services.Repositories;
 
 
-public class OrdreRepository : RepositoryBase<Ordre>, IOrdreRepository
+public class OrdreLinjeRepository : RepositoryBase<OrdreLinje>, IOrdreLinjeRepository
 {
-    public int OpretMedId(Ordre element)
+    public int OpretMedId(OrdreLinje element)
     {
         using DbContext context = CreateDbContext();
         int id = NextId();
@@ -23,18 +21,13 @@ public class OrdreRepository : RepositoryBase<Ordre>, IOrdreRepository
         return base.Delete(id);
     }
 
-    public override void Update(Ordre t)
-    {
-        base.Update(t);
-    }
-
-    public override Ordre? GetItem(int id)
+    public override OrdreLinje? GetItem(int id)
     {
         return base.GetItem(id);
     }
 
-    public override void Create(Ordre element)
+    public override void Update(OrdreLinje t)
     {
-        OpretMedId(element);
+        base.Update(t);
     }
 }

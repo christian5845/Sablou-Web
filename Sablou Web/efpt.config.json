@@ -57,6 +57,10 @@
       {
          "Name": "[dbo].[Ordre]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[OrdreLinje]",
+         "ObjectType": 0
       }
    ],
    "UiHint": null,
