@@ -6,200 +6,203 @@ using Sablou_Web.Services;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 
-namespace Sablou_Web.Pages.Kurve
+namespace Sablou_Web.Pages.Betalinger;
+
+public class BetalingModel : PageModel
 {
-    public class BetalingModel : PageModel
+    public IDataService Repo;
+    private const string SessionKey = "GæsteKurv";
+
+    public List<KurvLinjeViewModel> KurvLinjer { get; set; } = new();
+    public decimal Total => KurvLinjer.Sum(l => l.Subtotal);
+
+    [BindProperty]
+    [Required(ErrorMessage = "Navn er påkrævet")]
+    public string GæsteNavn { get; set; }
+
+    [BindProperty]
+    [Required(ErrorMessage = "E-mail er påkrævet")]
+    [EmailAddress(ErrorMessage = "Ugyldig e-mailadresse")]
+    public string GæsteEmail { get; set; }
+
+    [BindProperty]
+    public string GæsteTelefon { get; set; }
+
+    [BindProperty]
+    [Required(ErrorMessage = "Adresse er påkrævet")]
+    public string GæsteAdresse { get; set; }
+
+    [BindProperty]
+    public string? Besked { get; set; }
+
+    public BetalingModel(IDataService repo)
     {
-        private readonly IDataService _repo;
-        private const string SessionKey = "GæsteKurv";
+        Repo = repo;
+    }
 
-        public List<KurvLinjeViewModel> KurvLinjer { get; set; } = new();
-        public decimal Total => KurvLinjer.Sum(l => l.Subtotal);
+    public void OnGet()
+    {
+        KurvLinjer = HentKurvLinjer();
+    }
 
-        [BindProperty]
-        [Required(ErrorMessage = "Navn er påkrævet")]
-        public string GæsteNavn { get; set; }
+    public IActionResult OnPostAfgivBestilling()
+    {
+        //Repo = new Dataservice();
 
-        [BindProperty]
-        [Required(ErrorMessage = "E-mail er påkrævet")]
-        [EmailAddress(ErrorMessage = "Ugyldig e-mailadresse")]
-        public string GæsteEmail { get; set; }
+        KurvLinjer = HentKurvLinjer();
 
-        [BindProperty]
-        public string GæsteTelefon { get; set; }
+        if (!ModelState.IsValid)
+            return Page();
 
-        [BindProperty]
-        [Required(ErrorMessage = "Adresse er påkrævet")]
-        public string GæsteAdresse { get; set; }
-
-        [BindProperty]
-        public string? Besked { get; set; }
-
-        public BetalingModel(IDataService repo)
+        if (!KurvLinjer.Any())
         {
-            _repo = repo;
+            TempData["Error"] = "Kurven er tom.";
+            return RedirectToPage("/Kurve/Kurv");
         }
 
-        public void OnGet()
+        // Opret ordre i databasen
+        var dbOrdre = new Ordre
         {
-            KurvLinjer = HentKurvLinjer();
-        }
+            Navn = GæsteNavn,
+            Email = GæsteEmail,
+            Telefon = GæsteTelefon,
+            Adresse = GæsteAdresse,
+            Besked = Besked,
+            ErLoggetInd = LoginModel.CurrentBruger != null,
+            BrugerId = LoginModel.CurrentBruger?.Id ?? 0,
+            // Behandlet håndteres i admin; default i DB = false
+        };
 
-        public IActionResult OnPostAfgivBestilling()
+        int ordreId = Repo.OrdreRepository.OpretMedId(dbOrdre);
+
+        // Opret KurvLinje-entries i DB til den oprettede ordre
+        if (LoginModel.CurrentBruger != null)
         {
-            KurvLinjer = HentKurvLinjer();
-
-            if (!ModelState.IsValid)
-                return Page();
-
-            if (!KurvLinjer.Any())
+            var kurv = Repo.KurvRepository.Data.Values
+                .FirstOrDefault(k => k.BrugerId == LoginModel.CurrentBruger.Id);
+            if (kurv != null)
             {
-                TempData["Error"] = "Kurven er tom.";
-                return RedirectToPage("/Kurve/Kurv");
-            }
+                var linjer = Repo.KurvLinjeRepository.Data.Values
+                    .Where(l => l.KurvId == kurv.Id)
+                    .ToList();
 
-            // Opret ordre i databasen
-            var dbOrdre = new Ordre
-            {
-                Navn = GæsteNavn,
-                Email = GæsteEmail,
-                Telefon = GæsteTelefon,
-                Adresse = GæsteAdresse,
-                Besked = Besked,
-                ErLoggetInd = LoginModel.CurrentBruger != null,
-                BrugerId = LoginModel.CurrentBruger?.Id ?? 0,
-                // Behandlet håndteres i admin; default i DB = false
-            };
-
-            _repo.OrdreRepository.Create(dbOrdre);
-
-            // Opret KurvLinje-entries i DB til den oprettede ordre
-            if (LoginModel.CurrentBruger != null)
-            {
-                var kurv = _repo.KurvRepository.Data.Values
-                    .FirstOrDefault(k => k.BrugerId == LoginModel.CurrentBruger.Id);
-                if (kurv != null)
+                foreach (var linje in linjer)
                 {
-                    var linjer = _repo.KurvLinjeRepository.Data.Values
-                        .Where(l => l.KurvId == kurv.Id)
-                        .ToList();
-
-                    foreach (var linje in linjer)
+                    var ny = new OrdreLinje
                     {
-                        var ny = new KurvLinje
-                        {
-                            ChokoladeId = linje.ChokoladeId,
-                            Antal = linje.Antal,                          
-                        };
-                        _repo.KurvLinjeRepository.Create(ny);
-                    }
-                }
-            }
-            else
-            {
-                // Gæstekurv: KurvLinjeViewModel -> opret KurvLinje i DB (ordrelinje)
-                // Eksempel: opret ordrelinjer for gæster — bemærk: ingen KurvId sættes
-                foreach (var linje in KurvLinjer)
-                {
-                    var ny = new KurvLinje
-                    {
+                        OrdreId = ordreId,
                         ChokoladeId = linje.ChokoladeId,
                         Antal = linje.Antal,
                     };
-                    _repo.KurvLinjeRepository.Create(ny);
+                    Repo.OrdreLinjeRepository.Create(ny);
                 }
             }
-
-            // Tøm kurven efter bestilling (session eller DB-kurv)
-            TømKurv();
-
-            TempData["BestillingNavn"] = GæsteNavn;
-            TempData["BestillingId"] = dbOrdre.Id.ToString();
-            return RedirectToPage("/Betalinger/Bekræftelse");
+        }
+        else
+        {
+            // Gæstekurv: KurvLinjeViewModel -> opret KurvLinje i DB (ordrelinje)
+            // Eksempel: opret ordrelinjer for gæster — bemærk: ingen KurvId sættes
+            foreach (var linje in KurvLinjer)
+            {
+                var ny = new OrdreLinje
+                {
+                    OrdreId = ordreId,
+                    ChokoladeId = linje.ChokoladeId,
+                    Antal = linje.Antal,
+                };
+                Repo.OrdreLinjeRepository.OpretMedId(ny);
+            }
         }
 
-        // Hjælpemetoder
+        // Tøm kurven efter bestilling (session eller DB-kurv)
+        TømKurv();
 
-        private List<KurvLinjeViewModel> HentKurvLinjer()
+        TempData["BestillingNavn"] = GæsteNavn;
+        TempData["BestillingId"] = dbOrdre.Id.ToString();
+        return RedirectToPage("/Betalinger/Bekræftelse");
+    }
+
+    // Hjælpemetoder
+
+    private List<KurvLinjeViewModel> HentKurvLinjer()
+    {
+        var bruger = LoginModel.CurrentBruger;
+        List<KurvLinje> linjer;
+
+        if (bruger != null)
         {
-            var bruger = LoginModel.CurrentBruger;
-            List<KurvLinje> linjer;
+            var kurv = Repo.KurvRepository.Data.Values
+                .FirstOrDefault(k => k.BrugerId == bruger.Id);
+            if (kurv == null) return new List<KurvLinjeViewModel>();
+            linjer = Repo.KurvLinjeRepository.Data.Values
+                .Where(l => l.KurvId == kurv.Id)
+                .ToList();
+        }
+        else
+        {
+            var json = HttpContext.Session.GetString(SessionKey);
+            linjer = json == null
+                ? new List<KurvLinje>()
+                : JsonSerializer.Deserialize<List<KurvLinje>>(json)!;
+        }
 
-            if (bruger != null)
+        return linjer.Select(l =>
+        {
+            var choko = Repo.ChokoladeRepository.GetItem(l.ChokoladeId);
+            return new KurvLinjeViewModel
             {
-                var kurv = _repo.KurvRepository.Data.Values
-                    .FirstOrDefault(k => k.BrugerId == bruger.Id);
-                if (kurv == null) return new List<KurvLinjeViewModel>();
-                linjer = _repo.KurvLinjeRepository.Data.Values
+                ChokoladeId = l.ChokoladeId,
+                Navn = choko?.Navn ?? "Ukendt",
+                Stykpris = choko?.Stykpris ?? 0,
+                Antal = l.Antal
+            };
+        }).ToList();
+    }
+
+    private void TømKurv()
+    {
+        var bruger = LoginModel.CurrentBruger;
+        if (bruger != null)
+        {
+            var kurv = Repo.KurvRepository.Data.Values
+                .FirstOrDefault(k => k.BrugerId == bruger.Id);
+            if (kurv != null)
+            {
+                var linjer = Repo.KurvLinjeRepository.Data.Values
                     .Where(l => l.KurvId == kurv.Id)
                     .ToList();
+                foreach (var linje in linjer)
+                    Repo.KurvLinjeRepository.Delete(linje.Id);
             }
-            else
-            {
-                var json = HttpContext.Session.GetString(SessionKey);
-                linjer = json == null
-                    ? new List<KurvLinje>()
-                    : JsonSerializer.Deserialize<List<KurvLinje>>(json)!;
-            }
-
-            return linjer.Select(l =>
-            {
-                var choko = _repo.ChokoladeRepository.GetItem(l.ChokoladeId);
-                return new KurvLinjeViewModel
-                {
-                    ChokoladeId = l.ChokoladeId,
-                    Navn = choko?.Navn ?? "Ukendt",
-                    Stykpris = choko?.Stykpris ?? 0,
-                    Antal = l.Antal
-                };
-            }).ToList();
         }
-
-        private void TømKurv()
+        else
         {
-            var bruger = LoginModel.CurrentBruger;
-            if (bruger != null)
-            {
-                var kurv = _repo.KurvRepository.Data.Values
-                    .FirstOrDefault(k => k.BrugerId == bruger.Id);
-                if (kurv != null)
-                {
-                    var linjer = _repo.KurvLinjeRepository.Data.Values
-                        .Where(l => l.KurvId == kurv.Id)
-                        .ToList();
-                    foreach (var linje in linjer)
-                        _repo.KurvLinjeRepository.Delete(linje.Id);
-                }
-            }
-            else
-            {
-                // Guest cart stored in session; fjern kun kurv-session
-                HttpContext.Session.Remove(SessionKey);
-            }
+            // Guest cart stored in session; fjern kun kurv-session
+            HttpContext.Session.Remove(SessionKey);
         }
     }
+}
 
-    //DTO-klasser til visning(uændret struktur)
-    public class GemtOrdre
-    {
-        public string Id { get; set; }
-        public DateTime Dato { get; set; }
-        public string Navn { get; set; }
-        public string Email { get; set; }
-        public string Telefon { get; set; }
-        public string Adresse { get; set; }
-        public string Besked { get; set; }
-        public bool ErLoggetInd { get; set; }
-        public int? BrugerId { get; set; }
-        public List<GemtOrdreLinje> Linjer { get; set; } = new();
-        public decimal Total => Linjer.Sum(l => l.Stykpris * l.Antal);
-    }
+//DTO-klasser til visning(uændret struktur)
+public class GemtOrdre
+{
+    public string Id { get; set; }
+    public DateTime Dato { get; set; }
+    public string Navn { get; set; }
+    public string Email { get; set; }
+    public string Telefon { get; set; }
+    public string Adresse { get; set; }
+    public string Besked { get; set; }
+    public bool ErLoggetInd { get; set; }
+    public int? BrugerId { get; set; }
+    public List<GemtOrdreLinje> Linjer { get; set; } = new();
+    public decimal Total => Linjer.Sum(l => l.Stykpris * l.Antal);
+}
 
-    public class GemtOrdreLinje
-    {
-        public int ChokoladeId { get; set; }
-        public string Navn { get; set; }
-        public decimal Stykpris { get; set; }
-        public int Antal { get; set; }
-    }
+public class GemtOrdreLinje
+{
+    public int ChokoladeId { get; set; }
+    public string Navn { get; set; }
+    public decimal Stykpris { get; set; }
+    public int Antal { get; set; }
 }

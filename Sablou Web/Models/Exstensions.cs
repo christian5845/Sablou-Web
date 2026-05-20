@@ -126,3 +126,12 @@ public partial class Ordre : IHarId
     {
     }
 }
+
+public partial class OrdreLinje : IHarId
+{
+    public OrdreLinje()
+    {
+
+    }
+
+}

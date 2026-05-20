@@ -5,84 +5,89 @@ using Sablou_Web.Services;
 using Sablou_Web.Models;
 using Sablou_Web.Pages.BrugerLogin;
 
-namespace Sablou_Web.Pages.Bestillinger
+namespace Sablou_Web.Pages.Betalinger;
+
+public class BestillingerModel : PageModel
 {
-    public class BestillingerModel : PageModel
+    private readonly IDataService _repo;
+
+    public List<GemtOrdre> Ordrer { get; set; } = new();
+
+    public BestillingerModel(IDataService repo)
     {
-        private readonly IDataService _repo;
+        _repo = repo;
+    }
 
-        public List<GemtOrdre> Ordrer { get; set; } = new();
-
-        public BestillingerModel(IDataService repo)
-        {
-            _repo = repo;
-        }
-
-        public void OnGet()
-        {
-            // Hent ordrer fra DB og map til DTO for visning
-            Ordrer = _repo.OrdreRepository.Data.Values
-                .OrderByDescending(o => o.Dato)
-                .Select(o =>
+    public void OnGet()
+    {
+        // Hent ordrer fra DB og map til DTO for visning
+        Ordrer = _repo.OrdreRepository.Data.Values
+            .OrderByDescending(o => o.Dato)
+            .Select(o =>
+            {
+                var gemt = new GemtOrdre
                 {
-                    var gemt = new GemtOrdre
+                    Id = o.Id.ToString(),
+                    Dato = o.Dato,
+                    Navn = o.Navn,
+                    Email = o.Email,
+                    Telefon = o.Telefon,
+                    Adresse = o.Adresse,
+                    Besked = o.Besked,
+                    ErLoggetInd = o.ErLoggetInd,
+                    BrugerId = o.BrugerId                
+                };
+
+                List<GemtOrdreLinje> gemtOrdreLinjer = _repo.OrdreLinjeRepository.Data.Values
+                    .Where(l => l.OrdreId == o.Id)
+                    .Select(l =>
                     {
-                        Id = o.Id.ToString(),
-                        Dato = o.Dato,
-                        Navn = o.Navn,
-                        Email = o.Email,
-                        Telefon = o.Telefon,
-                        Adresse = o.Adresse,
-                        Besked = o.Besked,
-                        ErLoggetInd = o.ErLoggetInd,
-                        BrugerId = o.BrugerId                
-                    };
-
-                    gemt.Linjer = _repo.KurvLinjeRepository.Data.Values
-                        .Where(l => l.KurvId == o.Id)
-                        .Select(l =>
+                        var ch = _repo.ChokoladeRepository.GetItem(l.ChokoladeId);
+                        return new GemtOrdreLinje
                         {
-                            var ch = _repo.ChokoladeRepository.GetItem(l.ChokoladeId);
-                            return new GemtOrdreLinje
-                            {
-                                ChokoladeId = l.ChokoladeId,
-                                Navn = ch?.Navn ?? "Ukendt",
-                                Stykpris = ch?.Stykpris ?? 0,
-                                Antal = l.Antal
-                            };
-                        }).ToList();
+                            ChokoladeId = l.ChokoladeId,
+                            Navn = ch?.Navn ?? "Ukendt",
+                            Stykpris = ch?.Stykpris ?? 0,
+                            Antal = l.Antal
+                        };
+                    }).ToList();
 
-                    return gemt;
-                }).ToList();
-        }
+                foreach (GemtOrdreLinje l in gemtOrdreLinjer)
+                {
+                    gemt.Linjer.Add(l);
+                }
+               
 
-        // Admin: slet ordre
-        public IActionResult OnPostSlet(int id)
-        {
-            if (LoginModel.CurrentBruger?.Rolle != "Admin")
-                return Forbid();
+                return gemt;
+            }).ToList();
+    }
 
-            // Slet ordrelinjer først (foreign key)
-            var linjer = _repo.KurvLinjeRepository.Data.Values.Where(l => l.KurvId == id).ToList();
-            foreach (var l in linjer)
-                _repo.KurvLinjeRepository.Delete(l.Id);
+    // Admin: slet ordre
+    public IActionResult OnPostSlet(int id)
+    {
+        if (LoginModel.CurrentBruger?.Rolle != "Admin")
+            return Forbid();
 
-            _repo.OrdreRepository.Delete(id);
-            return RedirectToPage();
-        }
+        // Slet ordrelinjer først (foreign key)
+        var linjer = _repo.KurvLinjeRepository.Data.Values.Where(l => l.KurvId == id).ToList();
+        foreach (var l in linjer)
+            _repo.KurvLinjeRepository.Delete(l.Id);
 
-        // Admin: markér som behandlet
-        public IActionResult OnPostMarkBehandlet(int id)
-        {
-            if (LoginModel.CurrentBruger?.Rolle != "Admin")
-                return Forbid();
+        _repo.OrdreRepository.Delete(id);
+        return RedirectToPage();
+    }
 
-            var ordre = _repo.OrdreRepository.Data.Values.FirstOrDefault(o => o.Id == id);
-            if (ordre == null) return NotFound();
+    // Admin: markér som behandlet
+    public IActionResult OnPostMarkBehandlet(int id)
+    {
+        if (LoginModel.CurrentBruger?.Rolle != "Admin")
+            return Forbid();
 
-            ordre.Behandlet = true;
-            _repo.OrdreRepository.Update(ordre);
-            return RedirectToPage();
-        }
+        var ordre = _repo.OrdreRepository.Data.Values.FirstOrDefault(o => o.Id == id);
+        if (ordre == null) return NotFound();
+
+        ordre.Behandlet = true;
+        _repo.OrdreRepository.Update(ordre);
+        return RedirectToPage();
     }
 }

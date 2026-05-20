@@ -23,7 +23,7 @@ public abstract class RepositoryBase<T> : IRepository<T> where T : class, IHarId
         }
     }
 
-    public T? GetItem(int id)
+    public virtual T? GetItem(int id)
     {
         if (!Data.ContainsKey(id))
         {
@@ -43,7 +43,7 @@ public abstract class RepositoryBase<T> : IRepository<T> where T : class, IHarId
         context.SaveChanges();
     }
 
-    public bool Delete(int id)
+    public virtual bool Delete(int id)
     {
         using DbContext context = CreateDbContext();
 
@@ -77,7 +77,7 @@ public abstract class RepositoryBase<T> : IRepository<T> where T : class, IHarId
         return new cralle_dk_db_sablouContext();
     }
 
-    private int NextId()
+    protected int NextId()
     {
         return Data.Select(t => t.Value.Id).DefaultIfEmpty(0).Max() + 1;
     }

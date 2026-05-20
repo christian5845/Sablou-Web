@@ -39,4 +39,7 @@ public partial class Ordre
     public DateTime Dato { get; set; }
 
     public bool Behandlet { get; set; }
+
+    [InverseProperty("Ordre")]
+    public virtual ICollection<OrdreLinje> OrdreLinje { get; set; } = new List<OrdreLinje>();
 }
