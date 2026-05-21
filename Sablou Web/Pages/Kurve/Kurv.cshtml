@@ -12,7 +12,43 @@
 
     @if (!Model.KurvLinjer.Any())
     {
-        <p class="text-muted">Din kurv er tom. <a asp-page="/Chokolader/VoresChokolader">Se vores chokolader</a></p>
+        <style>
+            .empty-cart-wrap {
+                background: linear-gradient(180deg, #fff8f1 0%, #ffffff 100%);
+                border: 1px solid rgba(0,0,0,0.06);
+                border-radius: 1.5rem;
+                padding: 2.5rem 1.5rem;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            }
+
+            .empty-cart-icon {
+                width: 84px;
+                height: 84px;
+                border-radius: 999px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 2.2rem;
+                background: linear-gradient(135deg, #f8d7da 0%, #fff3cd 100%);
+                box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 8px 20px rgba(0,0,0,0.08);
+            }
+
+            .empty-cart-note {
+                max-width: 42rem;
+            }
+        </style>
+
+        <div class="empty-cart-wrap text-center mx-auto">
+            <div class="empty-cart-icon mb-4" aria-hidden="true">🛒</div>
+            <h3 class="fw-bold mb-3">Din kurv er tom</h3>
+            <p class="text-muted mb-4 empty-cart-note mx-auto">
+                Du har endnu ikke lagt noget i kurven. Gå på opdagelse i vores udvalg og find noget lækkert.
+            </p>
+            <div class="d-flex flex-column flex-sm-row gap-2 justify-content-center">
+                <a asp-page="/Chokolader/VoresChokolader" class="btn btn-dark btn-lg px-4">Se vores chokolader</a>
+                <a asp-page="/Forside" class="btn btn-outline-secondary btn-lg px-4">Til forsiden</a>
+            </div>
+        </div>
     }
     else
     {
