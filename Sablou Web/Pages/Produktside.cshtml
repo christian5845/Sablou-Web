@@ -5,57 +5,306 @@
 @using Sablou_Web.Models
 @{
 }
+
 <style>
-    .product-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-        padding: 20px;
-        align-items: stretch;
+    :root {
+        --surface: rgba(255, 255, 255, 0.82);
+        --surface-strong: #ffffff;
+        --border: rgba(15, 23, 42, 0.08);
+        --shadow: 0 18px 50px rgba(15, 23, 42, 0.10);
+        --shadow-soft: 0 10px 24px rgba(15, 23, 42, 0.08);
+        --primary: #198754;
+        --primary-dark: #146c43;
+        --text: #1f2937;
+        --muted: #6b7280;
+        --accent: #fff7ed;
     }
 
-    .product {
-        background: #fff;
-        border-radius: 12px;
-        padding: 16px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    .product-page {
+        padding: 1.25rem 0 2.5rem;
+    }
+
+    .product-hero {
+        display: grid;
+        grid-template-columns: 1.15fr 0.95fr;
+        gap: 1.25rem;
+        align-items: stretch;
+        margin-bottom: 1.25rem;
+    }
+
+    .product-media,
+    .product-panel,
+    .product-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 1.25rem;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(10px);
+    }
+
+    .product-media {
+        overflow: hidden;
+        min-height: 28rem;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        height: 100%;
+    }
+
+    .product-media-top {
+        padding: 1.25rem 1.25rem 0;
+    }
+
+    .product-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: .5rem;
+        padding: .4rem .8rem;
+        border-radius: 999px;
+        background: rgba(25, 135, 84, 0.10);
+        color: var(--primary-dark);
+        font-weight: 700;
+        font-size: .9rem;
     }
 
     .image-placeholder {
-        width: 100%;
-        height: 180px;
-        background: #f3f3f3;
-        border-radius: 10px;
+        flex: 1;
+        min-height: 24rem;
+        margin: 1rem 1.25rem 1.25rem;
+        border-radius: 1rem;
+        background:
+            radial-gradient(circle at top left, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.65)),
+            linear-gradient(135deg, #fef3c7, #fde68a 35%, #f3d38b 70%, #e5c16f);
+        border: 1px solid rgba(255, 255, 255, 0.85);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
         display: flex;
         align-items: center;
         justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .image-placeholder::before,
+    .image-placeholder::after {
+        content: "";
+        position: absolute;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.28);
+        filter: blur(2px);
+    }
+
+    .image-placeholder::before {
+        width: 12rem;
+        height: 12rem;
+        top: -2rem;
+        right: -3rem;
+    }
+
+    .image-placeholder::after {
+        width: 8rem;
+        height: 8rem;
+        bottom: -1rem;
+        left: -2rem;
+    }
+
+    .image-placeholder-content {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        color: #5b3b16;
+        padding: 1rem;
+    }
+
+    .image-placeholder-content .icon {
+        font-size: 3rem;
+        line-height: 1;
+        display: block;
+        margin-bottom: .75rem;
+    }
+
+    .image-placeholder-content .title {
+        font-weight: 800;
+        font-size: 1.25rem;
+        margin-bottom: .25rem;
+    }
+
+    .image-placeholder-content .subtitle {
+        color: rgba(91, 59, 22, 0.82);
+        font-size: .95rem;
+    }
+
+    .product-panel {
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 28rem;
+    }
+
+    .product-title {
+        margin: 0 0 .5rem;
+        font-size: clamp(1.7rem, 2.3vw, 2.5rem);
+        font-weight: 800;
+        color: var(--text);
+        letter-spacing: -0.03em;
+    }
+
+    .product-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .5rem;
         margin-bottom: 1rem;
+    }
+
+    .meta-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: .35rem;
+        padding: .45rem .75rem;
+        border-radius: 999px;
+        background: #f8fafc;
+        color: #334155;
+        border: 1px solid var(--border);
+        font-size: .92rem;
+        font-weight: 600;
+    }
+
+    .price-box {
+        padding: 1rem 1rem 0.85rem;
+        border-radius: 1rem;
+        background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
+        border: 1px solid #bbf7d0;
+        margin-bottom: 1rem;
+    }
+
+    .price-label {
+        color: #166534;
+        font-weight: 700;
+        font-size: .95rem;
+        margin-bottom: .15rem;
+    }
+
+    .price-value {
+        color: #14532d;
+        font-weight: 900;
+        font-size: 2rem;
+        letter-spacing: -0.04em;
+        line-height: 1.1;
+    }
+
+    .price-value small {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #166534;
+    }
+
+    .qty-controls {
+        display: inline-flex;
+        align-items: center;
+        gap: .75rem;
+        padding: .55rem .7rem;
+        border-radius: 999px;
+        background: #fff;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow-soft);
+        margin-bottom: 1rem;
+    }
+
+    .qty-controls form {
+        margin: 0;
+    }
+
+    .qty-btn {
+        width: 2.5rem;
+        height: 2.5rem;
+        border: 0;
+        border-radius: 999px;
+        background: #f1f5f9;
+        color: #0f172a;
+        font-size: 1.2rem;
+        font-weight: 800;
+        line-height: 1;
+        transition: transform .15s ease, background-color .15s ease, box-shadow .15s ease;
+    }
+
+        .qty-btn:hover {
+            transform: translateY(-1px);
+            background: #e2e8f0;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+        }
+
+    .qty-value {
+        min-width: 2rem;
+        text-align: center;
+        font-weight: 800;
+        font-size: 1.1rem;
+        color: var(--text);
+    }
+
+    .add-to-cart-form {
+        margin-top: .25rem;
     }
 
     .add-to-cart-btn {
         transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, filter 0.15s ease;
-        min-width: 10rem;
-        font-weight: 700;
+        min-width: 12rem;
+        font-weight: 800;
         border-radius: 999px;
-        box-shadow: 0 4px 12px rgba(25, 135, 84, 0.18);
+        box-shadow: 0 10px 20px rgba(25, 135, 84, 0.20);
+        padding: .8rem 1.2rem;
     }
 
         .add-to-cart-btn:hover {
             transform: translateY(-1px);
             filter: brightness(1.03);
-            box-shadow: 0 8px 18px rgba(25, 135, 84, 0.24);
+            box-shadow: 0 14px 24px rgba(25, 135, 84, 0.24);
         }
+
+    .section-card {
+        margin-top: 1.25rem;
+        background: var(--surface-strong);
+        border: 1px solid var(--border);
+        border-radius: 1.25rem;
+        box-shadow: var(--shadow-soft);
+        overflow: hidden;
+    }
+
+    .section-card .card-body {
+        padding: 1.25rem;
+    }
+
+    .section-title {
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: var(--text);
+        margin-bottom: .85rem;
+        letter-spacing: -0.02em;
+    }
+
+    .description-text {
+        color: var(--text);
+        line-height: 1.7;
+    }
+
+    .ingredients-list .list-group-item {
+        border-color: rgba(15, 23, 42, 0.08);
+        padding-top: .95rem;
+        padding-bottom: .95rem;
+    }
+
+    .ingredient-name {
+        font-weight: 800;
+        color: var(--text);
+    }
+
+    .ingredient-desc {
+        color: var(--muted);
+    }
 
     .cart-feedback {
         position: relative;
         display: flex;
         align-items: center;
         gap: 10px;
-        margin: 1rem 20px 0;
+        margin: 1rem 0 1.25rem;
         padding: 0.9rem 1rem;
         border-radius: 14px;
         background: linear-gradient(135deg, #e8fff1, #d9fbe8);
@@ -80,10 +329,20 @@
     .cart-feedback-text {
         flex: 1;
     }
+
+    @@media (max-width: 992px) {
+        .product-hero {
+            grid-template-columns: 1fr;
+        }
+
+        .product-media,
+        .product-panel {
+            min-height: auto;
+        }
+    }
 </style>
 
-<main class="page-content container">
-
+<main class="page-content container product-page">
     @{
         var cartFeedback = TempData["CartFeedback"] as string;
     }
@@ -96,69 +355,106 @@
         </div>
     }
 
-</main>
+    <section class="product-hero">
+        <article class="product-media">
+            <div class="product-media-top">
+                <span class="product-badge">Premium chokolade</span>
+            </div>
 
-<header>
-    <h1>@Model.Chokoladen.Navn</h1>
-</header>
-<tbody>
-    <div class="row">
-        <div class="col">
-            Vis billede her
-        </div>
-        <div class="col">
-                <div class="card" style="width: 20rem; height: 40rem">
-                    <div class="card-body">
-                        Vis/tilføj kurv funktion her
+            @{
+                var chokoladeNavn = Model.Chokoladen?.Navn?.ToLowerInvariant() ?? string.Empty;
+                string? billedeUrl = null;
 
-                        <p class="row">Pris: @Model.TotalPris dkk    
-                        </p>
+                if (chokoladeNavn.Contains("sommer"))
+                {
+                    billedeUrl = Url.Content("~/Images/Sommerchokolade.png");
+                }
+                else if (chokoladeNavn.Contains("jul"))
+                {
+                    billedeUrl = Url.Content("~/Images/Julechokolade.png");
+                }
+                else if (chokoladeNavn.Contains("påske"))
+                {
+                    billedeUrl = Url.Content("~/Images/Påskechokolade.png");
+                }
+            }
 
-
-                        <div class="qty-controls" aria-label="Antal for @Model.AntalChokolader">
-                        <form method="post" asp-page-handler="ReducerAntal" asp-route-chokoladeId="@Model.Chokoladen.Id" class="m-0">
-                                <input type="hidden" name="id" value="@Model.Chokoladen.Id" />
-                                <button type="submit" class="qty-btn" aria-label="Reducer antal">−</button>
-                            </form>
-
-                            <span class="qty-value">@Model.AntalChokolader</span>
-
-                            <form method="post" asp-page-handler="OpretAntal" class="m-0">
-                                <input type="hidden" name="id" value="@Model.Chokoladen.Id" />
-                                <button type="submit" class="qty-btn" aria-label="Øg antal">+</button>
-                            </form>
-                        </div>
-                       @*  <div class="fw-bold">@string.Format(CultureInfo.GetCultureInfo("da-DK"), "{0:0.00} kr.", linje.Subtotal)</div> *@
-
-                    <form method="post"
-                          asp-page="/Produktside"
-                          asp-page-handler="TilføjTilKurv"
-                          class="add-to-cart-form">
-
-                        <input type="hidden"
-                               name="id"
-                               value="@Model.Chokoladen.Id" />
-
-                        <button type="submit"
-                                class="btn btn-sm btn-success add-to-cart-btn">
-                            🛒 Læg i kurv
-                        </button>
-
-                    </form>
+            <div class="image-placeholder" aria-label="Produktbillede">
+                @if (!string.IsNullOrWhiteSpace(billedeUrl))
+                {
+                    <img src="@billedeUrl"
+                         alt="@Model.Chokoladen.Navn"
+                         style="width:100%; height:100%; object-fit:cover; border-radius:1rem;" />
+                }
+                else
+                {
+                    <div class="image-placeholder-content">
+                        <span class="icon">🍫</span>
+                        <div class="title">@Model.Chokoladen.Navn</div>
+                        <div class="subtitle">Intet billede er tilgængeligt for dette produkt.</div>
                     </div>
-                </div>
-        </div>
-    </div>
+                }
+            </div>
+        </article>
 
-    <div class="card" >
-    <div class="card-body">
-        Her står beskrivelsen af chokoladen
-        @Model.Chokoladen.Beskrivelse
-    </div>
-</div>
-    <div class="card">
+        <aside class="product-panel">
+            <div>
+                <h1 class="product-title">@Model.Chokoladen.Navn</h1>
+
+                <div class="product-meta">
+                    <span class="meta-chip">Håndlavet med kærlighed</span>
+                    <span class="meta-chip">Friske råvarer</span>
+                    <span class="meta-chip">Sød forkælelse</span>
+                </div>
+
+                <div class="price-box">
+                    <div class="price-label">Pris</div>
+                    <div class="price-value">@Model.TotalPris <small>dkk</small></div>
+                </div>
+
+                <div class="qty-controls" aria-label="Antal for @Model.AntalChokolader">
+                    <form method="post" asp-page-handler="ReducerAntal" asp-route-chokoladeId="@Model.Chokoladen.Id" class="m-0">
+                        <input type="hidden" name="id" value="@Model.Chokoladen.Id" />
+                        <button type="submit" class="qty-btn" aria-label="Reducer antal">−</button>
+                    </form>
+
+                    <span class="qty-value">@Model.AntalChokolader</span>
+
+                    <form method="post" asp-page-handler="OpretAntal" class="m-0">
+                        <input type="hidden" name="id" value="@Model.Chokoladen.Id" />
+                        <button type="submit" class="qty-btn" aria-label="Øg antal">+</button>
+                    </form>
+                </div>
+
+                <form method="post"
+                      asp-page="/Produktside"
+                      asp-page-handler="TilføjTilKurv"
+                      class="add-to-cart-form">
+                    <input type="hidden"
+                           name="id"
+                           value="@Model.Chokoladen.Id" />
+
+                    <button type="submit"
+                            class="btn btn-success add-to-cart-btn">
+                        🛒 Læg i kurv
+                    </button>
+                </form>
+            </div>
+        </aside>
+    </section>
+
+    <section class="section-card">
         <div class="card-body">
-            <strong>Produktinformation</strong>
+            <div class="section-title">Beskrivelse</div>
+            <div class="description-text">
+                @Model.Chokoladen.Beskrivelse
+            </div>
+        </div>
+    </section>
+
+    <section class="section-card">
+        <div class="card-body">
+            <div class="section-title">Produktinformation</div>
 
             @{
                 var ingrediensIds = Model.Repo.IngrediensListeRepository.Data.Values
@@ -173,15 +469,15 @@
 
             @if (ingredienser.Any())
             {
-                <ul class="list-group mt-3">
+                <ul class="list-group ingredients-list mt-3">
                     @foreach (var ingrediens in ingredienser)
                     {
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <span>
-                                <strong>@ingrediens.Navn</strong>
+                                <span class="ingredient-name">@ingrediens.Navn</span>
                                 @if (!string.IsNullOrWhiteSpace(ingrediens.Beskrivelse))
                                 {
-                                    <span class="text-muted">- @ingrediens.Beskrivelse</span>
+                                    <span class="ingredient-desc"> - @ingrediens.Beskrivelse</span>
                                 }
                             </span>
 
@@ -199,9 +495,9 @@
             }
             else
             {
-                <p>Ingen ingredienser fundet.</p>
+                <p class="mb-0">Ingen ingredienser fundet.</p>
             }
         </div>
-    </div>
-</tbody>
+    </section>
+</main>
 
