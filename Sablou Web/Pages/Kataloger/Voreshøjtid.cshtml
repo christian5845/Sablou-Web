@@ -2,24 +2,231 @@
 @model Sablou_Web.Pages.Kataloger.VoresHøjtidModel
 
 @{
+    ViewData["Title"] = "Om vores højtider";
 }
 
-<header>
-    <h1 style="text-align-center">
-        Vores "indsæt højtids navn"
-    </h1> 
-</header>
+<style>
+    .højtid-hero {
+        background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
+        color: white;
+        padding: 4rem 2rem;
+        text-align: center;
+        margin-bottom: 3rem;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(139, 69, 19, 0.2);
+    }
 
-<body>
-<p>
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-</p>
+        .højtid-hero h1 {
+            font-family: 'Poiret One', cursive;
+            font-size: 2.5rem;
+            margin: 0;
+            font-weight: 700;
+        }
 
-<p>
-        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
-</p>
+        .højtid-hero p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            margin: 0.5rem 0 0 0;
+            font-style: italic;
+        }
 
-<p>
-        "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."
-</p>
-</body>
+    .højtid-content {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .højtid-intro {
+        background: #f9f6f2;
+        padding: 2rem;
+        margin-bottom: 3rem;
+        border-radius: 10px;
+        text-align: center;
+        color: #444;
+    }
+
+        .højtid-intro p {
+            line-height: 1.8;
+            font-size: 1.05rem;
+            margin: 0;
+        }
+
+    .højtid-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .højtid-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .højtid-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(139, 69, 19, 0.15);
+        }
+
+    .højtid-card-header {
+        background: linear-gradient(135deg, #D2691E 0%, #8B4513 100%);
+        padding: 2rem;
+        text-align: center;
+        color: white;
+    }
+
+        .højtid-card-header .icon {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .højtid-card-header h2 {
+            font-family: 'Poiret One', cursive;
+            font-size: 1.8rem;
+            margin: 0;
+            font-weight: 700;
+        }
+
+    .højtid-card-body {
+        padding: 2rem;
+    }
+
+        .højtid-card-body p {
+            color: #555;
+            line-height: 1.8;
+            font-size: 0.95rem;
+            margin: 0 0 1rem 0;
+        }
+
+            .højtid-card-body p:last-of-type {
+                margin-bottom: 1.5rem;
+            }
+
+    .højtid-btn {
+        display: inline-block;
+        padding: 0.65rem 1.5rem;
+        background: #8B4513;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: 2px solid #8B4513;
+        font-size: 0.95rem;
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+        .højtid-btn:hover {
+            background: white;
+            color: #8B4513;
+        }
+
+    @@media (max-width: 768px) {
+        .højtid-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .højtid-hero h1 {
+            font-size: 2rem;
+        }
+    }
+</style>
+
+<div class="container py-4">
+    <div class="højtid-hero">
+        <h1>🍫 Vores højtidssamlinger</h1>
+        <p>Håndlavede chokolader til dine vigtigste øjeblikke</p>
+    </div>
+
+    <div class="højtid-content">
+        <div class="højtid-intro">
+            <p>
+                Vi fejrer årsdagen med kuraterede chokoladesamlinger der fanger essensen af hver højtid.
+                Fra påskemorgen til mors dags glæde – udforsket vores specielle samlinger der er skabt med kærlighed.
+            </p>
+        </div>
+
+        <div class="højtid-grid">
+            <!-- Påske -->
+            <div class="højtid-card">
+                <div class="højtid-card-header">
+                    <span class="icon">🐣</span>
+                    <h2>Påske</h2>
+                </div>
+                <div class="højtid-card-body">
+                    <p>
+                        Påsken er et symbol på fornyelse og håb. Vores påskesamling fejrer forårets ankomst
+                        med friske smage og farverige designs.
+                    </p>
+                    <p>
+                        Fra klassiske påske-æg til innovative smage kombinationer – hver chokolade er en fest
+                        for smagsløgene og øjet.
+                    </p>
+                    <a href="/Kataloger/PåskeKatalog" class="højtid-btn">Udforsk påskesamlingen →</a>
+                </div>
+            </div>
+
+            <!-- Mors dag -->
+            <div class="højtid-card">
+                <div class="højtid-card-header">
+                    <span class="icon">💐</span>
+                    <h2>Mors dag</h2>
+                </div>
+                <div class="højtid-card-body">
+                    <p>
+                        Mors dag handler om at sige takk til de vigtigste kvinder i vores liv. Vores morsdag-samling
+                        er fyldt med kærlighed og elegance.
+                    </p>
+                    <p>
+                        Lækkert indpakket og smukkt præsenteret – den perfekte gave der viser hvor meget du bryder dig.
+                        Hver chokolade er håndlavet med ømt omhu.
+                    </p>
+                    <a href="/Kataloger/MorsDagKatalog" class="højtid-btn">Udforsk morsdag-samlingen →</a>
+                </div>
+            </div>
+
+            <!-- Fars dag -->
+            <div class="højtid-card">
+                <div class="højtid-card-header">
+                    <span class="icon">👔</span>
+                    <h2>Fars dag</h2>
+                </div>
+                <div class="højtid-card-body">
+                    <p>
+                        Fars dag er tiden til at fejre de stærke mænd i vores liv. Vores farsdag-samling tilbyder
+                        kraftfulde smage og klassisk elegance.
+                    </p>
+                    <p>
+                        Fra mørk chokolade til unikke smagskombinaioner – vores farsdag-kollektion er perfekt
+                        til at vise din påskønnelse og taknemmelighed.
+                    </p>
+                    <a href="/Kataloger/FarsDagKatalog" class="højtid-btn">Udforsk farsdag-samlingen →</a>
+                </div>
+            </div>
+
+            <!-- Halloween -->
+            <div class="højtid-card">
+                <div class="højtid-card-header">
+                    <span class="icon">🎃</span>
+                    <h2>Halloween</h2>
+                </div>
+                <div class="højtid-card-body">
+                    <p>
+                        Halloween er tid for sjov, kreativitet og eventyr. Vores halloween-samling byder på mørk,
+                        eventyrlig chokolade med en skræmmende god smag.
+                    </p>
+                    <p>
+                        Med spøgelsesagtige designs og dristigt farvevalg – vores halloween-chokolader er det perfekte
+                        supplement til dine trick-or-treat eventyr.
+                    </p>
+                    <a href="/Kataloger/HalloweenKatalog" class="højtid-btn">Udforsk halloween-samlingen →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
