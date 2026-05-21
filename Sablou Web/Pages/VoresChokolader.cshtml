@@ -6,199 +6,67 @@
 }
 
 <style>
-    :root {
-        --bg: #fff8f2;
-        --surface: rgba(255, 255, 255, 0.88);
-        --surface-strong: #ffffff;
-        --text: #2b1d16;
-        --muted: #6f5b51;
-        --brand: #8a4b2a;
-        --brand-2: #c98b62;
-        --accent: #16a34a;
-        --border: rgba(138, 75, 42, 0.12);
-        --shadow: 0 18px 40px rgba(69, 38, 22, 0.12);
-    }
-
-    body {
-        background-color: #faf7f2;
-        color: var(--text);
-    }
-
-    .page-shell {
-        padding: 2rem 1rem 1rem;
-    }
-
-    .page-hero {
-        background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,248,242,0.9));
-        border: 1px solid var(--border);
-        border-radius: 24px;
-        box-shadow: var(--shadow);
-        padding: 1.4rem 1.5rem;
-        margin: 0 0 1.25rem;
-        backdrop-filter: blur(10px);
-    }
-
-    .page-hero h1 {
-        margin: 0;
-        font-weight: 800;
-        letter-spacing: -0.03em;
-        color: var(--text);
-    }
-
-    .page-hero p {
-        margin: 0.45rem 0 0;
-        color: var(--muted);
-    }
-
-    .product-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-        gap: 1.25rem;
+    .vh-wrap {
+        font-family: 'Poiret One', cursive;
+        background: #faf7f2;
         padding: 0;
+        margin: -1rem;
     }
 
-    .product {
+    .vh-hero {
+        background: #3d1f0d;
+        color: #f5e6d3;
+        padding: 2.5rem 2rem 2rem;
+        text-align: center;
+        border-bottom: 3px solid #8B4513;
         position: relative;
         overflow: hidden;
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 24px;
-        padding: 1rem;
-        box-shadow: var(--shadow);
-        backdrop-filter: blur(10px);
-        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
 
-    .product:hover {
-        transform: translateY(-4px);
-        border-color: rgba(138, 75, 42, 0.2);
-        box-shadow: 0 24px 50px rgba(69, 38, 22, 0.16);
-    }
+        .vh-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient( 45deg, transparent, transparent 30px, rgba(139, 69, 19, 0.08) 30px, rgba(139, 69, 19, 0.08) 31px );
+        }
 
-    .product-media {
+    .vh-hero-inner {
         position: relative;
-        overflow: hidden;
-        border-radius: 18px;
-        background: linear-gradient(135deg, #f7e7db, #fff);
-        margin-bottom: 1rem;
-        min-height: 300px;
-        display: flex;
-        align-items: stretch;
-    }
-
-    .product-media img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-        transform: scale(1);
-        transition: transform 0.35s ease;
-    }
-
-    .product:hover .product-media img {
-        transform: scale(1.03);
-    }
-
-    .product-badge {
-        position: absolute;
-        top: 14px;
-        left: 14px;
         z-index: 1;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        padding: 0.45rem 0.75rem;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.88);
-        color: var(--brand);
-        font-size: 0.8rem;
-        font-weight: 800;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.8);
     }
 
-    .product-title {
-        margin: 0 0 0.35rem;
-        font-size: 1.35rem;
-        line-height: 1.2;
-        font-weight: 800;
-        letter-spacing: -0.02em;
-        color: var(--text);
+    .vh-hero-brand {
+        font-family: 'Poiret One', cursive;
+        font-size: 1.5rem;
+        color: #d4956a;
+        letter-spacing: 1px;
+        margin-bottom: 0.25rem;
     }
 
-    .product-description {
-        margin: 0 0 0.85rem;
-        color: var(--muted);
-        line-height: 1.6;
-        min-height: 4.8rem;
+    .vh-hero h1 {
+        font-size: 2rem;
+        margin: 0 0 0.4rem;
+        font-weight: 400;
+        letter-spacing: 2px;
     }
 
-    .product-price {
-        margin: 0 0 1rem;
-        font-size: 1.05rem;
-        font-weight: 800;
-        color: var(--brand);
-    }
-
-    .product-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-        align-items: center;
-    }
-
-    .details-btn {
-        border-radius: 999px;
-        padding: 0.7rem 1rem;
-        font-weight: 700;
-        box-shadow: 0 8px 18px rgba(13, 110, 253, 0.14);
-    }
-
-    .details-btn:hover {
-        transform: translateY(-1px);
-    }
-
-    .add-to-cart-form {
+    .vh-hero p {
+        font-size: 0.95rem;
+        color: #d4956a;
         margin: 0;
+        font-family: sans-serif;
+        font-style: italic;
     }
 
-    .add-to-cart-btn {
-        transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, filter 0.15s ease;
-        min-width: 11rem;
-        font-weight: 800;
-        border-radius: 999px;
-        box-shadow: 0 8px 18px rgba(25, 135, 84, 0.18);
-    }
-
-    .add-to-cart-btn:hover {
-        transform: translateY(-1px);
-        filter: brightness(1.03);
-        box-shadow: 0 12px 24px rgba(25, 135, 84, 0.24);
-    }
-
-    .add-to-cart-btn.is-animating {
-        animation: cart-success-pulse 520ms ease-out;
-    }
-
-    .add-to-cart-btn.is-loading {
-        transform: scale(0.97);
-        box-shadow: 0 0 0 0.25rem rgba(15, 157, 88, 0.24), 0 8px 18px rgba(15, 157, 88, 0.25);
-        background-color: #0f9d58;
-        border-color: #0f9d58;
-        color: white;
-    }
-
-    .add-to-cart-btn.is-loading::after {
-        content: "";
-        display: inline-block;
-        width: 0.85rem;
-        height: 0.85rem;
-        margin-left: 0.55rem;
-        border: 2px solid rgba(255,255,255,0.55);
-        border-top-color: white;
-        border-radius: 50%;
-        animation: cart-spinner 0.8s linear infinite;
-        vertical-align: -0.12rem;
+    .vh-intro {
+        background: #fff;
+        border-bottom: 1px solid #e8ddd0;
+        padding: 1.25rem 2rem;
+        text-align: center;
+        color: #666;
+        font-family: sans-serif;
+        font-size: 0.9rem;
+        line-height: 1.7;
     }
 
     .cart-feedback {
@@ -206,7 +74,7 @@
         display: flex;
         align-items: center;
         gap: 10px;
-        margin: 1rem 0 1.25rem;
+        margin: 1rem 2rem 0;
         padding: 0.95rem 1rem;
         border-radius: 16px;
         background: linear-gradient(135deg, #e8fff1, #d9fbe8);
@@ -214,7 +82,7 @@
         border: 1px solid #86efac;
         box-shadow: 0 10px 26px rgba(20, 83, 45, 0.12);
         font-weight: 700;
-        animation: cart-feedback-in 180ms ease-out, cart-feedback-glow 1.4s ease-in-out infinite;
+        font-family: sans-serif;
     }
 
     .cart-feedback-icon {
@@ -234,19 +102,174 @@
         flex: 1;
     }
 
+    .vh-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.25rem;
+        padding: 1.5rem;
+    }
+
+    .vh-card {
+        background: #fff;
+        border-radius: 12px;
+        border: 1px solid #e0d0c0;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(61, 31, 13, 0.08);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+        .vh-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(61, 31, 13, 0.12);
+        }
+
+    .vh-card-top {
+        padding: 1.25rem 1.25rem 1rem;
+        text-align: center;
+        border-bottom: 1px solid #f0e4d4;
+    }
+
+    .product-media {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #f7e7db, #fff);
+        margin-bottom: 1rem;
+        min-height: 180px;
+        display: flex;
+        align-items: stretch;
+    }
+
+    .product-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transform: scale(1);
+        transition: transform 0.35s ease;
+    }
+
+    .vh-card:hover .product-media img {
+        transform: scale(1.03);
+    }
+
+    .product-badge {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        z-index: 1;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.45rem 0.75rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.88);
+        color: #3d1f0d;
+        font-size: 0.8rem;
+        font-weight: 800;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        font-family: sans-serif;
+    }
+
+    .product-title {
+        margin: 0 0 0.35rem;
+        font-size: 1.3rem;
+        line-height: 1.2;
+        font-weight: 400;
+        letter-spacing: 1.5px;
+        color: #3d1f0d;
+    }
+
+    .product-description {
+        margin: 0 0 0.85rem;
+        color: #666;
+        line-height: 1.6;
+        min-height: 4.8rem;
+        font-family: sans-serif;
+        font-size: 0.85rem;
+    }
+
+    .product-price {
+        margin: 0 0 1rem;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #8B4513;
+    }
+
+    .product-actions {
+        padding: 1rem 1.25rem 1.25rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    .details-btn,
+    .add-to-cart-btn {
+        width: 100%;
+        border-radius: 999px;
+        padding: 0.6rem 1rem;
+        font-family: 'Poiret One', cursive;
+        font-size: 0.95rem;
+        letter-spacing: 1px;
+        border: none;
+        text-align: center;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+        box-sizing: border-box;
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+    .details-btn:hover,
+    .add-to-cart-btn:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.03);
+    }
+
+    .details-btn {
+        background: #fff7ea;
+        color: #3d1f0d;
+        border: 1px solid #e0d0c0;
+        box-shadow: 0 4px 12px rgba(61, 31, 13, 0.08);
+    }
+
+        .details-btn:hover {
+            color: #3d1f0d;
+            text-decoration: none;
+            box-shadow: 0 8px 18px rgba(61, 31, 13, 0.12);
+        }
+
+    .add-to-cart-form {
+        margin: 0;
+        flex: 1 1 10rem;
+    }
+
+    .add-to-cart-btn {
+        box-shadow: 0 4px 12px rgba(25, 135, 84, 0.18);
+    }
+
+        .add-to-cart-btn:hover {
+            box-shadow: 0 8px 18px rgba(25, 135, 84, 0.24);
+        }
+
     .site-footer {
         position: relative;
-        background: #0f1720;
-        color: #e6eef8;
-        padding: 2rem 1rem;
+        background: #3d1f0d;
+        color: #f5e6d3;
+        padding: 1.8rem 1rem;
         text-align: center;
         font-size: 0.95rem;
-        border-top: 1px solid rgba(255,255,255,0.04);
+        border-top: 1px solid rgba(255,255,255,0.06);
         margin-top: 2rem;
+        font-family: sans-serif;
     }
 
     .site-footer a {
-        color: #e6eef8;
+        color: #f5e6d3;
         text-decoration: underline;
         opacity: 0.9;
     }
@@ -290,80 +313,41 @@
         text-decoration: underline;
     }
 
-    @@keyframes cart-feedback-in {
-        from {
-            opacity: 0;
-            transform: translateY(-6px) scale(0.99);
+    @@media (max-width: 768px) {
+        .vh-hero h1 {
+            font-size: 1.5rem;
         }
 
-        to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-    }
-
-    @@keyframes cart-feedback-glow {
-        0%, 100% {
-            box-shadow: 0 10px 26px rgba(20, 83, 45, 0.12);
+        .vh-grid {
+            grid-template-columns: 1fr;
+            padding: 1rem;
         }
 
-        50% {
-            box-shadow: 0 12px 30px rgba(20, 83, 45, 0.18);
-        }
-    }
-
-    @@keyframes cart-success-pulse {
-        0% { transform: scale(1); }
-        40% { transform: scale(1.03); }
-        100% { transform: scale(1); }
-    }
-
-    @@keyframes cart-spinner {
-        to {
-            transform: rotate(360deg);
-        }
-    }
-
-    @@media (max-width: 576px) {
-        .page-shell {
-            padding: 1rem 0.75rem 0;
-        }
-
-        .page-hero {
-            padding: 1rem 1rem 1.1rem;
-            border-radius: 20px;
-        }
-
-        .product {
-            padding: 0.85rem;
-            border-radius: 20px;
-        }
-
-        .product-media {
-            min-height: 240px;
-        }
-
-        .product-title {
-            font-size: 1.2rem;
+        .vh-intro,
+        .cart-feedback {
+            margin-left: 1rem;
+            margin-right: 1rem;
         }
 
         .product-description {
             min-height: auto;
         }
-
-        .details-btn,
-        .add-to-cart-btn {
-            width: 100%;
-            justify-content: center;
-        }
     }
 </style>
 
-<main class="page-content container page-shell">
-    <section class="page-hero">
-        <h1>Vores Chokolader</h1>
-        <p>Udvalgte chokolader med fokus på smag, kvalitet og sæsonens favoritter.</p>
-    </section>
+<div class="vh-wrap">
+
+    <div class="vh-hero">
+        <div class="vh-hero-inner">
+            <div class="vh-hero-brand">Sabloú</div>
+            <h1>Vores chokolader</h1>
+            <p>Udvalgte chokolader med fokus på smag, kvalitet og sæsonens favoritter</p>
+        </div>
+    </div>
+
+    <div class="vh-intro">
+        Udforsk vores kollektion af håndlavede chokolader — skabt med omtanke, detaljer og en forkærlighed for det elegante.
+    </div>
 
     @if (!string.IsNullOrWhiteSpace(cartFeedback))
     {
@@ -373,7 +357,7 @@
         </div>
     }
 
-    <div class="product-grid">
+    <div class="vh-grid">
         @foreach (var c in Model._repo.ChokoladeRepository.Data.Values)
         {
             var lowerName = c.Navn.ToLowerInvariant();
@@ -381,31 +365,40 @@
             var hasChristmas = lowerName.Contains("jul");
             var hasEaster = lowerName.Contains("påske");
 
-            <article class="product">
-                <div class="product-media">
+            <article class="vh-card">
+                <div class="vh-card-top">
                     @if (hasSummer)
                     {
                         <span class="product-badge">Sommerfavorit</span>
-                        <img src="~/Images/Sommerchokolade.png" alt="@c.Navn"
-                             style="width:100%; height:300px; object-fit:cover;" />
+                        <div class="product-media">
+                            <img src="~/Images/Sommerchokolade.png" alt="@c.Navn" />
+                        </div>
                     }
                     else if (hasChristmas)
                     {
                         <span class="product-badge">Julechokolade</span>
-                        <img src="~/Images/Julechokolade.png" alt="@c.Navn"
-                             style="width:100%; height:300px; object-fit:cover;" />
+                        <div class="product-media">
+                            <img src="~/Images/Julechokolade.png" alt="@c.Navn" />
+                        </div>
                     }
                     else if (hasEaster)
                     {
                         <span class="product-badge">Påskefavorit</span>
-                        <img src="~/Images/Påskechokolade.png" alt="@c.Navn"
-                             style="width:100%; height:300px; object-fit:cover;" />
+                        <div class="product-media">
+                            <img src="~/Images/Påskechokolade.png" alt="@c.Navn" />
+                        </div>
                     }
-                </div>
+                    else
+                    {
+                        <div class="product-media">
+                            <img src="~/Images/Sommerchokolade.png" alt="@c.Navn" />
+                        </div>
+                    }
 
-                <h2 class="product-title">@c.Navn</h2>
-                <p class="product-description">@c.Beskrivelse</p>
-                <p class="product-price">Pris: @c.VisPris()</p>
+                    <h2 class="product-title">@c.Navn</h2>
+                    <p class="product-description">@c.Beskrivelse</p>
+                    <p class="product-price">Pris: @c.VisPris()</p>
+                </div>
 
                 <div class="product-actions">
                     <a class="btn btn-primary btn-sm details-btn"
@@ -423,7 +416,8 @@
             </article>
         }
     </div>
-</main>
+
+</div>
 
 <footer class="site-footer" role="contentinfo">
     <div>
