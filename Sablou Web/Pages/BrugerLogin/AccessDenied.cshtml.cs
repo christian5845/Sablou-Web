@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Sablou_Web.Pages.BrugerLogin
+namespace Sablou_Web.Pages.BrugerLogin;
+
+public class AccessDeniedModel : PageModel
 {
-    public class AccessDeniedModel : PageModel
+    public void OnGet()
     {
-        public void OnGet()
-        {
-        }
     }
 }

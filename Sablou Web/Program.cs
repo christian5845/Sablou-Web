@@ -22,8 +22,6 @@ builder.Services.AddRazorPages(options =>
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 
-
-
 builder.Services.AddSingleton<IDataService, Dataservice>();
 
 
@@ -34,7 +32,6 @@ builder.Services.AddAuthentication(
         options.AccessDeniedPath = "/BrugerLogin/AccessDenied";
         
     });
-
 
 var app = builder.Build();
 
@@ -55,5 +52,6 @@ app.UseSession();
 app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
+app.UseRequestLocalization("da-DK");
 
 app.Run();

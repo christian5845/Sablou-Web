@@ -64,7 +64,7 @@ namespace Sablou_Web.Pages.Chokolader
 
             _repositories.ChokoladeRepository.Delete(id.Value);
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Oversigt");
         }
     }
 }

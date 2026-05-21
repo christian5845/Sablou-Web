@@ -12,19 +12,15 @@ namespace Sablou_Web.Pages.Chokolader;
 [Authorize(Roles = "Admin")]
 public class OpretModel : PageModel
 {
-    private IDataService _repositories;
-    private readonly cralle_dk_db_sablouContext _context;
-
-
-
-    public OpretModel(cralle_dk_db_sablouContext context)
+    public  IDataService Repo { get; }
+    
+    public OpretModel(IDataService dataService)
     {
-        _context = context;
-        _repositories = new Dataservice();
+        Repo = dataService;
     }
 
     [BindProperty]
-    public Models.Chokolade Chokolade { get; set; } = default!;
+    public Chokolade Chokolade { get; set; } = default!;
 
     public List<SelectListItem> IngrediensValg { get; set; } = new();
 
@@ -37,7 +33,7 @@ public class OpretModel : PageModel
         {
             return RedirectToPage("/Forside");
         }
-        IngrediensValg = _context.Ingrediens
+        IngrediensValg = Repo.IngrediensRepository.Data.Values
             .Select(i => new SelectListItem
             {
                 Value = i.Id.ToString(),
@@ -56,7 +52,7 @@ public class OpretModel : PageModel
         }
         if (!ModelState.IsValid)
         {
-            IngrediensValg = _context.Ingrediens
+            IngrediensValg = Repo.IngrediensRepository.Data.Values
                 .Select(i => new SelectListItem
                 {
                     Value = i.Id.ToString(),
@@ -67,11 +63,11 @@ public class OpretModel : PageModel
             return Page();
         }
 
-        _repositories.ChokoladeRepository.Create(Chokolade);
+        Repo.ChokoladeRepository.Create(Chokolade);
 
         foreach (var id in ValgteIngrediensIds)
         {
-            _repositories.IngrediensListeRepository.Create(new IngrediensListe(Chokolade.Id, id));
+            Repo.IngrediensListeRepository.Create(new IngrediensListe(Chokolade.Id, id));
         }
 
         return RedirectToPage("./Oversigt");

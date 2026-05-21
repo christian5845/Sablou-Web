@@ -91,7 +91,7 @@ namespace Sablou_Web.Pages.Chokolader
                 );
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Chokolader/Oversigt");
         }
     }
 }
