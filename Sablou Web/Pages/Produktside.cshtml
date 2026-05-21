@@ -330,6 +330,19 @@
         flex: 1;
     }
 
+    .back-btn {
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        min-width: 12rem;
+        font-weight: 800;
+        border-radius: 999px;
+        padding: .8rem 1.2rem;
+    }
+
+        .back-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 14px 24px rgba(0, 0, 0, 0.10);
+        }
+
     @@media (max-width: 992px) {
         .product-hero {
             grid-template-columns: 1fr;
@@ -439,6 +452,10 @@
                         🛒 Læg i kurv
                     </button>
                 </form>
+                <a asp-page="/VoresChokolader"
+                   class="btn btn-outline-secondary back-btn mt-2">
+                    Tilbage til chokoladeoversigt
+                </a>
             </div>
         </aside>
     </section>
