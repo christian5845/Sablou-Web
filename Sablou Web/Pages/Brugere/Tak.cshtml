@@ -1,0 +1,21 @@
+﻿@page
+@model Sablou_Web.Pages.Brugere.TakModel
+@{
+    ViewData["Title"] = "Tak for din oprettelse";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-body p-4 p-md-5 text-center">
+                    <h1 class="h3 mb-3">Tak for din oprettelse</h1>
+                    <p class="mb-4">
+                        Din bruger er nu blevet oprettet, og du kan nu logge ind og begynde at udforske vores udvalg.
+                    </p>
+                    <a asp-page="/BrugerLogin/Login" class="btn btn-primary">Gå til log ind</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

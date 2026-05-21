@@ -2,27 +2,51 @@
 @model Sablou_Web.Pages.Kataloger.OpdaterHøjtidModel
 @using Sablou_Web.Models
 @{
+    ViewData["Title"] = "Opdater højtid";
 }
-<form method="post">
-    <div class="row">
-        @foreach (var katalog in Model.Repositories.HøjtidsKatalogRepository.Data.Values)
-        {
-            <div class="col-md-6 mb-4">
-                <div class="card h-100">
-                    <img src="~/images/chokolade.jpg" class="card-img-top" alt="@katalog.Højtidsnavn" />
 
-                    <div class="card-body">
-                        <h5 class="card-title">@katalog.Højtidsnavn</h5>
-
-                        <a class="btn btn-primary"
-                           asp-page="/Kataloger/RedigerKatalog"
-                           asp-route-id="@katalog.Id">
-                           Rediger
-                        </a>
-                    </div>
+<div class="container py-4">
+    <div class="row justify-content-center mb-4">
+        <div class="col-12 col-lg-10">
+            <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3">
+                <div>
+                    <h1 class="h3 mb-2">Opdater højtid</h1>
+                    <p class="text-muted mb-0">Vælg et katalog og rediger det direkte herfra.</p>
                 </div>
             </div>
-        }
+        </div>
     </div>
-   
-</form>
+
+    <form method="post">
+        <div class="row g-4">
+            @foreach (var katalog in Model.Repositories.HøjtidsKatalogRepository.Data.Values)
+            {
+                <div class="col-12 col-md-6 col-xl-4">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                        <div class="position-relative">
+                            <img src="~/images/chokolade.jpg"
+                                 class="card-img-top"
+                                 alt="@katalog.Højtidsnavn"
+                                 style="height: 220px; object-fit: cover;" />
+                        </div>
+
+                        <div class="card-body d-flex flex-column p-4">
+                            <h5 class="card-title mb-2">@katalog.Højtidsnavn</h5>
+                            <p class="card-text text-muted flex-grow-1 mb-4">
+                                Rediger indstillinger og oplysninger for dette katalog.
+                            </p>
+
+                            <div class="mt-auto">
+                                <a class="btn btn-primary w-100 rounded-pill"
+                                   asp-page="/Kataloger/RedigerKatalog"
+                                   asp-route-id="@katalog.Id">
+                                    Rediger
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </form>
+</div>

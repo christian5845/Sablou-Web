@@ -153,36 +153,37 @@
 </section>
 
 <main class="page-content container">
+</main>
 
-    <!-- Footer -->
+@section Footer {
     <footer class="site-footer" role="contentinfo">
-
         <div>
             © @DateTime.Now.Year Sablou — All rights reserved.
         </div>
 
         <div class="footer-links">
-
             <a href="https://www.instagram.com/sablou_cph/?hl=da"
                target="_blank"
                class="instagram-icon-link">
-
                 <img src="~/images/insta.png" alt="Instagram" />
             </a>
 
-            <span>·</span>
+            <span> </span>
 
             <a href="/om">Om os</a>
-
         </div>
-
     </footer>
-</main>
+}
 
 <style>
     .site-footer {
+        max-width: 900px;
+        width: calc(100% - 2rem);
+        margin: 1rem auto;
         padding: 2rem 0;
         text-align: center;
+        box-sizing: border-box;
+        border-radius: 16px;
     }
 
     .footer-links {

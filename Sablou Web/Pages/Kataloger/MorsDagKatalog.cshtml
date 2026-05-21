@@ -273,8 +273,35 @@
             <div class="product">
 
                 <div class="product-top">
-                    <div class="image-placeholder">
-                        vis billede her
+                    @{
+                        var chokoladeNavn = c?.Navn?.ToLowerInvariant() ?? string.Empty;
+                        string? billedeUrl = null;
+
+                        if (chokoladeNavn.Contains("sommer"))
+                        {
+                            billedeUrl = Url.Content("~/Images/Sommerchokolade.png");
+                        }
+                        else if (chokoladeNavn.Contains("jul"))
+                        {
+                            billedeUrl = Url.Content("~/Images/Julechokolade.png");
+                        }
+                        else if (chokoladeNavn.Contains("påske"))
+                        {
+                            billedeUrl = Url.Content("~/Images/Påskechokolade.png");
+                        }
+                    }
+
+                    <div class="image-placeholder" aria-label="Produktbillede">
+                        @if (!string.IsNullOrWhiteSpace(billedeUrl))
+                        {
+                            <img src="@billedeUrl"
+                                 alt="@c.Navn"
+                                 style="width:100%; height:100%; object-fit:cover; border-radius:10px;" />
+                        }
+                        else
+                        {
+                            <span>🍫 Intet billede</span>
+                        }
                     </div>
 
                     <h3>@c.Navn</h3>
