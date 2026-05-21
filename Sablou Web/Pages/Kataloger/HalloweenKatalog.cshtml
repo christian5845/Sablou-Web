@@ -4,56 +4,75 @@
 @{
 }
 <style>
-    .product-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-        padding: 20px;
-        align-items: stretch;
+    .catalog-wrap {
+        font-family: 'Poiret One', cursive;
+        background: #faf7f2;
+        padding: 0 0 2rem;
+        margin: -1rem;
     }
 
-    .product {
-        background: #fff;
-        border-radius: 12px;
-        padding: 16px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 100%;
+    .catalog-hero {
+        background: linear-gradient(135deg, #E66C2C, #F4831B);
+        color: #000000;
+        padding: 2.5rem 2rem 2rem;
+        text-align: center;
+        border-bottom: 3px solid #d39c59;
+        position: relative;
+        overflow: hidden;
     }
 
-    .image-placeholder {
-        width: 100%;
-        height: 180px;
-        background: #f3f3f3;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 1rem;
-    }
-
-    .add-to-cart-btn {
-        transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, filter 0.15s ease;
-        min-width: 10rem;
-        font-weight: 700;
-        border-radius: 999px;
-        box-shadow: 0 4px 12px rgba(25, 135, 84, 0.18);
-    }
-
-        .add-to-cart-btn:hover {
-            transform: translateY(-1px);
-            filter: brightness(1.03);
-            box-shadow: 0 8px 18px rgba(25, 135, 84, 0.24);
+        .catalog-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient( 45deg, transparent, transparent 30px, rgba(255, 255, 255, 0.06) 30px, rgba(255, 255, 255, 0.06) 31px );
         }
+
+    .catalog-hero-inner {
+        position: relative;
+        z-index: 1;
+    }
+
+    .catalog-brand {
+        font-family: 'Poiret One', cursive;
+        font-size: 1.5rem;
+        color: #000000;
+        letter-spacing: 1px;
+        margin-bottom: 0.25rem;
+    }
+
+    .catalog-hero h1 {
+        font-size: 2rem;
+        margin: 0 0 0.4rem;
+        font-weight: 400;
+        letter-spacing: 2px;
+    }
+
+    .catalog-hero p {
+        font-size: 0.95rem;
+        color: #000000;
+        margin: 0;
+        font-family: sans-serif;
+        font-style: italic;
+    }
+
+    .catalog-intro {
+        background: #fff;
+        border-bottom: 1px solid #e8ddd0;
+        padding: 1.25rem 2rem;
+        text-align: center;
+        color: #666;
+        font-family: sans-serif;
+        font-size: 0.9rem;
+        line-height: 1.7;
+    }
 
     .cart-feedback {
         position: relative;
         display: flex;
         align-items: center;
         gap: 10px;
-        margin: 1rem 20px 0;
+        margin: 1rem 2rem 0;
         padding: 0.9rem 1rem;
         border-radius: 14px;
         background: linear-gradient(135deg, #e8fff1, #d9fbe8);
@@ -61,6 +80,7 @@
         border: 1px solid #86efac;
         box-shadow: 0 8px 20px rgba(20, 83, 45, 0.12);
         font-weight: 600;
+        font-family: sans-serif;
     }
 
     .cart-feedback-icon {
@@ -78,9 +98,161 @@
     .cart-feedback-text {
         flex: 1;
     }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.25rem;
+        padding: 1.5rem;
+        align-items: stretch;
+    }
+
+    .product {
+        background: #fff;
+        border-radius: 12px;
+        border: 1px solid #e0d0c0;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(44, 18, 61, 0.08);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+        .product:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(44, 18, 61, 0.12);
+        }
+
+    .product-top {
+        padding: 1.25rem 1.25rem 1rem;
+        text-align: center;
+        border-bottom: 1px solid #f0e4d4;
+    }
+
+    .image-placeholder {
+        width: 100%;
+        height: 180px;
+        background: linear-gradient(135deg, #ffffff, #ffffff);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        color: #E66C2C;
+        font-family: sans-serif;
+        font-size: 0.9rem;
+    }
+
+    .product-top h3 {
+        font-family: 'Poiret One', cursive;
+        font-size: 1.3rem;
+        font-weight: 400;
+        color: #E66C2C;
+        margin: 0 0 0.2rem;
+        letter-spacing: 1.5px;
+    }
+
+    .product-top p {
+        font-family: sans-serif;
+        font-size: 0.85rem;
+        color: #666;
+        line-height: 1.6;
+        margin: 0 0 0.75rem;
+    }
+
+    .product-price {
+        color: #F4831B;
+        margin-bottom: 0;
+    }
+
+    .product-actions {
+        padding: 1rem 1.25rem 1.25rem;
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+        .product-actions a,
+        .product-actions form {
+            flex: 1 1 10rem;
+        }
+
+    .product-btn {
+        width: 100%;
+        padding: 0.6rem 1rem;
+        border-radius: 999px;
+        font-family: 'Poiret One', cursive;
+        font-size: 0.95rem;
+        letter-spacing: 1px;
+        border: none;
+        text-align: center;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+        box-sizing: border-box;
+        text-decoration: none;
+    }
+
+        .product-btn:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.03);
+        }
+
+    .details-btn {
+        background: #ffffff;
+        color: #EB6123;
+        border: 1px solid #EB6123;
+        box-shadow: 0 4px 12px rgba(44, 18, 61, 0.08);
+    }
+
+        .details-btn:hover {
+            color: #EB6123;
+            text-decoration: none;
+            box-shadow: 0 8px 18px rgba(44, 18, 61, 0.12);
+        }
+
+    .cart-btn {
+        background: #EB6123;
+        color: #f3e8fb;
+        box-shadow: 0 4px 12px rgba(44, 18, 61, 0.18);
+    }
+
+        .cart-btn:hover {
+            color: #fff;
+            box-shadow: 0 8px 18px rgba(44, 18, 61, 0.24);
+        }
+
+    @@media (max-width: 768px) {
+        .catalog-hero h1 {
+            font-size: 1.5rem;
+        }
+
+        .product-grid {
+            grid-template-columns: 1fr;
+            padding: 1rem;
+        }
+
+        .catalog-intro,
+        .cart-feedback {
+            margin-left: 1rem;
+            margin-right: 1rem;
+        }
+    }
 </style>
 
-<main class="page-content container">
+<div class="catalog-wrap">
+
+    <div class="catalog-hero">
+        <div class="catalog-hero-inner">
+            <div class="catalog-brand">Sabloú</div>
+            <h1>Halloween-katalog</h1>
+            <p>Mørke, mystiske og eventyrlige chokolader til årets mest gyselige aften</p>
+        </div>
+    </div>
+
+    <div class="catalog-intro">
+        Udforsk vores Halloween-sortiment med dybe farver, intense smage og stemningsfulde detaljer.
+    </div>
 
     @{
         var cartFeedback = TempData["CartFeedback"] as string;
@@ -94,53 +266,52 @@
         </div>
     }
 
-</main>
+    <div class="product-grid">
 
-<div class="product-grid">
+        @foreach (var c in Model.Chokolader)
+        {
+            <div class="product">
 
-    @foreach (var c in Model.Chokolader)
-    {
-        <div class="product">
+                <div class="product-top">
+                    <div class="image-placeholder">
+                        vis billede her
+                    </div>
 
-            <div>
-                <div class="image-placeholder">
-                    vis billede her
+                    <h3>@c.Navn</h3>
+
+                    <p>@c.Beskrivelse</p>
+
+                    <p class="fw-bold product-price">Pris: @c.VisPris()</p>
                 </div>
 
-                <h3>@c.Navn</h3>
+                <div class="product-actions">
 
-                <p>@c.Beskrivelse</p>
+                    <a class="product-btn details-btn"
+                       asp-page="/Produktside"
+                       asp-route-id="@c.Id">
+                        Kig nærmere
+                    </a>
 
-                <p class="fw-bold">Pris: @c.VisPris()</p>
-            </div>
+                    <form method="post"
+                          asp-page="/Kataloger/HalloweenKatalog"
+                          asp-page-handler="TilføjTilKurv">
 
-            <div class="d-flex gap-2 flex-wrap mt-3">
+                        <input type="hidden"
+                               name="chokoladeId"
+                               value="@c.Id" />
 
-                <a class="btn btn-sm btn-success add-to-cart-btn"
-                   asp-page="/Produktside"
-                   asp-route-id="@c.Id">
-                    Kig nærmere
-                </a>
+                        <button type="submit"
+                                class="product-btn cart-btn">
+                            🛒 Læg i kurv
+                        </button>
 
-                <form method="post"
-                      asp-page="/Kataloger/HalloweenKatalog"
-                      asp-page-handler="TilføjTilKurv"
-                      class="add-to-cart-form">
+                    </form>
 
-                    <input type="hidden"
-                           name="chokoladeId"
-                           value="@c.Id" />
-
-                    <button type="submit"
-                            class="btn btn-sm btn-success add-to-cart-btn">
-                        🛒 Læg i kurv
-                    </button>
-
-                </form>
+                </div>
 
             </div>
+        }
 
-        </div>
-    }
+    </div>
 
 </div>
