@@ -58,8 +58,8 @@ namespace Sablou_Web.Pages.Brugere
                 return Page();
             }
 
-            // Vend tilbage til startsiden
-            return RedirectToPage("/Forside");
+            // Redirect til en takkeside
+            return RedirectToPage("/Brugere/Tak");
         }
     }
 
