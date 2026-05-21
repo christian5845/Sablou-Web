@@ -6,227 +6,242 @@
 }
 
 <style>
-    .højtid-hero {
-        background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
-        color: white;
-        padding: 4rem 2rem;
+    .vh-wrap {
+        font-family: 'Poiret One', cursive;
+        background: #faf7f2;
+        padding: 0;
+        margin: -1rem;
+    }
+
+    .vh-hero {
+        background: #3d1f0d;
+        color: #f5e6d3;
+        padding: 2.5rem 2rem 2rem;
         text-align: center;
-        margin-bottom: 3rem;
-        border-radius: 12px;
-        box-shadow: 0 8px 24px rgba(139, 69, 19, 0.2);
-    }
-
-        .højtid-hero h1 {
-            font-family: 'Poiret One', cursive;
-            font-size: 2.5rem;
-            margin: 0;
-            font-weight: 700;
-        }
-
-        .højtid-hero p {
-            font-size: 1.1rem;
-            opacity: 0.95;
-            margin: 0.5rem 0 0 0;
-            font-style: italic;
-        }
-
-    .højtid-content {
-        max-width: 1000px;
-        margin: 0 auto;
-    }
-
-    .højtid-intro {
-        background: #f9f6f2;
-        padding: 2rem;
-        margin-bottom: 3rem;
-        border-radius: 10px;
-        text-align: center;
-        color: #444;
-    }
-
-        .højtid-intro p {
-            line-height: 1.8;
-            font-size: 1.05rem;
-            margin: 0;
-        }
-
-    .højtid-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-        gap: 2rem;
-        margin-top: 2rem;
-    }
-
-    .højtid-card {
-        background: white;
-        border-radius: 12px;
+        border-bottom: 3px solid #8B4513;
+        position: relative;
         overflow: hidden;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-        .højtid-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 32px rgba(139, 69, 19, 0.15);
+        .vh-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient( 45deg, transparent, transparent 30px, rgba(139, 69, 19, 0.08) 30px, rgba(139, 69, 19, 0.08) 31px );
         }
 
-    .højtid-card-header {
-        background: linear-gradient(135deg, #D2691E 0%, #8B4513 100%);
-        padding: 2rem;
-        text-align: center;
-        color: white;
+    .vh-hero-inner {
+        position: relative;
+        z-index: 1;
     }
 
-        .højtid-card-header .icon {
-            font-size: 3.5rem;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        .højtid-card-header h2 {
-            font-family: 'Poiret One', cursive;
-            font-size: 1.8rem;
-            margin: 0;
-            font-weight: 700;
-        }
-
-    .højtid-card-body {
-        padding: 2rem;
+    .vh-hero-brand {
+        font-family: 'Allison', cursive;
+        font-size: 1.5rem;
+        color: #d4956a;
+        letter-spacing: 1px;
+        margin-bottom: 0.25rem;
     }
 
-        .højtid-card-body p {
-            color: #555;
-            line-height: 1.8;
-            font-size: 0.95rem;
-            margin: 0 0 1rem 0;
-        }
+    .vh-hero h1 {
+        font-size: 2rem;
+        margin: 0 0 0.4rem;
+        font-weight: 400;
+        letter-spacing: 2px;
+    }
 
-            .højtid-card-body p:last-of-type {
-                margin-bottom: 1.5rem;
-            }
-
-    .højtid-btn {
-        display: inline-block;
-        padding: 0.65rem 1.5rem;
-        background: #8B4513;
-        color: white;
-        text-decoration: none;
-        border-radius: 6px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        border: 2px solid #8B4513;
+    .vh-hero p {
         font-size: 0.95rem;
-        width: 100%;
+        color: #d4956a;
+        margin: 0;
+        font-family: sans-serif;
+        font-style: italic;
+    }
+
+    .vh-intro {
+        background: #fff;
+        border-bottom: 1px solid #e8ddd0;
+        padding: 1.25rem 2rem;
         text-align: center;
+        color: #666;
+        font-family: sans-serif;
+        font-size: 0.9rem;
+        line-height: 1.7;
+    }
+
+    .vh-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.25rem;
+        padding: 1.5rem;
+    }
+
+    .vh-card {
+        background: #fff;
+        border-radius: 12px;
+        border: 1px solid #e0d0c0;
+        overflow: hidden;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .vh-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(61, 31, 13, 0.12);
+        }
+
+    .vh-card-top {
+        padding: 1.5rem 1.25rem 1rem;
+        text-align: center;
+        border-bottom: 1px solid #f0e4d4;
+    }
+
+    .vh-icon {
+        width: 52px;
+        height: 52px;
+        background: #faf0e8;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 0.75rem;
+        font-size: 1.6rem;
+        border: 2px solid #e8d0b8;
+    }
+
+    .vh-card-top h2 {
+        font-family: 'Poiret One', cursive;
+        font-size: 1.3rem;
+        font-weight: 400;
+        color: #3d1f0d;
+        margin: 0 0 0.2rem;
+        letter-spacing: 1.5px;
+    }
+
+    .vh-season {
+        font-size: 0.75rem;
+        color: #a07050;
+        font-family: sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .vh-card-body {
+        padding: 1rem 1.25rem 1.25rem;
+    }
+
+        .vh-card-body p {
+            font-family: sans-serif;
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.6;
+            margin: 0 0 1rem;
+        }
+
+    .vh-btn {
+        display: block;
+        width: 100%;
+        padding: 0.55rem 1rem;
+        background: #3d1f0d;
+        color: #f5e6d3;
+        border: none;
+        border-radius: 6px;
+        font-family: 'Poiret One', cursive;
+        font-size: 0.95rem;
+        letter-spacing: 1px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        transition: background 0.2s ease;
         box-sizing: border-box;
     }
 
-        .højtid-btn:hover {
-            background: white;
-            color: #8B4513;
+        .vh-btn:hover {
+            background: #8B4513;
+            color: #fff;
+            text-decoration: none;
         }
 
     @@media (max-width: 768px) {
-        .højtid-grid {
-            grid-template-columns: 1fr;
+        .vh-hero h1 {
+            font-size: 1.5rem;
         }
 
-        .højtid-hero h1 {
-            font-size: 2rem;
+        .vh-grid {
+            grid-template-columns: 1fr;
+            padding: 1rem;
         }
     }
 </style>
 
-<div class="container py-4">
-    <div class="højtid-hero">
-        <h1>🍫 Vores højtidssamlinger</h1>
-        <p>Håndlavede chokolader til dine vigtigste øjeblikke</p>
-    </div>
+<div class="vh-wrap">
 
-    <div class="højtid-content">
-        <div class="højtid-intro">
-            <p>
-                Vi fejrer årsdagen med kuraterede chokoladesamlinger der fanger essensen af hver højtid.
-                Fra påskemorgen til mors dags glæde – udforsket vores specielle samlinger der er skabt med kærlighed.
-            </p>
-        </div>
-
-        <div class="højtid-grid">
-            <!-- Påske -->
-            <div class="højtid-card">
-                <div class="højtid-card-header">
-                    <span class="icon">🐣</span>
-                    <h2>Påske</h2>
-                </div>
-                <div class="højtid-card-body">
-                    <p>
-                        Påsken er et symbol på fornyelse og håb. Vores påskesamling fejrer forårets ankomst
-                        med friske smage og farverige designs.
-                    </p>
-                    <p>
-                        Fra klassiske påske-æg til innovative smage kombinationer – hver chokolade er en fest
-                        for smagsløgene og øjet.
-                    </p>
-                    <a href="/Kataloger/PåskeKatalog" class="højtid-btn">Udforsk påskesamlingen →</a>
-                </div>
-            </div>
-
-            <!-- Mors dag -->
-            <div class="højtid-card">
-                <div class="højtid-card-header">
-                    <span class="icon">💐</span>
-                    <h2>Mors dag</h2>
-                </div>
-                <div class="højtid-card-body">
-                    <p>
-                        Mors dag handler om at sige takk til de vigtigste kvinder i vores liv. Vores morsdag-samling
-                        er fyldt med kærlighed og elegance.
-                    </p>
-                    <p>
-                        Lækkert indpakket og smukkt præsenteret – den perfekte gave der viser hvor meget du bryder dig.
-                        Hver chokolade er håndlavet med ømt omhu.
-                    </p>
-                    <a href="/Kataloger/MorsDagKatalog" class="højtid-btn">Udforsk morsdag-samlingen →</a>
-                </div>
-            </div>
-
-            <!-- Fars dag -->
-            <div class="højtid-card">
-                <div class="højtid-card-header">
-                    <span class="icon">👔</span>
-                    <h2>Fars dag</h2>
-                </div>
-                <div class="højtid-card-body">
-                    <p>
-                        Fars dag er tiden til at fejre de stærke mænd i vores liv. Vores farsdag-samling tilbyder
-                        kraftfulde smage og klassisk elegance.
-                    </p>
-                    <p>
-                        Fra mørk chokolade til unikke smagskombinaioner – vores farsdag-kollektion er perfekt
-                        til at vise din påskønnelse og taknemmelighed.
-                    </p>
-                    <a href="/Kataloger/FarsDagKatalog" class="højtid-btn">Udforsk farsdag-samlingen →</a>
-                </div>
-            </div>
-
-            <!-- Halloween -->
-            <div class="højtid-card">
-                <div class="højtid-card-header">
-                    <span class="icon">🎃</span>
-                    <h2>Halloween</h2>
-                </div>
-                <div class="højtid-card-body">
-                    <p>
-                        Halloween er tid for sjov, kreativitet og eventyr. Vores halloween-samling byder på mørk,
-                        eventyrlig chokolade med en skræmmende god smag.
-                    </p>
-                    <p>
-                        Med spøgelsesagtige designs og dristigt farvevalg – vores halloween-chokolader er det perfekte
-                        supplement til dine trick-or-treat eventyr.
-                    </p>
-                    <a href="/Kataloger/HalloweenKatalog" class="højtid-btn">Udforsk halloween-samlingen →</a>
-                </div>
-            </div>
+    <div class="vh-hero">
+        <div class="vh-hero-inner">
+            <div class="vh-hero-brand">Sabloú</div>
+            <h1>Vores højtidssamlinger</h1>
+            <p>Håndlavede chokolader til dine vigtigste øjeblikke</p>
         </div>
     </div>
+
+    <div class="vh-intro">
+        Vi fejrer årstiderne med kuraterede chokoladesamlinger — skabt med kærlighed til hver højtid.
+        Udforsk vores specielle samlinger herunder.
+    </div>
+
+    <div class="vh-grid">
+
+        <!-- Påske -->
+        <div class="vh-card">
+            <div class="vh-card-top">
+                <div class="vh-icon">🐣</div>
+                <h2>Påske</h2>
+                <div class="vh-season">Forår</div>
+            </div>
+            <div class="vh-card-body">
+                <p>Friske smage og farverige designs inspireret af forårets ankomst. Fra klassiske påskeæg til innovative smagskombinationer til hele familien.</p>
+                <a href="/Kataloger/PåskeKatalog" class="vh-btn">Udforsk samlingen</a>
+            </div>
+        </div>
+
+        <!-- Mors dag -->
+        <div class="vh-card">
+            <div class="vh-card-top">
+                <div class="vh-icon">💐</div>
+                <h2>Mors dag</h2>
+                <div class="vh-season">Maj</div>
+            </div>
+            <div class="vh-card-body">
+                <p>Lækre chokolader indpakket med elegance — den perfekte gave der viser, hvor meget du bryder dig. Håndlavet med ømt omhu.</p>
+                <a href="/Kataloger/MorsDagKatalog" class="vh-btn">Udforsk samlingen</a>
+            </div>
+        </div>
+
+        <!-- Fars dag -->
+        <div class="vh-card">
+            <div class="vh-card-top">
+                <div class="vh-icon">👔</div>
+                <h2>Fars dag</h2>
+                <div class="vh-season">Juni</div>
+            </div>
+            <div class="vh-card-body">
+                <p>Kraftfulde smage og mørk chokolade i klassisk stil — til den mand der fortjener noget særligt. Perfekt til at vise din taknemmelighed.</p>
+                <a href="/Kataloger/FarsDagKatalog" class="vh-btn">Udforsk samlingen</a>
+            </div>
+        </div>
+
+        <!-- Halloween -->
+        <div class="vh-card">
+            <div class="vh-card-top">
+                <div class="vh-icon">🎃</div>
+                <h2>Halloween</h2>
+                <div class="vh-season">Oktober</div>
+            </div>
+            <div class="vh-card-body">
+                <p>Dristige designs og mørk eventyrlig chokolade med spøgelsesagtige detaljer — det perfekte supplement til dine halloween-fejringer.</p>
+                <a href="/Kataloger/HalloweenKatalog" class="vh-btn">Udforsk samlingen</a>
+            </div>
+        </div>
+
+    </div>
+
 </div>
