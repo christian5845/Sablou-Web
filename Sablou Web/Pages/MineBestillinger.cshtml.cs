@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
-using Sablou_Web.Pages.Betalinger;
 using Sablou_Web.Pages.BrugerLogin;
 using Sablou_Web.Services;
 using Sablou_Web.Models;
@@ -10,11 +8,10 @@ namespace Sablou_Web.Pages;
 
 public class MineBestillingerModel : PageModel
 {
-    public IDataService Repo { get;}
+    public IDataService Repo { get; }
 
     public int BrugerId { get; set; }
     public List<GemtOrdre> Ordrer { get; set; } = new();
-    
 
     public MineBestillingerModel(IDataService dataService)
     {
@@ -39,7 +36,8 @@ public class MineBestillingerModel : PageModel
                    Besked = o.Besked,
                    ErLoggetInd = o.ErLoggetInd,
                    BrugerId = o.BrugerId,
-                   ErBehandlet = o.Behandlet
+                   ErBehandlet = o.Behandlet,            
+                   ErAnnulleret = o.ErAnnulleret
                };
 
                List<GemtOrdreLinje> gemtOrdreLinjer = Repo.OrdreLinjeRepository.Data.Values
@@ -57,11 +55,30 @@ public class MineBestillingerModel : PageModel
                    }).ToList();
 
                foreach (GemtOrdreLinje l in gemtOrdreLinjer)
-               {
                    gemt.Linjer.Add(l);
-               }
-               return gemt;
-           }).Where(o => o.BrugerId == BrugerId) .ToList();
 
+               return gemt;
+           })
+           .Where(o => o.BrugerId == BrugerId)
+           .ToList();
+    }
+
+    // Annullér ordre
+    // Kaldes når kunden trykker "Ja" i bekræftelses-popup'en.
+    public IActionResult OnPostAnnuller(int id)
+    {
+        // Sikkerhedstjek: ordren skal tilhøre den indloggede bruger
+        var ordre = Repo.OrdreRepository.Data.Values
+            .FirstOrDefault(o => o.Id == id && o.BrugerId == BrugerId);
+
+        if (ordre == null || ordre.Behandlet)
+            return Forbid(); // Ordren findes ikke eller tilhører en anden bruger, eller allerede behandlet
+
+        // Sæt ErAnnulleret i stedet for at slette
+        // Så admin stadig kan se den
+        ordre.ErAnnulleret = true;
+        Repo.OrdreRepository.Update(ordre);
+
+        return RedirectToPage();
     }
 }
