@@ -35,7 +35,8 @@ public class BestillingerModel : PageModel
                     Adresse = o.Adresse,
                     Besked = o.Besked,
                     ErLoggetInd = o.ErLoggetInd,
-                    BrugerId = o.BrugerId                
+                    BrugerId = o.BrugerId,
+                    ErBehandlet = o.Behandlet
                 };
 
                 List<GemtOrdreLinje> gemtOrdreLinjer = _repo.OrdreLinjeRepository.Data.Values
@@ -56,8 +57,6 @@ public class BestillingerModel : PageModel
                 {
                     gemt.Linjer.Add(l);
                 }
-               
-
                 return gemt;
             }).ToList();
     }
@@ -69,9 +68,9 @@ public class BestillingerModel : PageModel
             return Forbid();
 
         // Slet ordrelinjer først (foreign key)
-        var linjer = _repo.KurvLinjeRepository.Data.Values.Where(l => l.KurvId == id).ToList();
+        var linjer = _repo.OrdreLinjeRepository.Data.Values.Where(l => l.OrdreId == id).ToList();
         foreach (var l in linjer)
-            _repo.KurvLinjeRepository.Delete(l.Id);
+            _repo.OrdreLinjeRepository.Delete(l.Id);
 
         _repo.OrdreRepository.Delete(id);
         return RedirectToPage();

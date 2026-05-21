@@ -11,10 +11,4 @@ public class ChokoladerIKatalogRepository : RepositoryBase<ChokoladerIkatalog>
     {
         return context.Set<ChokoladerIkatalog>().Include(p=> p.ChokoladeId).Include(p=>p.KatalogId);
     }
-
-
-    public override void Create(ChokoladerIkatalog element)
-    {
-        base.Create(element);
-    }
 }
