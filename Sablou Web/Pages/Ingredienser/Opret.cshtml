@@ -1,25 +1,42 @@
 ﻿@page
 @model Sablou_Web.Pages.Ingredienser.OpretModel
 @{
+    ViewData["Title"] = "Opret ingrediens";
 }
 
-<form method="post"> 
-    <div class="form-group"> 
-        <label asp-for="Navn" class="control-label"></label>
-        <input asp-for="Navn"/>
-    </div>
-     <div class="form-group"> 
-        <label asp-for="Beskrivelse" class="control-label"></label>
-        <input asp-for="Beskrivelse"/>
-    </div>
-    <div class="form-group"> 
-        <label asp-for="Antal" class="control-label"></label>
-        <input asp-for="Antal"/>
-    </div>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4 p-md-5">
+                    <div class="mb-4">
+                        <h1 class="h3 mb-1">Opret ingrediens</h1>
+                        <p class="text-muted mb-0">Udfyld felterne nedenfor for at oprette en ny ingrediens.</p>
+                    </div>
 
-    <p>
-        <div class="form-group">
-            <input type="submit" value="create", class="btn btn-primary"/>
+                    <form method="post">
+                        <div class="mb-3">
+                            <label asp-for="Navn" class="form-label fw-semibold"></label>
+                            <input asp-for="Navn" class="form-control form-control-lg" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Beskrivelse" class="form-label fw-semibold"></label>
+                            <input asp-for="Beskrivelse" class="form-control form-control-lg" />
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Antal" class="form-label fw-semibold"></label>
+                            <input asp-for="Antal" class="form-control form-control-lg" />
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <a asp-page="/Ingredienser/Alle" class="btn btn-outline-secondary">Annuller</a>
+                            <button type="submit" class="btn btn-primary px-4">Opret</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-    </p>
-</Form>
+    </div>
+</div>
