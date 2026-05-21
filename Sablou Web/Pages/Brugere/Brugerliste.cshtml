@@ -3,56 +3,58 @@
 @using System
 @using System.Security.Claims
 
-<h2>Brugerliste</h2>
+<div class="container pt-4">
+    <h2>Brugerliste</h2>
 
-<form method="post" class="form-inline mb-3">
-    <div class="input-group">
-        <input asp-for="SearchString" class="form-control" placeholder="Søg efter Email" />
-        <button type="submit" asp-page-handler="NameSearch" class="btn btn-primary ms-2">Søg</button>
-        <a asp-page="./Brugerliste" class="btn btn-secondary ms-2">Ryd</a>
-    </div>
-</form>
+    <form method="post" class="form-inline mb-3">
+        <div class="input-group">
+            <input asp-for="SearchString" class="form-control" placeholder="Søg efter Email" />
+            <button type="submit" asp-page-handler="NameSearch" class="btn btn-primary ms-2">Søg</button>
+            <a asp-page="./Brugerliste" class="btn btn-secondary ms-2">Ryd</a>
+        </div>
+    </form>
 
-<table class="table table-striped align-middle">
-    <thead>
-        <tr>
-            <th>Navn</th>
-            <th>Email</th>
-            <th>Telefon</th>
-            <th>Rolle</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var b in Model.Brugere)
-    {
-        <tr>
-            <td>@b.Navn</td>
-            <td>@b.Email</td>
-            <td>@(b.Telefonnummer?.ToString() ?? "")</td>
-            <td>
-                <span class="badge @(string.Equals(b.Rolle, "Admin", StringComparison.OrdinalIgnoreCase) ? "bg-danger" : "bg-secondary")">
-                    @b.Rolle
-                </span>
-            </td>
-            <td>
-                <form method="post" asp-page-handler="SkiftRolle" class="d-inline">
-                    <input type="hidden" name="id" value="@b.Id" />
-                    <button type="submit" class="btn btn-sm btn-outline-primary me-2">
-                        @(string.Equals(b.Rolle, "Admin", StringComparison.OrdinalIgnoreCase) ? "Gør Kunde" : "Gør Admin")
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Navn</th>
+                <th>Email</th>
+                <th>Telefon</th>
+                <th>Rolle</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var b in Model.Brugere)
+        {
+            <tr>
+                <td>@b.Navn</td>
+                <td>@b.Email</td>
+                <td>@(b.Telefonnummer?.ToString() ?? "")</td>
+                <td>
+                    <span class="badge @(string.Equals(b.Rolle, "Admin", StringComparison.OrdinalIgnoreCase) ? "bg-danger" : "bg-secondary")">
+                        @b.Rolle
+                    </span>
+                </td>
+                <td>
+                    <form method="post" asp-page-handler="SkiftRolle" class="d-inline">
+                        <input type="hidden" name="id" value="@b.Id" />
+                        <button type="submit" class="btn btn-sm btn-outline-primary me-2">
+                            @(string.Equals(b.Rolle, "Admin", StringComparison.OrdinalIgnoreCase) ? "Gør Kunde" : "Gør Admin")
+                        </button>
+                    </form>
+
+                    @* Slet-knap: åbner modal *@
+                    <button type="button" class="btn btn-sm btn-danger btn-delete"
+                            data-id="@b.Id" data-name="@b.Navn" title="Slet bruger">
+                        Slet
                     </button>
-                </form>
-
-                @* Slet-knap: åbner modal *@
-                <button type="button" class="btn btn-sm btn-danger btn-delete"
-                        data-id="@b.Id" data-name="@b.Navn" title="Slet bruger">
-                    Slet
-                </button>
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
 
 @* Bekræftelsesmodal for slet *@
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
