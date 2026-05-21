@@ -4,20 +4,11 @@
 @{
 }
 <h2>Chokolade liste</h2>
-
-@* <form method="post" class="form-inline mb-3">
-    <div class="input-group">
-        <input asp-for="SearchString" class="form-control" placeholder="Søg efter Email" />
-        <button type="submit" asp-page-handler="NameSearch" class="btn btn-primary ms-2">Søg</button>
-        <a asp-page="./Brugerliste" class="btn btn-secondary ms-2">Ryd</a>
-    </div>
-</form> *@
-
 <table class="table table-striped align-middle">
     <thead>
         <tr>
             <th>Navn</th>
-            <th>Er i Højtid</th>
+            <th>Status</th>
             <th></th>
         </tr>
     </thead>
@@ -28,7 +19,7 @@
                 <td>@chokolade.Navn</td>
                 <td>
                     <span class="badge @((Model.IdListe.Contains(chokolade.Id)) ? "bg-success" : "bg-danger")">
-                        Er i Højtid
+                        <div>@((Model.IdListe.Contains(chokolade.Id)) ? "Er i kataloget" : "Er ikke i kataloget" )</div>
                     </span>
                 </td>
                 <td>
