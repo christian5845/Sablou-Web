@@ -40,6 +40,8 @@ public partial class Ordre
 
     public bool Behandlet { get; set; }
 
+    public bool ErAnnulleret { get; set; }
+
     [InverseProperty("Ordre")]
     public virtual ICollection<OrdreLinje> OrdreLinje { get; set; } = new List<OrdreLinje>();
 }

@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Sablou_Web.Pages.Kurve;
 using Sablou_Web.Services;
 using Sablou_Web.Models;
 using Sablou_Web.Pages.BrugerLogin;
@@ -10,7 +9,6 @@ namespace Sablou_Web.Pages.Betalinger;
 public class BestillingerModel : PageModel
 {
     private readonly IDataService _repo;
-
     public List<GemtOrdre> Ordrer { get; set; } = new();
 
     public BestillingerModel(IDataService repo)
@@ -20,7 +18,6 @@ public class BestillingerModel : PageModel
 
     public void OnGet()
     {
-        // Hent ordrer fra DB og map til DTO for visning
         Ordrer = _repo.OrdreRepository.Data.Values
             .OrderByDescending(o => o.Dato)
             .Select(o =>
@@ -36,7 +33,8 @@ public class BestillingerModel : PageModel
                     Besked = o.Besked,
                     ErLoggetInd = o.ErLoggetInd,
                     BrugerId = o.BrugerId,
-                    ErBehandlet = o.Behandlet
+                    ErBehandlet = o.Behandlet,                   
+                    ErAnnulleret = o.ErAnnulleret
                 };
 
                 List<GemtOrdreLinje> gemtOrdreLinjer = _repo.OrdreLinjeRepository.Data.Values
@@ -54,20 +52,18 @@ public class BestillingerModel : PageModel
                     }).ToList();
 
                 foreach (GemtOrdreLinje l in gemtOrdreLinjer)
-                {
                     gemt.Linjer.Add(l);
-                }
+
                 return gemt;
             }).ToList();
     }
 
-    // Admin: slet ordre
+    // Admin: slet ordre permanent
     public IActionResult OnPostSlet(int id)
     {
         if (LoginModel.CurrentBruger?.Rolle != "Admin")
             return Forbid();
 
-        // Slet ordrelinjer først (foreign key)
         var linjer = _repo.OrdreLinjeRepository.Data.Values.Where(l => l.OrdreId == id).ToList();
         foreach (var l in linjer)
             _repo.OrdreLinjeRepository.Delete(l.Id);

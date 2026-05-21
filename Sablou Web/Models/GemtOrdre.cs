@@ -16,4 +16,5 @@ public class GemtOrdre
     public List<GemtOrdreLinje> Linjer { get; set; } = new();
     public decimal Total => Linjer.Sum(l => l.Stykpris * l.Antal);
     public bool ErBehandlet { get; set; }
+    public bool ErAnnulleret { get; set; }
 }
