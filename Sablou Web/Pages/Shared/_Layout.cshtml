@@ -237,16 +237,102 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - Sablou_Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
+    <style>
+            .site-footer {
+                position: relative; /* ensure footer can sit above fixed hero */
+                z-index: 1001; /* higher than .hero-full (900) so footer appears on top */
+                background: #faf7f2;
+                color: #000000;
+                padding: 1.25rem 1rem;
+                text-align: center;
+                font-size: 0.95rem;
+                border-top: 1px solid rgba(255,255,255,0.04);
+            }
 
-    </footer>
+                .site-footer a {
+                    color: #e6eef8;
+                    text-decoration: underline;
+                    opacity: 0.9;
+                }
+
+            .site-footer {
+                padding: 2rem 0;
+                text-align: center;
+            }
+
+            .footer-links {
+                margin-top: 0.7rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 14px;
+                font-size: 0.95rem;
+            }
+
+            .instagram-icon-link {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                line-height: 0;
+            }
+
+                .instagram-icon-link img {
+                    width: 38px;
+                    height: 38px;
+                    object-fit: contain;
+                    display: block;
+                    transition: transform 0.3s ease;
+                }
+
+                    .instagram-icon-link img:hover {
+                        transform: scale(1.12);
+                    }
+
+            .footer-links a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+                .footer-links a:hover {
+                    text-decoration: underline;
+                }
+    </style>
+
+    @if (IsSectionDefined("Footer"))
+    {
+        @await RenderSectionAsync("Footer", required: false)
+    }
+    else
+    {
+        <footer class="site-footer" role="contentinfo">
+
+            <div>
+                © @DateTime.Now.Year Sablou — All rights reserved.
+            </div>
+
+            <div class="footer-links">
+
+                <a href="https://www.instagram.com/sablou_cph/?hl=da"
+                   target="_blank"
+                   class="instagram-icon-link">
+
+                    <img src="~/images/insta.png" alt="Instagram" />
+                </a>
+
+                <span></span>
+
+                <a href="/om">Om os</a>
+
+            </div>
+
+        </footer>
+    }
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>
