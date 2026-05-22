@@ -9,12 +9,12 @@ namespace Sablou_Web.Pages;
 
 public class VoresChokoladerModel : PageModel
 {
-    public IDataService _repo { get; }
+    public IDataService Repo { get; }
     private const string SessionKey = "GæsteKurv";
 
     public VoresChokoladerModel(IDataService repo)
     {
-        _repo = repo;
+        Repo = repo;
     }
 
     public void OnGet()
@@ -27,27 +27,27 @@ public class VoresChokoladerModel : PageModel
         if (bruger != null)
         {
             // Find eller opret kurv i DB
-            var kurv = _repo.KurvRepository.Data.Values
+            var kurv = Repo.KurvRepository.Data.Values
                 .FirstOrDefault(k => k.BrugerId == bruger.Id);
 
             if (kurv == null)
             {
                 kurv = new Kurv { BrugerId = bruger.Id };
-                _repo.KurvRepository.Create(kurv);
+                Repo.KurvRepository.Create(kurv);
             }
 
             // Find eksisterende linje eller opret ny
-            var linje = _repo.KurvLinjeRepository.Data.Values
+            var linje = Repo.KurvLinjeRepository.Data.Values
                 .FirstOrDefault(l => l.KurvId == kurv.Id && l.ChokoladeId == chokoladeId);
 
             if (linje != null)
             {
                 linje.Antal++;
-                _repo.KurvLinjeRepository.Update(linje);
+                Repo.KurvLinjeRepository.Update(linje);
             }
             else
             {
-                _repo.KurvLinjeRepository.Create(new KurvLinje
+                Repo.KurvLinjeRepository.Create(new KurvLinje
                 {
                     KurvId = kurv.Id,
                     ChokoladeId = chokoladeId,

@@ -4,67 +4,66 @@ using Sablou_Web.Models;
 using Sablou_Web.Pages.BrugerLogin;
 using Sablou_Web.Services;
 
-namespace Sablou_Web.Pages.Chokolader
+namespace Sablou_Web.Pages.Chokolader;
+
+public class SletModel : PageModel
 {
-    public class SletModel : PageModel
+    private IDataService _repositories;
+
+    public SletModel(IDataService repo)
     {
-        private IDataService _repositories;
+        _repositories = repo;
+    }
 
-        public SletModel()
+    [BindProperty]
+    public Chokolade Chokolade { get; set; } = default!;
+
+    public IActionResult OnGet(int? id)
+    {
+        if (LoginModel.CurrentBruger?.Rolle != "Admin")
         {
-            _repositories = new Dataservice();
+            return RedirectToPage("/BrugerLogin/AccessDenied");
         }
 
-        [BindProperty]
-        public Chokolade Chokolade { get; set; } = default!;
-
-        public IActionResult OnGet(int? id)
+        if (id == null)
         {
-            if (LoginModel.CurrentBruger?.Rolle != "Admin")
-            {
-                return RedirectToPage("/BrugerLogin/AccessDenied");
-            }
-
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Chokolade = _repositories.ChokoladeRepository.GetItem(id.Value);
-
-            if (Chokolade == null)
-            {
-                return NotFound();
-            }
-
-            return Page();
+            return NotFound();
         }
 
-        public IActionResult OnPost(int? id)
+        Chokolade = _repositories.ChokoladeRepository.GetItem(id.Value);
+
+        if (Chokolade == null)
         {
-            if (LoginModel.CurrentBruger?.Rolle != "Admin")
-            {
-                return RedirectToPage("/Forside");
-            }
-
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var ingrediensListeIds = _repositories.IngrediensListeRepository.Data
-                .Where(il => il.Value.ChokoladeId == id.Value)
-                .Select(il => il.Value.Id)
-                .ToList();
-
-            foreach (var ingrediensListeId in ingrediensListeIds)
-            {
-                _repositories.IngrediensListeRepository.Delete(ingrediensListeId);
-            }
-
-            _repositories.ChokoladeRepository.Delete(id.Value);
-
-            return RedirectToPage("./Oversigt");
+            return NotFound();
         }
+
+        return Page();
+    }
+
+    public IActionResult OnPost(int? id)
+    {
+        if (LoginModel.CurrentBruger?.Rolle != "Admin")
+        {
+            return RedirectToPage("/Forside");
+        }
+
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var ingrediensListeIds = _repositories.IngrediensListeRepository.Data
+            .Where(il => il.Value.ChokoladeId == id.Value)
+            .Select(il => il.Value.Id)
+            .ToList();
+
+        foreach (var ingrediensListeId in ingrediensListeIds)
+        {
+            _repositories.IngrediensListeRepository.Delete(ingrediensListeId);
+        }
+
+        _repositories.ChokoladeRepository.Delete(id.Value);
+
+        return RedirectToPage("./Oversigt");
     }
 }

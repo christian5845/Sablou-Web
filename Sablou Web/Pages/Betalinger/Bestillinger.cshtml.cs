@@ -8,7 +8,7 @@ namespace Sablou_Web.Pages.Betalinger;
 
 public class BestillingerModel : PageModel
 {
-    private readonly IDataService _repo;
+    private IDataService _repo;
     public List<GemtOrdre> Ordrer { get; set; } = new();
 
     public BestillingerModel(IDataService repo)

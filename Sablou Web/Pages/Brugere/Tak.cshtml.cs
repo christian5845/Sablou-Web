@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Sablou_Web.Pages.Brugere
+namespace Sablou_Web.Pages.Brugere;
+
+public class TakModel : PageModel
 {
-    public class TakModel : PageModel
+    public void OnGet()
     {
-        public void OnGet()
-        {
-        }
     }
 }

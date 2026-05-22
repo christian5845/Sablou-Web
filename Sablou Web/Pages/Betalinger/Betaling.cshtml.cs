@@ -10,7 +10,7 @@ namespace Sablou_Web.Pages.Betalinger;
 
 public class BetalingModel : PageModel
 {
-    public IDataService Repo;
+    public IDataService Repo { get; }
     private const string SessionKey = "GæsteKurv";
 
     public List<KurvLinjeViewModel> KurvLinjer { get; set; } = new();

@@ -5,38 +5,62 @@ using Sablou_Web.Models;
 using Sablou_Web.Pages.BrugerLogin;
 using Sablou_Web.Services;
 
-namespace Sablou_Web.Pages.Chokolader
-{
-    public class OpdaterModel : PageModel
-    {
-        private IDataService _repositories;
+namespace Sablou_Web.Pages.Chokolader;
 
-        public OpdaterModel()
+public class OpdaterModel : PageModel
+{
+    private IDataService _repositories;
+
+    public OpdaterModel(IDataService repo)
+    {
+        _repositories = repo;
+    }
+
+    [BindProperty]
+    public Chokolade Chokolade { get; set; } = default!;
+
+    public List<SelectListItem> IngrediensValg { get; set; } = new();
+
+    [BindProperty]
+    public List<int> ValgteIngrediensIds { get; set; } = new();
+
+    public IActionResult OnGet(int id)
+    {
+        if (LoginModel.CurrentBruger?.Rolle != "Admin")
         {
-            _repositories = new Dataservice();
+            return RedirectToPage("/Forside");
+        }
+        Chokolade = _repositories.ChokoladeRepository.GetItem(id);
+
+        if (Chokolade == null)
+        {
+            return NotFound();
         }
 
-        [BindProperty]
-        public Chokolade Chokolade { get; set; } = default!;
+        IngrediensValg = _repositories.IngrediensRepository.Data
+            .Select(i => new SelectListItem
+            {
+                Value = i.Value.Id.ToString(),
+                Text = i.Value.Navn
+            })
+            .ToList();
 
-        public List<SelectListItem> IngrediensValg { get; set; } = new();
+        ValgteIngrediensIds = _repositories.IngrediensListeRepository.Data
+            .Where(il => il.Value.ChokoladeId == id)
+            .Select(il => il.Value.IngrediensId)
+            .ToList();
 
-        [BindProperty]
-        public List<int> ValgteIngrediensIds { get; set; } = new();
+        return Page();
+    }
 
-        public IActionResult OnGet(int id)
+    public IActionResult OnPost()
+    {
+        if (LoginModel.CurrentBruger?.Rolle != "Admin")
         {
-            if (LoginModel.CurrentBruger?.Rolle != "Admin")
-            {
-                return RedirectToPage("/Forside");
-            }
-            Chokolade = _repositories.ChokoladeRepository.GetItem(id);
-
-            if (Chokolade == null)
-            {
-                return NotFound();
-            }
-
+            return RedirectToPage("/Forside");
+        }
+        if (!ModelState.IsValid)
+        {
             IngrediensValg = _repositories.IngrediensRepository.Data
                 .Select(i => new SelectListItem
                 {
@@ -45,53 +69,28 @@ namespace Sablou_Web.Pages.Chokolader
                 })
                 .ToList();
 
-            ValgteIngrediensIds = _repositories.IngrediensListeRepository.Data
-                .Where(il => il.Value.ChokoladeId == id)
-                .Select(il => il.Value.IngrediensId)
-                .ToList();
-
             return Page();
         }
 
-        public IActionResult OnPost()
+        _repositories.ChokoladeRepository.Update(Chokolade);
+
+        var gamleIngredienser = _repositories.IngrediensListeRepository.Data
+            .Where(il => il.Value.ChokoladeId == Chokolade.Id)
+            .Select(il => il.Value.Id)
+            .ToList();
+
+        foreach (var id in gamleIngredienser)
         {
-            if (LoginModel.CurrentBruger?.Rolle != "Admin")
-            {
-                return RedirectToPage("/Forside");
-            }
-            if (!ModelState.IsValid)
-            {
-                IngrediensValg = _repositories.IngrediensRepository.Data
-                    .Select(i => new SelectListItem
-                    {
-                        Value = i.Value.Id.ToString(),
-                        Text = i.Value.Navn
-                    })
-                    .ToList();
-
-                return Page();
-            }
-
-            _repositories.ChokoladeRepository.Update(Chokolade);
-
-            var gamleIngredienser = _repositories.IngrediensListeRepository.Data
-                .Where(il => il.Value.ChokoladeId == Chokolade.Id)
-                .Select(il => il.Value.Id)
-                .ToList();
-
-            foreach (var id in gamleIngredienser)
-            {
-                _repositories.IngrediensListeRepository.Delete(id);
-            }
-
-            foreach (var ingrediensId in ValgteIngrediensIds)
-            {
-                _repositories.IngrediensListeRepository.Create(
-                    new IngrediensListe(Chokolade.Id, ingrediensId)
-                );
-            }
-
-            return RedirectToPage("/Chokolader/Oversigt");
+            _repositories.IngrediensListeRepository.Delete(id);
         }
+
+        foreach (var ingrediensId in ValgteIngrediensIds)
+        {
+            _repositories.IngrediensListeRepository.Create(
+                new IngrediensListe(Chokolade.Id, ingrediensId)
+            );
+        }
+
+        return RedirectToPage("/Chokolader/Oversigt");
     }
 }

@@ -16,7 +16,7 @@
 
     <div class="card shadow-sm border-0">
         <div class="card-body p-0">
-            @if (Model.Chokolader?.Any() == true)
+            @if (Model.Repo.ChokoladeRepository.Data?.Any() == true)
             {
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
@@ -29,7 +29,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.Chokolader)
+                            @foreach (var item in Model.Repo.ChokoladeRepository.Data.Values)
                             {
                                 <tr>
                                     <td class="fw-semibold">

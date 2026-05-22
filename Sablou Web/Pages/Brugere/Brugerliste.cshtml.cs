@@ -7,69 +7,68 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Identity.Client;
 
-namespace Sablou_Web.Pages.Brugere
+namespace Sablou_Web.Pages.Brugere;
+
+[Authorize(Roles = "Admin")]
+public class BrugerlisteModel : PageModel
 {
-    [Authorize(Roles = "Admin")]
-    public class BrugerlisteModel : PageModel
+    private IDataService _repo;
+
+    public List<Bruger> Brugere { get; set; } = new List<Bruger>();
+
+    [BindProperty]
+    public string SearchString { get; set; }
+
+    public BrugerlisteModel(IDataService repo)
     {
-        private IDataService _repo;
+        _repo = repo;
+    }
 
-        public List<Bruger> Brugere { get; set; } = new List<Bruger>();
+    public void OnGet()
+    {
+        // Hent alle brugere fra repository og sorter efter navn
+        Brugere = _repo.BrugerRepository.Data.Values
+            .OrderBy(b => b.Navn)
+            .ToList();
+    }
+    public IActionResult OnPostNameSearch()
+    {
+        Brugere = _repo.BrugerRepository.Data.Values
+            .Where(b => b.Email.Contains(SearchString, StringComparison.OrdinalIgnoreCase))
+            .OrderBy(b => b.Email)
+            .ToList();
+        return Page();
+    }
+    public IActionResult OnPostSkiftRolle(int id)
+    {
+        Bruger? bruger = _repo.BrugerRepository.GetItem(id);
 
-        [BindProperty]
-        public string SearchString { get; set; }
-
-        public BrugerlisteModel(IDataService repo)
+        if (bruger == null)
         {
-            _repo = repo;
+            return NotFound();
         }
 
-        public void OnGet()
+        if (bruger.Rolle == "Admin")
         {
-            // Hent alle brugere fra repository og sorter efter navn
-            Brugere = _repo.BrugerRepository.Data.Values
-                .OrderBy(b => b.Navn)
-                .ToList();
+            bruger.Rolle = "Kunde";
         }
-        public IActionResult OnPostNameSearch()
+        else
         {
-            Brugere = _repo.BrugerRepository.Data.Values
-                .Where(b => b.Email.Contains(SearchString, StringComparison.OrdinalIgnoreCase))
-                .OrderBy(b => b.Email)
-                .ToList();
-            return Page();
+            bruger.Rolle = "Admin";
         }
-        public IActionResult OnPostSkiftRolle(int id)
+
+        _repo.BrugerRepository.Update(bruger);
+
+        return RedirectToPage();
+    }
+    public IActionResult OnPostSlet(int id)
+    {
+        Bruger? bruger = _repo.BrugerRepository.GetItem(id);
+        if (bruger == null)
         {
-            Bruger? bruger = _repo.BrugerRepository.GetItem(id);
-
-            if (bruger == null)
-            {
-                return NotFound();
-            }
-
-            if (bruger.Rolle == "Admin")
-            {
-                bruger.Rolle = "Kunde";
-            }
-            else
-            {
-                bruger.Rolle = "Admin";
-            }
-
-            _repo.BrugerRepository.Update(bruger);
-
-            return RedirectToPage();
+            return NotFound();
         }
-        public IActionResult OnPostSlet(int id)
-        {
-            Bruger? bruger = _repo.BrugerRepository.GetItem(id);
-            if (bruger == null)
-            {
-                return NotFound();
-            }
-            _repo.BrugerRepository.Delete(id);
-            return RedirectToPage();
-        }
+        _repo.BrugerRepository.Delete(id);
+        return RedirectToPage();
     }
 }

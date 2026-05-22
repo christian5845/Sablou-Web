@@ -360,7 +360,7 @@
     }
 
     <div class="vh-grid">
-        @foreach (var c in Model._repo.ChokoladeRepository.Data.Values)
+        @foreach (var c in Model.Repo.ChokoladeRepository.Data.Values)
         {
             var lowerName = c.Navn.ToLowerInvariant();
             var hasSummer = lowerName.Contains("sommer");

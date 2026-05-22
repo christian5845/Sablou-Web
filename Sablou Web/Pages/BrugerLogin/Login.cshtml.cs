@@ -8,65 +8,64 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using Sablou_Web.Services.Repositories;
 
-namespace Sablou_Web.Pages.BrugerLogin
+namespace Sablou_Web.Pages.BrugerLogin;
+
+public class LoginModel : PageModel
 {
-    public class LoginModel : PageModel
+    private IDataService _brugerRepository;
+
+    public static Bruger? CurrentBruger { get; set; }
+
+    [BindProperty]
+    public string Email { get; set; }
+
+    [BindProperty, DataType(DataType.Password)]
+    public string Adgangskode { get; set; }
+
+    public string ErrorMessage { get; set; }
+
+    public LoginModel(IDataService DS)
     {
-        private IDataService _brugerRepository;
+        _brugerRepository = DS;
+    }
 
-        public static Bruger? CurrentBruger { get; set; }
+    public async Task<IActionResult> OnPost()
+    {
+        CurrentBruger = VerifyUser(Email, Adgangskode);
 
-        [BindProperty]
-        public string Email { get; set; }
-
-        [BindProperty, DataType(DataType.Password)]
-        public string Adgangskode { get; set; }
-
-        public string ErrorMessage { get; set; }
-
-        public LoginModel(IDataService DS)
+        if (CurrentBruger == null)
         {
-            _brugerRepository = DS;
+            ErrorMessage = "Kunne ikke logge ind";
+            return Page();
         }
 
-        public async Task<IActionResult> OnPost()
-        {
-            CurrentBruger = VerifyUser(Email, Adgangskode);
+        // Log ind
+        await HttpContext.SignInAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme,
+            BuildClaimsPrincipal(CurrentBruger));
 
-            if (CurrentBruger == null)
-            {
-                ErrorMessage = "Kunne ikke logge ind";
-                return Page();
-            }
+        return RedirectToPage("/Forside");
+    }
 
-            // Log ind
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                BuildClaimsPrincipal(CurrentBruger));
+    private ClaimsPrincipal BuildClaimsPrincipal(Bruger bruger)
+    {
+        // Opbyg Claims-liste
+        List<Claim> claims = new List<Claim>();
+        claims.Add(new Claim(ClaimTypes.Email, bruger.Email));
+        claims.Add(new Claim(ClaimTypes.Role, bruger.Rolle));
 
-            return RedirectToPage("/Forside");
-        }
+        // Opret ClaimsIdentity (claims plus Authentication-strategi)
+        ClaimsIdentity claimsIdentity = new ClaimsIdentity(
+            claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-        private ClaimsPrincipal BuildClaimsPrincipal(Bruger bruger)
-        {
-            // Opbyg Claims-liste
-            List<Claim> claims = new List<Claim>();
-            claims.Add(new Claim(ClaimTypes.Email, bruger.Email));
-            claims.Add(new Claim(ClaimTypes.Role, bruger.Rolle));
+        // Opret endeligt ClaimsPrincipal-objekt
+        return new ClaimsPrincipal(claimsIdentity);
+    }
 
-            // Opret ClaimsIdentity (claims plus Authentication-strategi)
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(
-                claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            // Opret endeligt ClaimsPrincipal-objekt
-            return new ClaimsPrincipal(claimsIdentity);
-        }
-
-        public Bruger? VerifyUser(string providedEmail, string providedPassword)
-        {
-            return _brugerRepository.BrugerRepository.VerifyUser(
-                providedEmail.Trim().ToLowerInvariant(),
-                providedPassword);
-        }
+    public Bruger? VerifyUser(string providedEmail, string providedPassword)
+    {
+        return _brugerRepository.BrugerRepository.VerifyUser(
+            providedEmail.Trim().ToLowerInvariant(),
+            providedPassword);
     }
 }

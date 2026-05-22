@@ -6,102 +6,101 @@ using Sablou_Web.Pages.BrugerLogin;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace Sablou_Web.Pages.Brugere
+namespace Sablou_Web.Pages.Brugere;
+
+public class RedigerProfilModel : PageModel
 {
-    public class RedigerProfilModel : PageModel
+    private readonly IDataService _repo;
+
+    [BindProperty]
+    [Required(ErrorMessage = "Navn skal udfyldes")]
+    public string Navn { get; set; }
+
+    [BindProperty]
+    [Required(ErrorMessage = "Email skal udfyldes")]
+    [EmailAddress(ErrorMessage = "Ugyldig email")]
+    public string Email { get; set; }
+
+    [BindProperty]
+    public int? Telefonnummer { get; set; }
+
+    [BindProperty]
+    [Required(ErrorMessage = "Adresse skal udfyldes")]
+    public string Adresse { get; set; }
+
+    public string? SuccessMessage { get; set; }
+
+    public RedigerProfilModel(IDataService repo)
     {
-        private readonly IDataService _repo;
+        _repo = repo;
+    }
 
-        [BindProperty]
-        [Required(ErrorMessage = "Navn skal udfyldes")]
-        public string Navn { get; set; }
-
-        [BindProperty]
-        [Required(ErrorMessage = "Email skal udfyldes")]
-        [EmailAddress(ErrorMessage = "Ugyldig email")]
-        public string Email { get; set; }
-
-        [BindProperty]
-        public int? Telefonnummer { get; set; }
-
-        [BindProperty]
-        [Required(ErrorMessage = "Adresse skal udfyldes")]
-        public string Adresse { get; set; }
-
-        public string? SuccessMessage { get; set; }
-
-        public RedigerProfilModel(IDataService repo)
+    public IActionResult OnGet()
+    {
+        // Kun loggede brugere må redigere deres profil
+        if (LoginModel.CurrentBruger == null)
         {
-            _repo = repo;
+            return RedirectToPage("/Forside");
         }
 
-        public IActionResult OnGet()
+        // Hent den loggede bruger
+        Bruger bruger = LoginModel.CurrentBruger;
+
+        // Fyld formularen med brugerens nuværende oplysninger
+        Navn = bruger.Navn;
+        Email = bruger.Email;
+        Telefonnummer = bruger.Telefonnummer;
+        Adresse = bruger.Adresse;
+
+        return Page();
+    }
+
+    public IActionResult OnPost()
+    {
+        // Kun loggede brugere må redigere deres profil
+        if (LoginModel.CurrentBruger == null)
         {
-            // Kun loggede brugere må redigere deres profil
-            if (LoginModel.CurrentBruger == null)
-            {
-                return RedirectToPage("/Forside");
-            }
+            return RedirectToPage("/Forside");
+        }
 
-            // Hent den loggede bruger
-            Bruger bruger = LoginModel.CurrentBruger;
-
-            // Fyld formularen med brugerens nuværende oplysninger
-            Navn = bruger.Navn;
-            Email = bruger.Email;
-            Telefonnummer = bruger.Telefonnummer;
-            Adresse = bruger.Adresse;
-
+        // Tjekker validation fx gyldig email
+        if (!ModelState.IsValid)
+        {
             return Page();
         }
 
-        public IActionResult OnPost()
+        // Hent den rigtige bruger fra databasen/repository via id
+        Bruger? bruger = _repo.BrugerRepository.GetItem(LoginModel.CurrentBruger.Id);
+
+        if (bruger == null)
         {
-            // Kun loggede brugere må redigere deres profil
-            if (LoginModel.CurrentBruger == null)
-            {
-                return RedirectToPage("/Forside");
-            }
+            return RedirectToPage("/Forside");
+        }
 
-            // Tjekker validation fx gyldig email
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+        // Tjek om den nye email allerede bruges af en anden bruger
+        bool emailExists = _repo.BrugerRepository.Data.Values
+            .Any(b => b.Email.Equals(Email, StringComparison.OrdinalIgnoreCase)
+                   && b.Id != bruger.Id);
 
-            // Hent den rigtige bruger fra databasen/repository via id
-            Bruger? bruger = _repo.BrugerRepository.GetItem(LoginModel.CurrentBruger.Id);
-
-            if (bruger == null)
-            {
-                return RedirectToPage("/Forside");
-            }
-
-            // Tjek om den nye email allerede bruges af en anden bruger
-            bool emailExists = _repo.BrugerRepository.Data.Values
-                .Any(b => b.Email.Equals(Email, StringComparison.OrdinalIgnoreCase)
-                       && b.Id != bruger.Id);
-
-            if (emailExists)
-            {
-                ModelState.AddModelError(nameof(Email), "E-mailen bruges allerede af en anden bruger.");
-                return Page();
-            }
-
-            // Opdater kun den loggede brugers egne informationer
-            bruger.Navn = Navn;
-            bruger.Email = Email;
-            bruger.Telefonnummer = Telefonnummer;
-            bruger.Adresse = Adresse;
-
-            _repo.BrugerRepository.Update(bruger);
-
-            // Opdater CurrentBruger, så navbar/min side viser de nye oplysninger
-            LoginModel.CurrentBruger = bruger;
-
-            SuccessMessage = "Din profil blev opdateret.";
-
+        if (emailExists)
+        {
+            ModelState.AddModelError(nameof(Email), "E-mailen bruges allerede af en anden bruger.");
             return Page();
         }
+
+        // Opdater kun den loggede brugers egne informationer
+        bruger.Navn = Navn;
+        bruger.Email = Email;
+        bruger.Telefonnummer = Telefonnummer;
+        bruger.Adresse = Adresse;
+
+        _repo.BrugerRepository.Update(bruger);
+
+        // Opdater CurrentBruger, så navbar/min side viser de nye oplysninger
+        LoginModel.CurrentBruger = bruger;
+
+        SuccessMessage = "Din profil blev opdateret.";
+
+        return Page();
     }
 }

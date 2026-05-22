@@ -6,37 +6,37 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Sablou_Web.Models;
+using Sablou_Web.Services;
 
-namespace Sablou_Web.Pages.Chokolader
+namespace Sablou_Web.Pages.Chokolader;
+
+public class DetaljerModel : PageModel
 {
-    public class DetaljerModel : PageModel
+    private IDataService _repositories;
+
+    public DetaljerModel(IDataService repo)
     {
-        private readonly Sablou_Web.Models.cralle_dk_db_sablouContext _context;
+        _repositories = repo;
+    }
 
-        public DetaljerModel(Sablou_Web.Models.cralle_dk_db_sablouContext context)
+    public Chokolade Chokolade { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int id)
+    {
+        if (id == null)
         {
-            _context = context;
-        }
-
-        public Models.Chokolade Chokolade { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var chokolade = await _context.Chokolade.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (chokolade is not null)
-            {
-                Chokolade = chokolade;
-
-                return Page();
-            }
-
             return NotFound();
         }
+
+        var chokolade = _repositories.ChokoladeRepository.GetItem(id);
+
+        if (chokolade is not null)
+        {
+            Chokolade = chokolade;
+
+            return Page();
+        }
+
+        return NotFound();
     }
 }

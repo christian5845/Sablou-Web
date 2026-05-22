@@ -17,9 +17,9 @@ public class OpretModel : PageModel
     [BindProperty]
     public int Antal { get; set; }
 
-    public OpretModel()
+    public OpretModel(IDataService repo)
     {
-        _repositories = new Dataservice();
+        _repositories = repo;
     }
 
     public IActionResult OnPost()
