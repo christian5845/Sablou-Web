@@ -139,7 +139,8 @@
         border-radius: 10px;
         background: linear-gradient(135deg, #f7e7db, #fff);
         margin-bottom: 1rem;
-        min-height: 180px;
+        width: 100%;
+        height: 240px;
         display: flex;
         align-items: stretch;
     }
@@ -148,6 +149,7 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: center;
         display: block;
         transform: scale(1);
         transition: transform 0.35s ease;
@@ -364,6 +366,8 @@
             var hasSummer = lowerName.Contains("sommer");
             var hasChristmas = lowerName.Contains("jul");
             var hasEaster = lowerName.Contains("påske");
+            var hasDubai = lowerName.Contains("dubai");
+            var hasMarcipan = lowerName.Contains("marcipan");
 
             <article class="vh-card">
                 <div class="vh-card-top">
@@ -386,6 +390,20 @@
                         <span class="product-badge">Påskefavorit</span>
                         <div class="product-media">
                             <img src="~/Images/Påskechokolade.png" alt="@c.Navn" />
+                        </div>
+                    }
+                    else if (hasDubai)
+                    {
+                        <span class="product-badge">Dubai Special</span>
+                        <div class="product-media">
+                            <img src="~/Images/DubaiChokolade.png" alt="@c.Navn" />
+                        </div>
+                    }
+                    else if (hasMarcipan)
+                    {
+                        <span class="product-badge">Marcipan Delight</span>
+                        <div class="product-media">
+                            <img src="~/Images/MarcipanChokolade.png" alt="@c.Navn" />
                         </div>
                     }
                     else
