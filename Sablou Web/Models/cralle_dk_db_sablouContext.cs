@@ -128,6 +128,8 @@ public partial class cralle_dk_db_sablouContext : DbContext
 
             entity.Property(e => e.Id).ValueGeneratedNever();
 
+            entity.HasOne(d => d.Chokolade).WithMany(p => p.KurvLinje).HasConstraintName("FK_KurvLinje_Chokolade");
+
             entity.HasOne(d => d.Kurv).WithMany(p => p.KurvLinje)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_KurvLinje_Kurv");
@@ -142,6 +144,10 @@ public partial class cralle_dk_db_sablouContext : DbContext
             entity.Property(e => e.Dato).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.Email).HasDefaultValue("");
             entity.Property(e => e.Navn).HasDefaultValue("");
+
+            entity.HasOne(d => d.Bruger).WithMany(p => p.Ordre)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Ordre_Bruger");
         });
 
         modelBuilder.Entity<OrdreLinje>(entity =>

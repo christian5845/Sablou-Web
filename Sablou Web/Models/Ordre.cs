@@ -13,7 +13,7 @@ public partial class Ordre
     [Key]
     public int Id { get; set; }
 
-    public int? BrugerId { get; set; }
+    public int BrugerId { get; set; }
 
     [Required]
     [StringLength(100)]
@@ -41,6 +41,10 @@ public partial class Ordre
     public bool Behandlet { get; set; }
 
     public bool ErAnnulleret { get; set; }
+
+    [ForeignKey("BrugerId")]
+    [InverseProperty("Ordre")]
+    public virtual Bruger Bruger { get; set; }
 
     [InverseProperty("Ordre")]
     public virtual ICollection<OrdreLinje> OrdreLinje { get; set; } = new List<OrdreLinje>();

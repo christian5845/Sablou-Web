@@ -37,4 +37,7 @@ public partial class Bruger
 
     [InverseProperty("Bruger")]
     public virtual ICollection<Kurv> Kurv { get; set; } = new List<Kurv>();
+
+    [InverseProperty("Bruger")]
+    public virtual ICollection<Ordre> Ordre { get; set; } = new List<Ordre>();
 }
