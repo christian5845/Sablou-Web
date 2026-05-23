@@ -12,7 +12,7 @@ public class MinSideModel : PageModel
 {
     private readonly IDataService _repo;
 
-    public Bruger Bruger { get; set; };
+    public Bruger Bruger { get; set; }
 
     public MinSideModel(IDataService repo)
     {
