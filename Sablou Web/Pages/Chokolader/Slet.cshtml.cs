@@ -56,11 +56,23 @@ public class SletModel : PageModel
             .Where(il => il.Value.ChokoladeId == id.Value)
             .Select(il => il.Value.Id)
             .ToList();
+        var chokoladerIKatalogIdListe = _repositories.ChokoladerIKatalogRepository.Data
+            .Where(il => il.Value.ChokoladeId == id.Value)
+            .Select(il => il.Value.Id)
+            .ToList();
+
+
+        foreach (var katalogId in chokoladerIKatalogIdListe)
+        {
+            _repositories.ChokoladerIKatalogRepository.Delete(katalogId);
+        }
 
         foreach (var ingrediensListeId in ingrediensListeIds)
         {
             _repositories.IngrediensListeRepository.Delete(ingrediensListeId);
         }
+      
+
 
         _repositories.ChokoladeRepository.Delete(id.Value);
 
