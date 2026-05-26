@@ -10,9 +10,5 @@ public class ForsideModel : PageModel
 {
     public void OnGet()
     {
-        if (LoginModel.CurrentBruger == null) // Force Signout on startup
-        {
-            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        }
     }
 }
