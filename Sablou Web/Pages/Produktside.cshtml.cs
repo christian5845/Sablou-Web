@@ -12,7 +12,6 @@ namespace Sablou_Web.Pages;
 public class ProduktsideModel : PageModel
 {
     private int _antalChokolader;
-
     public IDataService Repo { get; set; }
     public Chokolade Chokoladen { get; set; }
     public int AntalChokolader { get; set; }
@@ -26,21 +25,9 @@ public class ProduktsideModel : PageModel
     }
 
     #region Metoder
-    public IActionResult OnGet(int id)
+    public void OnGet(int id)
     {
-        Chokoladen = Repo.ChokoladeRepository.GetItem(id);
-        string idString = Chokoladen.Id.ToString();
-        ProduktSessionKey = "Produkt" + idString;
-        _antalChokolader = HentSessionDataTilInt();
-        if (_antalChokolader > 1 || _antalChokolader != null)
-        {
-            AntalChokolader = _antalChokolader;
-        }
-        else
-        {
-            AntalChokolader = 1;
-        }
-        return Page();
+        DataIndLæsning(id);
     }
     public IActionResult OnPostTilføjTilKurv(int id)
     {
@@ -154,8 +141,6 @@ public class ProduktsideModel : PageModel
     {
         if (data != null)
         {
-
-
             string dataString = data.ToString();
             List<string> dataList = new List<string>();
             dataList.Add(dataString);
