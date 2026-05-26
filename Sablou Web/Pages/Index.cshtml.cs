@@ -12,9 +12,9 @@ namespace Sablou_Web.Pages
             _logger = logger;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            RedirectToPage("/Forside");
+           return RedirectToPage("Forside");
         }
     }
 }
