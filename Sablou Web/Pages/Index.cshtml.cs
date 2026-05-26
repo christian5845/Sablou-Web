@@ -14,7 +14,7 @@ namespace Sablou_Web.Pages
 
         public void OnGet()
         {
-
+            RedirectToPage("/Forside");
         }
     }
 }
