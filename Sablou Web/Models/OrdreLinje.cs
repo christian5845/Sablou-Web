@@ -22,6 +22,10 @@ public partial class OrdreLinje
 
     public int Antal { get; set; }
 
+    [ForeignKey("ChokoladeId")]
+    [InverseProperty("OrdreLinje")]
+    public virtual Chokolade Chokolade { get; set; }
+
     [ForeignKey("OrdreId")]
     [InverseProperty("OrdreLinje")]
     public virtual Ordre Ordre { get; set; }

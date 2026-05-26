@@ -156,6 +156,8 @@ public partial class cralle_dk_db_sablouContext : DbContext
 
             entity.Property(e => e.Id).ValueGeneratedNever();
 
+            entity.HasOne(d => d.Chokolade).WithMany(p => p.OrdreLinje).HasConstraintName("FK_OrdreLinje_Chokolade");
+
             entity.HasOne(d => d.Ordre).WithMany(p => p.OrdreLinje)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_OrdreLinje_Ordre");

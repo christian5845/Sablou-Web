@@ -35,4 +35,7 @@ public partial class Chokolade
 
     [InverseProperty("Chokolade")]
     public virtual ICollection<KurvLinje> KurvLinje { get; set; } = new List<KurvLinje>();
+
+    [InverseProperty("Chokolade")]
+    public virtual ICollection<OrdreLinje> OrdreLinje { get; set; } = new List<OrdreLinje>();
 }
