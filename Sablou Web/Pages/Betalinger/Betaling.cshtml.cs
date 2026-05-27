@@ -59,12 +59,6 @@ public class BetalingModel : PageModel
             return RedirectToPage("/Kurve/Kurv");
         }
 
-        if (Repo.BrugerRepository.Data.Values.Any(b => b.Email.Equals(GæsteEmail, StringComparison.OrdinalIgnoreCase)))
-        {
-            TempData["Error"] = "E-mailen er allerede knyttet til en eksisterende konto. Log ind for at fortsætte.";
-            return RedirectToPage("/Betalinger/Betaling");
-        }
-
         // Opret ordre i databasen
         var dbOrdre = new Ordre
         {
