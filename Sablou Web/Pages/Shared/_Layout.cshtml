@@ -37,10 +37,9 @@
 
     <style>
         :root {
-            --navbar-height: 72px; /* adjust if your navbar height differs */
+            --navbar-height: 72px; 
         }
 
-        /* When navbar is fixed, add top padding so page content sits below it */
         body {
             background-color: #faf7f2;
             padding-top: var(--navbar-height);
@@ -174,8 +173,8 @@
                         }
                         @{
 
-                            // Vis kunne dette menu-punkt, hvis en User med "admin"-rolle er logget ind
-                            if (LoginModel.CurrentBruger?.Rolle == "Admin" /*Context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value == "admin"*/)
+                            // Vis kun dette menu-punkt, hvis en User med "admin"-rolle er logget ind
+                            if (LoginModel.CurrentBruger?.Rolle == "Admin")
                             {
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle text-dark" href="#" id="menu" role="button"
@@ -239,8 +238,8 @@
 
     <style>
             .site-footer {
-                position: relative; /* ensure footer can sit above fixed hero */
-                z-index: 1001; /* higher than .hero-full (900) so footer appears on top */
+                position: relative; 
+                z-index: 1001; 
                 background: #faf7f2;
                 color: #000000;
                 padding: 1.25rem 1rem;

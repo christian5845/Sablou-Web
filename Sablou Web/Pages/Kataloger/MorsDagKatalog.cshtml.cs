@@ -21,6 +21,4 @@ public class MorsDagKatalogModel : KatalogBase
     public void OnGet()
     {
     }
-
-   
 }

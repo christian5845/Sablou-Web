@@ -12,7 +12,6 @@ namespace Sablou_Web.Pages;
 public class ProduktsideModel : PageModel
 {
     private int _antalChokolader;
-
     public IDataService Repo { get; set; }
     public Chokolade Chokoladen { get; set; }
     public int AntalChokolader { get; set; }

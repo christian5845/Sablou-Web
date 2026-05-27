@@ -16,7 +16,6 @@ public class BrugerOprettelseModel : PageModel
     [BindProperty]
     public string Navn { get; set; }
 
-
     [BindProperty]
     //Validerer om emailen ligner en rigtig email.
     [Required(ErrorMessage = "Email skal udfyldes")]
@@ -44,7 +43,6 @@ public class BrugerOprettelseModel : PageModel
         {
             return Page();
         }
-
         try
         {
             // Send data videre til repository

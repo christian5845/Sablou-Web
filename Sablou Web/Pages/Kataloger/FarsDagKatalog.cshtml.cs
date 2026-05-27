@@ -17,7 +17,6 @@ public class FarsDagKatalogModel : KatalogBase
     {
     }
 
-
     public void OnGet()
     {
     }

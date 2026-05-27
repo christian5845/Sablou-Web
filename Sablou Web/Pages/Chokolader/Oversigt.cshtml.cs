@@ -19,7 +19,6 @@ public class OversigtModel : PageModel
         Repo = repo;
         
     }
-
     public async Task OnGet()
     {
        

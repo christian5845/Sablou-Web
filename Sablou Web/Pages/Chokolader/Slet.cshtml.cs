@@ -71,8 +71,6 @@ public class SletModel : PageModel
         {
             _repositories.IngrediensListeRepository.Delete(ingrediensListeId);
         }
-      
-
 
         _repositories.ChokoladeRepository.Delete(id.Value);
 

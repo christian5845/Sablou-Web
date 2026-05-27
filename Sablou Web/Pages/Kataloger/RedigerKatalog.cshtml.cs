@@ -25,7 +25,6 @@ public class RedigerKatalogModel : PageModel
     public RedigerKatalogModel(IDataService repo)
     {
         Repo = repo;
-
     }
 
     public IActionResult OnGet(int id)
@@ -67,7 +66,6 @@ public class RedigerKatalogModel : PageModel
         }
         return RedirectToPage(new {id});
     }
-    
     public bool DeleteMedChokoladeId(int cid)
     {
         int id = 0;

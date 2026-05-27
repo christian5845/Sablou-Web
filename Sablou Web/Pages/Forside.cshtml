@@ -4,7 +4,6 @@
 }
 
 <style>
-    /* Hero fills viewport minus navbar (adjust --navbar-height if needed) */
     :root {
         --navbar-height: 72px;
     }
@@ -25,11 +24,10 @@
         align-items: center;
         justify-content: center;
         color: #fff;
-        z-index: 900; /* keep below footer */
+        z-index: 900; 
         overflow: hidden;
     }
 
-    /* shared background layer styles */
     .hero-bg {
         position: absolute;
         inset: 0;
@@ -41,41 +39,36 @@
         backface-visibility: hidden;
         z-index: 0;
         pointer-events: none;
-        /* GPU hint */
         transform: translateZ(0) scale(1);
         -webkit-transform: translateZ(0) scale(1);
-        /* total cycle 30s = 10s per image */
         animation: hero-fadeZoom 30s ease-in-out infinite;
         -webkit-animation: hero-fadeZoom 30s ease-in-out infinite;
         opacity: 0;
     }
 
-    /* stagger start times for three images (0s, 10s, 20s) */
     .hero-bg.bg1 { animation-delay: 0s; -webkit-animation-delay: 0s; }
     .hero-bg.bg2 { animation-delay: 10s; -webkit-animation-delay: 10s; }
     .hero-bg.bg3 { animation-delay: 20s; -webkit-animation-delay: 20s; }
 
-    /* subtle dark overlay */
     .hero-full::before{
         content: "";
         position: absolute;
         inset: 0;
         background: rgba(0,0,0,0.35);
         pointer-events: none;
-        z-index: 1; /* overlay above background */
+        z-index: 1; 
     }
 
-    /* Center the text regardless of the .container width */
     .hero-content {
         position: relative;
-        z-index: 2; /* content on top of overlay */
+        z-index: 2; 
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         text-align: center;
-        padding: 0 1rem; /* small horizontal padding so text doesn't touch edges on small screens */
+        padding: 0 1rem; 
         box-sizing: border-box;
     }
 
@@ -93,19 +86,18 @@
         font-family: 'Poiret One';
     }
 
-    /* page content sits below fixed hero; do not raise its z-index */
     .page-content {
         position: relative;
         padding: 2rem;
-        padding-top: calc(100vh - var(--navbar-height) + 2rem); /* push content below hero */
+        padding-top: calc(100vh - var(--navbar-height) + 2rem); 
         background: #faf7f2;
         color: #111;
         min-height: 50vh;
     }
 
     .site-footer {
-        position: relative; /* ensure footer can sit above fixed hero */
-        z-index: 1001;     /* higher than .hero-full (900) so footer appears on top */
+        position: relative; 
+        z-index: 1001;     
         background: #0f1720;
         color: #e6eef8;
         padding: 1.25rem 1rem;
@@ -120,14 +112,13 @@
         opacity: 0.9;
     }
 
-    /* animation: each image now zooms in then zooms out during its own 10s window
-       slower, smoother zoom; quick fades to preserve sharp image change */
+
     @@keyframes hero-fadeZoom {
         0%   { opacity: 0; transform: translateZ(0) scale(1); }
-        8%   { opacity: 1; transform: translateZ(0) scale(1); }       /* quick fade in */
-        50%  { opacity: 1; transform: translateZ(0) scale(1.12); }    /* zoom-in peak (middle of slide) */
-        85%  { opacity: 1; transform: translateZ(0) scale(1.00); }    /* zoom-out */
-        95%  { opacity: 0; transform: translateZ(0) scale(1); }       /* quick fade out */
+        8%   { opacity: 1; transform: translateZ(0) scale(1); }       
+        50%  { opacity: 1; transform: translateZ(0) scale(1.12); }    
+        85%  { opacity: 1; transform: translateZ(0) scale(1.00); }    
+        95%  { opacity: 0; transform: translateZ(0) scale(1); }       
         100% { opacity: 0; transform: translateZ(0) scale(1); }
     }
 

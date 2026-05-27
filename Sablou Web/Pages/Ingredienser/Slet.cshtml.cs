@@ -16,7 +16,6 @@ public class SletModel : PageModel
         _data = dataservice;
     }
 
-
     public void OnGet(int id)
     {
         Ingrediens = _data.IngrediensRepository.GetItem(id);

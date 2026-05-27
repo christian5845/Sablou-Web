@@ -36,7 +36,6 @@ public class DetaljerModel : PageModel
 
             return Page();
         }
-
         return NotFound();
     }
 }

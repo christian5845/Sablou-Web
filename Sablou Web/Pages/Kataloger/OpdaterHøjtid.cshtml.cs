@@ -8,7 +8,6 @@ namespace Sablou_Web.Pages.Kataloger;
 public class OpdaterHøjtidModel : PageModel
 {
 
-
     public IDataService Repositories { get; }
 
     [BindProperty]

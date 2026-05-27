@@ -9,7 +9,6 @@ namespace Sablou_Web.Pages.Kataloger;
 
 public class HalloweenKatalogModel : KatalogBase
 {
-
    
     public override string Højtidsnavn => "Halloween";
     public override string SessionKey => "GæsteKurv";
@@ -17,7 +16,6 @@ public class HalloweenKatalogModel : KatalogBase
     public HalloweenKatalogModel(IDataService repo) : base(repo)
     {
     }
-
 
     public void OnGet()
     {

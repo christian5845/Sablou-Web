@@ -70,7 +70,6 @@
                                     <small class="text-muted">@ordre.Dato.ToString("d. MMMM yyyy 'kl.' HH:mm", new System.Globalization.CultureInfo("da-DK"))</small>
                                 </div>
 
-                                @* Markér behandlet – kun hvis ikke annulleret *@
                                 @if (!ordre.ErAnnulleret && !ordre.ErBehandlet)
                                 {
                                     <form method="post" asp-page-handler="MarkBehandlet" asp-route-id="@int.Parse(ordre.Id)" onsubmit="return confirm('Markér ordren som behandlet?');">
@@ -78,7 +77,6 @@
                                     </form>
                                 }
 
-                                @* Slet ordre permanent *@
                                 <form method="post" asp-page-handler="Slet" asp-route-id="@int.Parse(ordre.Id)" onsubmit="return confirm('Er du sikker? Ordren slettes permanent.');">
                                     <button type="submit" class="btn btn-sm btn-outline-danger">Slet</button>
                                 </form>

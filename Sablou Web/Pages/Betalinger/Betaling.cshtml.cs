@@ -47,7 +47,6 @@ public class BetalingModel : PageModel
 
     public IActionResult OnPostAfgivBestilling()
     {
-        //Repo = new Dataservice();
 
         KurvLinjer = HentKurvLinjer();
 
@@ -128,8 +127,6 @@ public class BetalingModel : PageModel
         return RedirectToPage("/Betalinger/Bekræftelse");
     }
 
-    // Hjælpemetoder
-
     private List<KurvLinjeViewModel> HentKurvLinjer()
     {
         var bruger = LoginModel.CurrentBruger;
@@ -183,7 +180,6 @@ public class BetalingModel : PageModel
         }
         else
         {
-            // Guest cart stored in session; fjern kun kurv-session
             HttpContext.Session.Remove(SessionKey);
         }
     }
