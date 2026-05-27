@@ -46,25 +46,19 @@ public partial class Chokolade : IHarId
         Navn = navn;
         Stykpris = stykpris;
         Beskrivelse = beskrivelse;
-
     }   
-
-
-
-  
+ 
 }
 public partial class Højtider : IHarId
 {
-
-
 }
 
 public partial class ChokoladerIkatalog : IHarId
 {
     public ChokoladerIkatalog()
     {
-
     }
+
     public ChokoladerIkatalog(int chokoladeid, int katalogid)
     {
         ChokoladeId = chokoladeid;
@@ -74,9 +68,6 @@ public partial class ChokoladerIkatalog : IHarId
 
 public partial class HøjtidsKatalog : IHarId
 {
-
-
-
     [NotMapped]
     public string Højtidsnavn
     {
@@ -100,7 +91,6 @@ public partial class HøjtidsKatalog : IHarId
             }
             else
                 return "tom";
-
         }
     }
 
@@ -131,7 +121,5 @@ public partial class OrdreLinje : IHarId
 {
     public OrdreLinje()
     {
-
     }
-
 }
