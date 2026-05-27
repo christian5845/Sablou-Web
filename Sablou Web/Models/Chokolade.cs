@@ -11,7 +11,6 @@ namespace Sablou_Web.Models;
 public partial class Chokolade
 {
     [Key]
-    [Column("ID")]
     public int Id { get; set; }
 
     [Required]
@@ -32,9 +31,6 @@ public partial class Chokolade
 
     [InverseProperty("Chokolade")]
     public virtual ICollection<IngrediensListe> IngrediensListe { get; set; } = new List<IngrediensListe>();
-
-    [InverseProperty("Chokolade")]
-    public virtual ICollection<KurvLinje> KurvLinje { get; set; } = new List<KurvLinje>();
 
     [InverseProperty("Chokolade")]
     public virtual ICollection<OrdreLinje> OrdreLinje { get; set; } = new List<OrdreLinje>();

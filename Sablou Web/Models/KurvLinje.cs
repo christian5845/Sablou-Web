@@ -22,10 +22,6 @@ public partial class KurvLinje
 
     public int Antal { get; set; }
 
-    [ForeignKey("ChokoladeId")]
-    [InverseProperty("KurvLinje")]
-    public virtual Chokolade Chokolade { get; set; }
-
     [ForeignKey("KurvId")]
     [InverseProperty("KurvLinje")]
     public virtual Kurv Kurv { get; set; }

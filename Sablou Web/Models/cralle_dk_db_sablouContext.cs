@@ -41,27 +41,27 @@ public partial class cralle_dk_db_sablouContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=mssql13.unoeuro.com;Initial Catalog=cralle_dk_db_sablou;Persist Security Info=True;User ID=cralle_dk;Password=mDz296f5FegxdnrhG3EA;Encrypt=True");
+        => optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SablouWebshopDB;Integrated Security=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Bruger>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Bruger__3214EC0720F9716B");
+            entity.HasKey(e => e.Id).HasName("PK__Bruger__3214EC07020000B6");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<Chokolade>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Chokolad__3214EC27DCC779E2");
+            entity.HasKey(e => e.Id).HasName("PK__Chokolad__3214EC076DF64751");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<ChokoladerIkatalog>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tmp_ms_x__3214EC0745D9D771");
+            entity.HasKey(e => e.Id).HasName("PK__Chokolad__3214EC0766E2B081");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -76,7 +76,7 @@ public partial class cralle_dk_db_sablouContext : DbContext
 
         modelBuilder.Entity<Højtider>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Højtider__3214EC0747CBE7BD");
+            entity.HasKey(e => e.Id).HasName("PK__Højtider__3214EC078CF83BA8");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Navn).IsFixedLength();
@@ -84,7 +84,7 @@ public partial class cralle_dk_db_sablouContext : DbContext
 
         modelBuilder.Entity<HøjtidsKatalog>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__HøjtidsK__3214EC0763394428");
+            entity.HasKey(e => e.Id).HasName("PK__HøjtidsK__3214EC07BAE3EA78");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -93,14 +93,14 @@ public partial class cralle_dk_db_sablouContext : DbContext
 
         modelBuilder.Entity<Ingrediens>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Ingredie__3214EC07170B0047");
+            entity.HasKey(e => e.Id).HasName("PK__Ingredie__3214EC0724FE9B36");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<IngrediensListe>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tmp_ms_x__3214EC071FAA53D9");
+            entity.HasKey(e => e.Id).HasName("PK__Ingredie__3214EC071F0B300A");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -115,7 +115,7 @@ public partial class cralle_dk_db_sablouContext : DbContext
 
         modelBuilder.Entity<Kurv>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Kurv__3214EC27D3868A9A");
+            entity.HasKey(e => e.Id).HasName("PK__Kurv__3214EC0738A867D9");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -124,11 +124,9 @@ public partial class cralle_dk_db_sablouContext : DbContext
 
         modelBuilder.Entity<KurvLinje>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__KurvLinj__3214EC27F6D8990F");
+            entity.HasKey(e => e.Id).HasName("PK__KurvLinj__3214EC27DBD1998C");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
-
-            entity.HasOne(d => d.Chokolade).WithMany(p => p.KurvLinje).HasConstraintName("FK_KurvLinje_Chokolade");
 
             entity.HasOne(d => d.Kurv).WithMany(p => p.KurvLinje)
                 .OnDelete(DeleteBehavior.Cascade)
@@ -137,7 +135,7 @@ public partial class cralle_dk_db_sablouContext : DbContext
 
         modelBuilder.Entity<Ordre>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Ordre__3214EC078C58FAB4");
+            entity.HasKey(e => e.Id).HasName("PK__Ordre__3214EC0786807BA3");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Adresse).HasDefaultValue("");
@@ -152,7 +150,7 @@ public partial class cralle_dk_db_sablouContext : DbContext
 
         modelBuilder.Entity<OrdreLinje>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__OrdreLin__3214EC273E3F5A95");
+            entity.HasKey(e => e.Id).HasName("PK__OrdreLin__3214EC07E3749F6B");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
 

@@ -1,0 +1,153 @@
+﻿SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+DROP TABLE if EXISTS [dbo].[KurvLinje];
+DROP TABLE if EXISTS [dbo].[OrdreLinje];
+DROP TABLE if EXISTS [dbo].[ChokoladerIKatalog];
+DROP TABLE if EXISTS [dbo].[IngrediensListe];
+DROP TABLE if EXISTS [dbo].[HøjtidsKatalog];
+DROP TABLE if EXISTS [dbo].[Kurv];
+DROP TABLE if EXISTS [dbo].[Bruger];
+DROP TABLE if EXISTS [dbo].[Chokolade];
+DROP TABLE if EXISTS [dbo].[Højtider];
+DROP TABLE if EXISTS [dbo].[Ingrediens];
+DROP TABLE if EXISTS [dbo].[Ordre];
+
+
+GO
+CREATE TABLE [dbo].[Bruger] (
+    [Id]            INT            NOT NULL,
+    [Navn]          NVARCHAR (50)  NOT NULL,
+    [Email]         NVARCHAR (50)  NOT NULL,
+    [Adresse]       NVARCHAR (50)  NOT NULL,
+    [Telefonnummer] INT            NULL,
+    [Password]      NVARCHAR (200) NOT NULL,
+    [Rolle]         NVARCHAR (50)  NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[Chokolade] (
+    [Id]          INT             NOT NULL,
+    [Navn]        NVARCHAR (30)   NOT NULL,
+    [Stykpris]    DECIMAL (18, 2) NOT NULL,
+    [Beskrivelse] NVARCHAR (200)  NOT NULL,
+    [Antal]       INT             NOT NULL,
+    PRIMARY KEY CLUSTERED ([ID] ASC)
+);
+
+
+CREATE TABLE [dbo].[Højtider] (
+    [Id]   INT        NOT NULL,
+    [Navn] NCHAR (20) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[HøjtidsKatalog] (
+    [Id]     INT NOT NULL,
+    [Højtid] INT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_Højtid] FOREIGN KEY ([Højtid]) REFERENCES [dbo].[Højtider] ([Id])
+);
+
+CREATE TABLE [dbo].[ChokoladerIKatalog] (
+    [Id]          INT NOT NULL,
+    [KatalogId]   INT NOT NULL,
+    [ChokoladeId] INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_KatalogId] FOREIGN KEY ([KatalogId]) REFERENCES [dbo].[HøjtidsKatalog] ([Id]),
+    CONSTRAINT [FK_ChokoladeIKatalogId] FOREIGN KEY ([ChokoladeId]) REFERENCES [dbo].[Chokolade] ([Id])
+);
+
+CREATE TABLE [dbo].[Ingrediens] (
+    [Id]          INT            NOT NULL,
+    [Navn]        NVARCHAR (30)  NOT NULL,
+    [Beskrivelse] NVARCHAR (100) NULL,
+    [Antal]       INT            NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[IngrediensListe] (
+    [Id]           INT NOT NULL,
+    [ChokoladeId]  INT NOT NULL,
+    [IngrediensId] INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_ChokoladeId] FOREIGN KEY ([ChokoladeId]) REFERENCES [dbo].[Chokolade] ([Id]),
+    CONSTRAINT [FK_IngrediensId] FOREIGN KEY ([IngrediensId]) REFERENCES [dbo].[Ingrediens] ([Id])
+);
+GO
+
+CREATE TABLE [dbo].[Kurv] (
+    [Id]       INT NOT NULL,
+    [BrugerID] INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_Kurv_Bruger] FOREIGN KEY ([BrugerID]) REFERENCES [dbo].[Bruger] ([Id]) ON DELETE CASCADE
+);
+
+CREATE TABLE [dbo].[Ordre] (
+    [Id]          INT            NOT NULL,
+    [BrugerId]    INT            NULL,
+    [Navn]        NVARCHAR (100) DEFAULT ('') NOT NULL,
+    [Email]       NVARCHAR (100) DEFAULT ('') NOT NULL,
+    [Telefon]     NVARCHAR (20)  NULL,
+    [Adresse]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+    [Besked]      NVARCHAR (500) NULL,
+    [ErLoggetInd] BIT            DEFAULT ((0)) NOT NULL,
+    [Dato]        DATETIME       DEFAULT (getdate()) NOT NULL,
+    [Behandlet]   BIT            DEFAULT ((0)) NOT NULL,
+	[ErAnnulleret] BIT            DEFAULT ((0)) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[KurvLinje] (
+    [ID]          INT NOT NULL,
+    [KurvID]      INT NULL,
+    [ChokoladeID] INT NOT NULL,
+    [Antal]       INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_KurvLinje_Kurv] FOREIGN KEY ([KurvID]) REFERENCES [dbo].[Kurv] ([ID]) ON DELETE CASCADE
+);
+
+CREATE TABLE [dbo].[OrdreLinje] (
+    [Id]          INT NOT NULL,
+    [OrdreID]     INT NULL,
+    [ChokoladeID] INT NOT NULL,
+    [Antal]       INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_OrdreLinje_Ordre] FOREIGN KEY ([OrdreID]) REFERENCES [dbo].[Ordre] ([Id]) ON DELETE CASCADE,
+CONSTRAINT [FK_OrdreLinje_Chokolade] FOREIGN KEY ([ChokoladeID]) REFERENCES [dbo].[Chokolade] ([ID]) ON DELETE CASCADE
+);
+GO
+
+INSERT INTO [dbo].[Bruger] ([Id], [Navn], [Email], [Adresse], [Telefonnummer], [Password], [Rolle]) VALUES (4, N'admin', N'admin@hotmail.com', N'admin', 47474747, N'AQAAAAIAAYagAAAAEFLK/qylMIDZj6DYjWxkiBe5HTCQ3BXMmFAIw0+R9WzBzLiV/sS5C7TVr0YywNrkSA==', N'Admin')
+INSERT INTO [dbo].[Bruger] ([Id], [Navn], [Email], [Adresse], [Telefonnummer], [Password], [Rolle]) VALUES (10, N'Bruger', N'bruger@hotmail.com', N'brugervej', 12345678, N'AQAAAAIAAYagAAAAEJvLVv0SHmUxkY7sx344u+vU3YdE00JkVrcliCHXGY5gT2vztcxPOMVyJwfKWlZFWA==', N'Kunde')
+INSERT INTO [dbo].[Bruger] ([Id], [Navn], [Email], [Adresse], [Telefonnummer], [Password], [Rolle]) VALUES (0, N'Gæst', N'Gæst@mail.com', N'-', 11111111, N'-', N'Gæst')
+
+INSERT INTO [dbo].[Chokolade] ([ID], [Navn], [Stykpris], [Beskrivelse], [Antal]) VALUES (1, N'Sommerchokolade', CAST(10.00 AS Decimal(18, 2)), N'En lækker chokolade til sommeren', 0)
+INSERT INTO [dbo].[Chokolade] ([ID], [Navn], [Stykpris], [Beskrivelse], [Antal]) VALUES (2, N'Julechokolade', CAST(12.00 AS Decimal(18, 2)), N'En lækker chokolade til julen', 0)
+INSERT INTO [dbo].[Chokolade] ([ID], [Navn], [Stykpris], [Beskrivelse], [Antal]) VALUES (3, N'Påskechokolade', CAST(20.00 AS Decimal(18, 2)), N'En lækker chokolade til påsken', 0)
+INSERT INTO [dbo].[Chokolade] ([ID], [Navn], [Stykpris], [Beskrivelse], [Antal]) VALUES (4, N'Dubai Chokolade', CAST(30.00 AS Decimal(18, 2)), N'Mørk chokolade med pistachio fyld', 0)
+INSERT INTO [dbo].[Chokolade] ([ID], [Navn], [Stykpris], [Beskrivelse], [Antal]) VALUES (5, N'Marcipanfyldt Chokolade', CAST(10.00 AS Decimal(18, 2)), N'Chokolade fyldt med marcipan.', 0)
+
+INSERT INTO [dbo].[Højtider] ([Id], [Navn]) VALUES (1, N'Påske               ')
+INSERT INTO [dbo].[Højtider] ([Id], [Navn]) VALUES (2, N'Mors dag            ')
+INSERT INTO [dbo].[Højtider] ([Id], [Navn]) VALUES (3, N'Fars dag            ')
+INSERT INTO [dbo].[Højtider] ([Id], [Navn]) VALUES (4, N'Halloween           ')
+
+INSERT INTO [dbo].[HøjtidsKatalog] ([Id], [Højtid]) VALUES (1, 1)
+INSERT INTO [dbo].[HøjtidsKatalog] ([Id], [Højtid]) VALUES (2, 2)
+INSERT INTO [dbo].[HøjtidsKatalog] ([Id], [Højtid]) VALUES (3, 3)
+INSERT INTO [dbo].[HøjtidsKatalog] ([Id], [Højtid]) VALUES (4, 4)
+
+INSERT INTO [dbo].[ChokoladerIKatalog] ([Id], [KatalogId], [ChokoladeId]) VALUES (1, 4, 3)
+INSERT INTO [dbo].[ChokoladerIKatalog] ([Id], [KatalogId], [ChokoladeId]) VALUES (2, 4, 2)
+INSERT INTO [dbo].[ChokoladerIKatalog] ([Id], [KatalogId], [ChokoladeId]) VALUES (3, 1, 3)
+INSERT INTO [dbo].[ChokoladerIKatalog] ([Id], [KatalogId], [ChokoladeId]) VALUES (4, 2, 4)
+INSERT INTO [dbo].[ChokoladerIKatalog] ([Id], [KatalogId], [ChokoladeId]) VALUES (5, 1, 5)
+
+INSERT INTO [dbo].[Ordre] ([Id], [BrugerId], [Navn], [Email], [Telefon], [Adresse], [Besked], [ErLoggetInd], [Dato], [Behandlet], [ErAnnulleret]) VALUES (1, 10, N'Bruger', N'bruger@hotmail.com', N'12345678', N'brugervej', NULL, 1, N'2026-05-27 11:38:08', 0, 0)
+
+INSERT INTO [dbo].[OrdreLinje] ([ID], [OrdreID], [ChokoladeID], [Antal]) VALUES (1, 1, 3, 1)
+INSERT INTO [dbo].[OrdreLinje] ([ID], [OrdreID], [ChokoladeID], [Antal]) VALUES (2, 1, 5, 1)

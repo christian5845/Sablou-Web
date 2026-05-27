@@ -11,7 +11,6 @@ namespace Sablou_Web.Models;
 public partial class OrdreLinje
 {
     [Key]
-    [Column("ID")]
     public int Id { get; set; }
 
     [Column("OrdreID")]
